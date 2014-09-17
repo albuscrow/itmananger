@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.itmanapp"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+    
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 用于访问wifi网络信息,wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 这个权限用于获取wifi的获取权限,wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- 允许应用读取低级别的系统日志文件 -->
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- Push service 运行需要的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!-- for log. -->
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+
+    <application
+        android:name="com.itmanapp.DemoApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/logo_120"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        
+        <!-- 启动页面 -->
+        <activity
+            android:name="com.itmanapp.StartActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- 登录页面 -->
+        <activity android:name="com.itmanapp.LoginActivity">
+        </activity>
+        
+        <!-- 主页 -->
+        <activity android:name="com.itmanapp.MainActivity">
+        </activity>
+        
+        
+        
+        <!-- 系统查询页面 -->
+        <activity android:name="com.itmanapp.SystemSearchActivity">
+        </activity>
+        
+        <!-- 系统查询详细页面 -->
+        <activity android:name="com.itmanapp.SystemSeachDetailActivity">
+        </activity>
+        
+        <!-- 系统整改历史页面-->
+        <activity android:name="com.itmanapp.SystemModifyInfoActivity">
+        </activity>
+        
+        <!-- 关联设备页面 -->
+        <activity android:name="com.itmanapp.RelatedDeviceActivity">
+        </activity>
+        
+        
+        
+        <!-- 设置页面 -->
+        <activity android:name="com.itmanapp.AccountDetailActivity">
+        </activity>
+        
+        <!-- 修改密码页面 -->
+        <activity android:name="com.itmanapp.ChangePasswordActivity">
+        </activity>
+        
+        
+        
+        <!-- 设备查询页面 -->
+        <activity android:name="com.itmanapp.EquipmentSearchActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        
+        <!-- 设备查询结果页面 -->
+        <activity android:name="com.itmanapp.EquipmentSearchDetailActivity">
+        </activity>
+        
+        
+        
+        <!-- 待巡检系统计划页面 -->
+        <activity android:name="com.itmanapp.InspectionSystemPlanActivity">
+        </activity> 
+        
+        <!-- 巡检设备页面 -->
+        <activity android:name="com.itmanapp.WrittenInspectionActivity">
+        </activity>
+        
+        <!-- 待巡检详细提交页面 -->
+        <activity android:name="com.itmanapp.WrittenInspectionDetailActivity">
+        </activity>
+        
+        
+        
+        <!-- 我的巡检页面 -->
+        <activity android:name="com.itmanapp.MyInspectionActivity">
+        </activity>
+        
+        <!-- 我的巡检详细页面 -->
+        <activity android:name="com.itmanapp.MyInspectionDetailActivity">
+        </activity>
+        
+        
+        
+        <!-- 待确认工单页面 -->
+        <activity android:name="com.itmanapp.PendingConfirmWorkOrdersActivity">
+        </activity>
+        
+        <!-- 待确认工单页面 -->
+        <activity android:name="com.itmanapp.PendingConfirmWorkOrdersDetailActivity">
+        </activity>
+        
+        
+        
+        <!-- 待维修工单页面 -->
+        <activity android:name="com.itmanapp.PendingWorkOrdersActivity">
+        </activity>
+        
+        <!-- 待维修工单详细页面 -->
+        <activity android:name="com.itmanapp.PendingWorkOrderDetailActivity">
+        </activity>
+        
+        
+        
+        <!-- 我的维修工单页面 -->
+        <activity android:name="com.itmanapp.MyRepairOrderActivity">
+        </activity>
+        
+        <!-- 我的维修工单页面 -->
+        <activity android:name="com.itmanapp.MyRepairOrderDetailActivity">
+        </activity>
+        
+        
+        
+        <!-- 填写报修页面 -->
+        <activity android:name="com.itmanapp.FillRepairActivity">
+        </activity>
+        
+        <!-- 我的报修页面 -->
+        <activity android:name="com.itmanapp.MyRepairActivity">
+        </activity>
+        
+        <!-- 我的报修详细页面 -->
+        <activity android:name="com.itmanapp.MyRepairDetailActivity">
+        </activity>
+        
+    </application>
+
+</manifest>

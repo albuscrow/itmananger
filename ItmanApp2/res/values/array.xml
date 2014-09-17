@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <string-array name="name">
+        <item> 编     码  </item>
+        <item> 名     称  </item>
+        <!-- <item>使用单位</item> -->
+    </string-array>   
+</resources>

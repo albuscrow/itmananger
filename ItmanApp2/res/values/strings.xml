@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Itman合作</string>
+    
+    <string name="exit_app">再按一次退出程序</string>
+    
+    <string name="acountStr">账号不能为空</string>
+    <string name="pwdStr">密码不能为空</string>
+    <string name="login_msg">数据请求中，请稍候...</string>
+    
+    <!-- 提示信息 -->
+    <string name="loadingNo">请求服务器超时</string>
+    <string name="loading">数据加载中...</string>
+    <string name="noNetwork">暂无网络</string>
+    <string name="serverError">服务器异常</string>
+    <string name="no_data">暂时没有数据</string>
+    
+    <string name="scan_text">将二维码放入框内, 即可自动扫描</string>
+    
+    <string name="xlistview_footer_hint_normal">上拉查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    <string name="xlistview_header_hint_loading">正在加载</string>
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    
+    
+</resources>

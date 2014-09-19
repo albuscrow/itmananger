@@ -127,6 +127,8 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		submitBtn=(Button)findViewById(R.id.submitBtn);
 		submitBtn.setOnClickListener(this);
 		
+		findViewById(R.id.bx_Btn).setOnClickListener(this);
+		
 		inspectionTargetTv.setText(planName);
 		deviceNameTv.setText(name);
 		deviceNumberTv.setText(deviceCode);
@@ -298,6 +300,12 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 			System.out.println("id-->"+sbId.toString()+"--Result-->"+sbResult.toString());
 			submitResult();
 			break;
+			
+		case R.id.bx_Btn:
+			Intent intent3=new Intent(CheckDeviceActivity.this,FillRepairActivity.class);
+			startActivity(intent3);
+			break;
+			
 		case R.id.backBtn:
 			finish();
 			break;

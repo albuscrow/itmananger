@@ -34,7 +34,10 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.adapter.NeedToCheckDeviceAdatper;
+import com.itmanapp.entity.DeviceNeedToCheck;
 import com.itmanapp.entity.PendingInspectionEquipmentEntity;
+import com.itmanapp.json.GetCheckDeviceListJson;
+import com.itmanapp.json.GetDeviceDetailJson;
 import com.itmanapp.json.GetMyInspectionJson;
 import com.itmanapp.util.AppManager;
 import com.itmanapp.util.NetworkCheck;
@@ -68,10 +71,10 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 	private NeedToCheckDeviceAdatper adapter;
 	
 	/**数据接收集合*/
-	private List<PendingInspectionEquipmentEntity> list = new ArrayList<PendingInspectionEquipmentEntity>();
+	private List<DeviceNeedToCheck> list = new ArrayList<DeviceNeedToCheck>();
 	
 	/**数据适配集合*/
-	private List<PendingInspectionEquipmentEntity> listAll = new ArrayList<PendingInspectionEquipmentEntity>();
+	private List<DeviceNeedToCheck> listAll = new ArrayList<DeviceNeedToCheck>();
 	
 	/** 页码 */
 	private int pageIndex = 1;
@@ -127,7 +130,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 		
 		myInspectionLv=(XListView)findViewById(R.id.myInspectionLv);
 		myInspectionLv.setOnItemClickListener(this);
-//		adapter=new PendingInspectionEquipmentAdatper(MyInspectionActivity.this, listAll);
+		adapter=new NeedToCheckDeviceAdatper(MyInspectionActivity.this, listAll);
 		myInspectionLv.setAdapter(adapter);
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
@@ -176,7 +179,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 						public void onResponse(JSONObject response) {
 							loading = true;
 							System.out.println("@@" + response.toString());
-							list=GetMyInspectionJson.getJson(response.toString());
+							list=GetCheckDeviceListJson.getJson(response.toString());
 							int result = GetMyInspectionJson.result;
 							if (result == 1) {
 								if (list != null && list.size() > 0) {
@@ -286,13 +289,13 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 	 **/
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		System.out.println(listAll.get(arg2-1).getPlanName()+"");
-		Intent intent=new Intent(MyInspectionActivity.this,MyInspectionDetailActivity.class);
-		intent.putExtra("planName", listAll.get(arg2-1).getAsName()+"");
-		intent.putExtra("adName", listAll.get(arg2-1).getAdName()+"");
-		intent.putExtra("destId", listAll.get(arg2-1).getAdCode()+"");
-		intent.putExtra("id", listAll.get(arg2-1).getId());
-		startActivity(intent);
+//		System.out.println(listAll.get(arg2-1).getPlanName()+"");
+//		Intent intent=new Intent(MyInspectionActivity.this,MyInspectionDetailActivity.class);
+//		intent.putExtra("planName", listAll.get(arg2-1).getAsName()+"");
+//		intent.putExtra("adName", listAll.get(arg2-1).getAdName()+"");
+//		intent.putExtra("destId", listAll.get(arg2-1).getAdCode()+"");
+//		intent.putExtra("id", listAll.get(arg2-1).getId());
+//		startActivity(intent);
 	}
 
 	/**
@@ -353,7 +356,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 	 * 
 	 * @return void
 	 */
-	private void setLvData(List<PendingInspectionEquipmentEntity> list) {
+	private void setLvData(List<DeviceNeedToCheck> list) {
 		// 刷新数据、适配数据
 		if (updateFlag) {
 			// 适配数据

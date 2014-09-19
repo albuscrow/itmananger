@@ -30,6 +30,7 @@ public class GetDeviceDetailJson {
 				entity.setAdDesp(js.getString("adDesp"));
 				entity.setAdId(js.getInt("adId"));
 				entity.setAdPosition(js.getString("adPosition"));
+				entity.setAdName(js.getString("adName"));
 				entity.setModelName(js.getString("modelName"));
 				entity.setSupplyName(js.getString("supplyName"));
 				entity.setAsName(js.getString("asName"));

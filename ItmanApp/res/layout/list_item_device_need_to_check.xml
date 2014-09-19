@@ -18,13 +18,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="巡检时间：" />
+                android:text="巡检设备" />
 
-            <TextView
-                android:id="@+id/inspectionTimeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2014-06-17 19:12:20" />
         </LinearLayout>
 
         <ImageView
@@ -38,6 +33,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center" >
 
@@ -62,10 +60,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="巡检计划：" />
+                        android:text="设备名称：" />
 
                     <TextView
-                        android:id="@+id/inspectionPlanTv"
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="文件" />
@@ -79,10 +77,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="巡检系统：" />
+                        android:text="设备编号：" />
 
                     <TextView
-                        android:id="@+id/related_name"
+                        android:id="@+id/code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="文件" />
@@ -96,27 +94,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="设备名称：" />
-
-                    <TextView
-                        android:id="@+id/deviceNameTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="文件" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="状  态：" />
 
                     <TextView
-                        android:id="@+id/statusTv"
+                        android:id="@+id/statu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#3B8CFE"
@@ -125,7 +106,6 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"

@@ -100,6 +100,7 @@ public class CabinetDetailActivity extends Activity implements OnClickListener{
 		deviceTime=(TextView)findViewById(R.id.time);
 		deviceDesp=(TextView)findViewById(R.id.desp);
 		
+		findViewById(R.id.related_file_Btn).setOnClickListener(this);
 		
 		mDialog = new ProgressDialog(this);
 		mDialog.setMessage(getString(R.string.login_msg));
@@ -260,7 +261,20 @@ public class CabinetDetailActivity extends Activity implements OnClickListener{
 		case R.id.backBtn:
 			finish();
 			break;
-		}
+			
+		case R.id.related_file_Btn:
+			Intent intent1=new Intent(CabinetDetailActivity.this,RelatedFileActivity.class);
+			if(entity.getTcId()>-1){
+				intent1.putExtra("id", entity.getTcId());
+			}
+
+			intent1.putExtra("type", RelatedFileActivity.TYPE_CABINET);
+
+			if(entity.getTcName()!=null&&!entity.getTcName().equals("")){
+				intent1.putExtra("name", entity.getTcName());
+			}
+			startActivity(intent1);
+			break;		}
 		
 	}
 }

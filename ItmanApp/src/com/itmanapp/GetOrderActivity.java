@@ -175,6 +175,52 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 				});
 		DemoApplication.getInstance().getRequestQueue().add(req);
 	}
+	
+	private void getOrder() {
+
+		// tencent 123456
+		String url = "http://211.155.229.136:8080/assetapi2/xj/sure?"
+				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+				+ "&txrId="+id;
+		System.out.println(url);
+
+		HashMap<String, String> params = new HashMap<String, String>();
+
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url,
+				new JSONObject(params), new Listener<JSONObject>() {
+
+					@Override
+					public void onResponse(JSONObject response) {
+
+						System.out.println("@@" + response.toString());
+						
+						int result = GetCheckDetailJson.getJson(response.toString());
+						if (result == 1) {
+							entity=GetCheckDetailJson.entity;
+							handler.sendEmptyMessage(1);
+						} else if (result == -1) {
+							handler.sendEmptyMessage(-1);
+						} else if (result == 0) {
+							handler.sendEmptyMessage(0);
+						} else if (result == 101) {
+							handler.sendEmptyMessage(101);
+						} else if (result == 103) {
+							handler.sendEmptyMessage(103);
+						}
+
+					}
+				}, new Response.ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						System.out.println("##" + error.toString());
+						handler.sendEmptyMessage(0);
+
+					}
+				});
+		DemoApplication.getInstance().getRequestQueue().add(req);
+	}
 
 	/**
 	 * description 消息处理
@@ -268,16 +314,13 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 			finish();
 			break;
 		case R.id.get_Btn:
-			Intent intent1=new Intent(GetOrderActivity.this,RelatedFileActivity.class);
-//			if(entity.getTcId()>-1){
-//				intent1.putExtra("id", entity.getTcId());
-//			}
-
-			intent1.putExtra("type", RelatedFileActivity.TYPE_CABINET);
-
-			if(entity.getTcName()!=null&&!entity.getTcName().equals("")){
-				intent1.putExtra("name", entity.getTcName());
-			}
+			//TODO
+//			getOrder();
+			Intent intent1=new Intent(GetOrderActivity.this, CheckDeviceActivity.class);
+			intent1.putExtra("id", entity.getTxcId());
+			intent1.putExtra("planName", entity.getTxpName());
+			intent1.putExtra("name", entity.getTdName());
+			intent1.putExtra("code", entity.getTdCode());
 			startActivity(intent1);
 			break;
 		}

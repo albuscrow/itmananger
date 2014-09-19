@@ -27,36 +27,23 @@ public class GetCheckDetailJson {
 			result=job.getInt("result");
 			if(result==1){
 				if (job != null ) {
-						JSONObject js = job.getJSONObject("details");
-						entity.setTxrId(js.getLong("txrId"));
-						entity.setTdName(js.getString("tdName"));
-						entity.setTdCode(js.getString("tdCode"));
-						try {
-							entity.setTxrStatus(js.getInt("txrStatus"));
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						entity.setTxpName(js.getString("txpName"));
-						entity.setPlanDate(js.getString("planDate"));
-						entity.setTmrName(js.getString("tmrName"));
-						entity.setTdPosition(js.getString("tdPosition"));
-						entity.setTxcName(js.getString("txcName"));
-						entity.setTxpNames(js.getString("txpNames"));
-						entity.setTcName(js.getString("tcName"));
-						
-//						entity.setDesp(js.getString("desp"));
-//						entity.setDestId(js.getInt("destId"));
-//						entity.setId(js.getInt("id"));
-//						entity.setPlanName(js.getString("planName"));
-//						entity.setStatus(js.getInt("status"));
-//						entity.setType(js.getInt("type"));
-//						entity.setUserids(js.getString("userids"));
-//						entity.setUserNames(js.getString("userNames"));
-//						entity.setAxrAddtime(js.getString("axrAddtime"));
-//					    entity.setAdName(js.getString("adName"));
-//					    entity.setAsCode(js.getString("asCode"));
-//					    entity.setAsName(js.getString("asName"));
-//					    entity.setAdCode(js.getString("adCode"));
+					JSONObject js = job.getJSONObject("details");
+					entity.setTxrId(js.getLong("txrId"));
+					entity.setTdName(js.getString("tdName"));
+					entity.setTdCode(js.getString("tdCode"));
+					try {
+						entity.setTxrStatus(js.getInt("txrStatus"));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					entity.setTxpName(js.getString("txpName"));
+					entity.setPlanDate(js.getString("planDate"));
+					entity.setTmrName(js.getString("tmrName"));
+					entity.setTdPosition(js.getString("tdPosition"));
+					entity.setTxcName(js.getString("txcName"));
+					entity.setTxpNames(js.getString("txpNames"));
+					entity.setTcName(js.getString("tcName"));
+					entity.setTxcId(js.getLong("txcId"));
 				}
 			}
 		} catch (JSONException e) {

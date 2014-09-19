@@ -30,9 +30,9 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.itmanapp.adapter.PendingInspectionEquipmentAdatper;
+import com.itmanapp.adapter.NeedToCheckDeviceAdatper;
 import com.itmanapp.entity.PendingInspectionEquipmentEntity;
-import com.itmanapp.json.GetWrittenInspectionJson;
+import com.itmanapp.json.GetCheckDeviceListJson;
 import com.itmanapp.util.AppManager;
 
 /**
@@ -60,7 +60,7 @@ public class WrittenInspectionActivity extends Activity implements
 	private ListView writtenInspectionLv = null;
 
 	/**待处理工单适配器*/
-	private PendingInspectionEquipmentAdatper adapter;
+	private NeedToCheckDeviceAdatper adapter;
 
 	/** 服务端解析数据 */
 	private List<PendingInspectionEquipmentEntity> list = new ArrayList<PendingInspectionEquipmentEntity>();
@@ -129,8 +129,8 @@ public class WrittenInspectionActivity extends Activity implements
 						public void onResponse(JSONObject response) {
 							
 							System.out.println("@@" + response.toString());
-							list = GetWrittenInspectionJson.getJson(response.toString());
-							int result = GetWrittenInspectionJson.result;
+//							list = GetWrittenInspectionJson.getJson(response.toString());
+							int result = GetCheckDeviceListJson.result;
 							if (result == 1) {
 								if (list != null && list.size() > 0) {
 									// 适配数据
@@ -172,7 +172,7 @@ public class WrittenInspectionActivity extends Activity implements
 			switch (msg.what) {
 			case 1:
 				//Toast.makeText(WrittenInspectionActivity.this, "获取成功", 1000).show();
-				adapter = new PendingInspectionEquipmentAdatper(WrittenInspectionActivity.this, list);
+//				adapter = new PendingInspectionEquipmentAdatper(WrittenInspectionActivity.this, list);
 				writtenInspectionLv.setAdapter(adapter);
 				break;
 			case -1:

@@ -90,7 +90,7 @@ public class WrittenInspectionDetailActivity extends Activity implements OnClick
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_written_inspection_detail);
+		setContentView(R.layout.activity_check_device);
 		AppManager.getAppManager().addActivity(this);
 		intent=getIntent();
 		id=intent.getIntExtra("id", 0);

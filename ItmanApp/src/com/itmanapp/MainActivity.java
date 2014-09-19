@@ -156,7 +156,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			
 		//待巡检工单
 		case R.id.writtenInspectionLayout:
-			Intent intent4=new Intent(MainActivity.this,InspectionSystemPlanActivity.class);
+			Intent intent4=new Intent(MainActivity.this,CheckPlanActivity.class);
 			startActivity(intent4);
 			break;
 			

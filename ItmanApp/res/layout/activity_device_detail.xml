@@ -117,7 +117,6 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         
-        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,7 +137,7 @@
     </LinearLayout>
     
     <Button
-        android:id="@+id/cxzgjlBtn"
+        android:id="@+id/related_file_Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"

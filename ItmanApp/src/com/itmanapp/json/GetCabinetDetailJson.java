@@ -36,7 +36,7 @@ public class GetCabinetDetailJson {
 				entity.setRoomName(js.getString("roomName"));
 				entity.setUnitName(js.getString("unitName"));
 				entity.setDepName(js.getString("depName"));
-				entity.setTcDescription("tcDescription");
+				entity.setTcDescription(js.getString("tcDescription"));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

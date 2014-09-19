@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.itmanapp.entity.InspectionPlanEntity;
+import com.itmanapp.entity.CheckPlanEntity;
 
 /**
  * @date 2014-8-6
@@ -21,8 +21,8 @@ public class GetInspectionPlanJson {
 	
 	public static int total = 0; 
 	
-	public static List<InspectionPlanEntity> getJson(String response){
-		List<InspectionPlanEntity> list = new ArrayList<InspectionPlanEntity>();
+	public static List<CheckPlanEntity> getJson(String response){
+		List<CheckPlanEntity> list = new ArrayList<CheckPlanEntity>();
 		try {
 			JSONObject job=new JSONObject(response);
 			result=job.getInt("result");
@@ -32,7 +32,7 @@ public class GetInspectionPlanJson {
 				if (job != null ) {
 					JSONArray jsonArray = job.getJSONArray("details");
 					for (int i = 0; i < jsonArray.length(); i++) {
-						InspectionPlanEntity entity=new InspectionPlanEntity();
+						CheckPlanEntity entity=new CheckPlanEntity();
 						JSONObject js = jsonArray.getJSONObject(i);
 						entity.setTxpId(js.getLong("txpId"));
 						entity.setTxpName(js.getString("txpName"));

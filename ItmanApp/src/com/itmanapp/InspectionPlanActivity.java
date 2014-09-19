@@ -31,8 +31,11 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.itmanapp.adapter.InspectionPlanAdatper;
 import com.itmanapp.adapter.InspectionSystemPlanAdatper;
+import com.itmanapp.entity.CheckPlanEntity;
 import com.itmanapp.entity.InspectionSystemPlanEntity;
+import com.itmanapp.json.GetInspectionPlanJson;
 import com.itmanapp.json.GetInspectionSystemPlanJson;
 import com.itmanapp.util.AppManager;
 import com.itmanapp.util.NetworkCheck;
@@ -45,7 +48,7 @@ import com.itmanapp.widget.listview.XListView.IXListViewListener;
  * @class description 待巡检工单页面
  * 
  */
-public class InspectionSystemPlanActivity extends Activity implements
+public class InspectionPlanActivity extends Activity implements
 		OnItemClickListener, OnClickListener {
 
 	/** 返回按钮 */
@@ -64,13 +67,13 @@ public class InspectionSystemPlanActivity extends Activity implements
 	private XListView inspectionSystemPlanLv = null;
 
 	/**待处理工单适配器*/
-	private InspectionSystemPlanAdatper adapter;
+	private InspectionPlanAdatper adapter;
 
 	/** 服务端解析数据 */
-	private List<InspectionSystemPlanEntity> list = new ArrayList<InspectionSystemPlanEntity>();
+	private List<CheckPlanEntity> list = new ArrayList<CheckPlanEntity>();
 
 	/** 适配类显示数据 */
-	private List<InspectionSystemPlanEntity> listAll = new ArrayList<InspectionSystemPlanEntity>();
+	private List<CheckPlanEntity> listAll = new ArrayList<CheckPlanEntity>();
 
 	/** 页码 */
 	private int pageIndex = 1;
@@ -113,7 +116,7 @@ public class InspectionSystemPlanActivity extends Activity implements
 	 * 控件显示
 	 */
 	private void getView() {
-		mDialog = new ProgressDialog(InspectionSystemPlanActivity.this);
+		mDialog = new ProgressDialog(InspectionPlanActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
@@ -121,7 +124,7 @@ public class InspectionSystemPlanActivity extends Activity implements
 
 		inspectionSystemPlanLv = (XListView) findViewById(R.id.inspectionSystemPlanLv);
 		inspectionSystemPlanLv.setOnItemClickListener(this);
-		adapter = new InspectionSystemPlanAdatper(InspectionSystemPlanActivity.this,
+		adapter = new InspectionPlanAdatper(InspectionPlanActivity.this,
 				listAll);
 		inspectionSystemPlanLv.setAdapter(adapter);
 
@@ -148,7 +151,7 @@ public class InspectionSystemPlanActivity extends Activity implements
 
 		if (!loading) {
 
-			String url = "http://211.155.229.136:8080/assetapi/xj/plans?"
+			String url = "http://211.155.229.136:8080/assetapi2/xj/plans?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&userId=" + userId + "&page=" + pageIndex;
 			System.out.println(url);
@@ -162,7 +165,7 @@ public class InspectionSystemPlanActivity extends Activity implements
 						public void onResponse(JSONObject response) {
 							loading = true;
 							System.out.println("@@" + response.toString());
-							list = GetInspectionSystemPlanJson.getJson(response.toString());
+							list = GetInspectionPlanJson.getJson(response.toString());
 							int result = GetInspectionSystemPlanJson.result;
 							if (result == 1) {
 								if (list != null && list.size() > 0) {
@@ -210,15 +213,15 @@ public class InspectionSystemPlanActivity extends Activity implements
 				//Toast.makeText(InspectionSystemPlanActivity.this, "获取成功", 1000).show();
 				break;
 			case -1:
-				Toast.makeText(InspectionSystemPlanActivity.this, "验证不通过，非法用户",
+				Toast.makeText(InspectionPlanActivity.this, "验证不通过，非法用户",
 						1000).show();
 				break;
 			case 0:
-				Toast.makeText(InspectionSystemPlanActivity.this, "获取失败", 1000)
+				Toast.makeText(InspectionPlanActivity.this, "获取失败", 1000)
 						.show();
 				break;
 			case 103:
-				Toast.makeText(InspectionSystemPlanActivity.this, "参数错误", 1000)
+				Toast.makeText(InspectionPlanActivity.this, "参数错误", 1000)
 						.show();
 				break;
 			}
@@ -275,8 +278,8 @@ public class InspectionSystemPlanActivity extends Activity implements
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Intent intent=new Intent(InspectionSystemPlanActivity.this,WrittenInspectionActivity.class);
-		intent.putExtra("id", listAll.get(arg2-1).getAxpId());
+		Intent intent=new Intent(InspectionPlanActivity.this, CheckDeviceListActivity.class);
+		intent.putExtra("id", listAll.get(arg2-1).getTxpId());
 		startActivity(intent);
 	}
 	
@@ -287,7 +290,7 @@ public class InspectionSystemPlanActivity extends Activity implements
 	 * 
 	 * @return void
 	 */
-	private void setLvData(List<InspectionSystemPlanEntity> list) {
+	private void setLvData(List<CheckPlanEntity> list) {
 		// 刷新数据、适配数据
 		if (updateFlag) {
 			// 适配数据
@@ -336,7 +339,7 @@ public class InspectionSystemPlanActivity extends Activity implements
 
 			@Override
 			public void onLoadMore() {
-				if (NetworkCheck.check(InspectionSystemPlanActivity.this) != null) {
+				if (NetworkCheck.check(InspectionPlanActivity.this) != null) {
 					if (!flag) {
 
 						flag = true;
@@ -416,7 +419,7 @@ public class InspectionSystemPlanActivity extends Activity implements
 			case 0X001:
 				listAll.clear();
 				refreshAndLoad();
-				Toast.makeText(InspectionSystemPlanActivity.this,
+				Toast.makeText(InspectionPlanActivity.this,
 						getString(R.string.no_data), Toast.LENGTH_SHORT).show();
 				// 停止加载更多复位页脚视图
 				inspectionSystemPlanLv.stopLoadMore();
@@ -452,7 +455,7 @@ public class InspectionSystemPlanActivity extends Activity implements
 			// 无网络
 			case 0X320:
 				listAll.clear();
-				Toast.makeText(InspectionSystemPlanActivity.this,
+				Toast.makeText(InspectionPlanActivity.this,
 						getString(R.string.noNetwork), Toast.LENGTH_SHORT)
 						.show();
 				refreshAndLoad();

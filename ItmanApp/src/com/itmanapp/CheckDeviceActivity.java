@@ -33,6 +33,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.adapter.WrittenInspectionDetailAdatper;
 import com.itmanapp.entity.InspectionProjectEntity;
+import com.itmanapp.json.GetCheckDetailJson;
 import com.itmanapp.json.GetInspectionProjectJson;
 import com.itmanapp.util.AppManager;
 
@@ -42,7 +43,7 @@ import com.itmanapp.util.AppManager;
  * @class description 待巡检详细提交页面
  * 
  */
-public class CheckDeviceDetailActivity extends Activity implements OnClickListener{
+public class CheckDeviceActivity extends Activity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -86,14 +87,24 @@ public class CheckDeviceDetailActivity extends Activity implements OnClickListen
 	
 	/**巡检记录id*/
 	private long id;
+
+	private String planName;
+
+	private String name;
+
+	private String deviceCode;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_written_inspection_detail);
+		setContentView(R.layout.activity_check_device);
 		AppManager.getAppManager().addActivity(this);
 		intent=getIntent();
-		id=intent.getLongExtra("id", 0);
+		id=intent.getLongExtra("id", -1);
+		planName = intent.getStringExtra("planName");
+		name = intent.getStringExtra("name");
+		deviceCode = intent.getStringExtra("code");
+		
 		getView();
 	}
 	
@@ -101,7 +112,7 @@ public class CheckDeviceDetailActivity extends Activity implements OnClickListen
 	 * 控件显示
 	 */
 	private void getView() {
-		mDialog = new ProgressDialog(CheckDeviceDetailActivity.this);
+		mDialog = new ProgressDialog(CheckDeviceActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		mDialog.show();
 		mDialog.setCanceledOnTouchOutside(false);
@@ -116,13 +127,9 @@ public class CheckDeviceDetailActivity extends Activity implements OnClickListen
 		submitBtn=(Button)findViewById(R.id.submitBtn);
 		submitBtn.setOnClickListener(this);
 		
-		String asName=intent.getStringExtra("asName");
-		String adName=intent.getStringExtra("adName");
-		String adCode=intent.getStringExtra("adCode");
-		
-		inspectionTargetTv.setText(asName+"");
-		deviceNameTv.setText(adName+"");
-		deviceNumberTv.setText(adCode+"");
+		inspectionTargetTv.setText(planName);
+		deviceNameTv.setText(name);
+		deviceNumberTv.setText(deviceCode);
 		
 		key = getRandomString(5);
 		String kb = key + "ASSET-HJTECH";
@@ -143,9 +150,9 @@ public class CheckDeviceDetailActivity extends Activity implements OnClickListen
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/xj/detail?"
+		String url = "http://211.155.229.136:8080/assetapi2/xj/items?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&txrId="+id;
+				+ "&txcId="+id;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -195,7 +202,7 @@ public class CheckDeviceDetailActivity extends Activity implements OnClickListen
 			switch (msg.what) {
 			case 1:
 				//Toast.makeText(WrittenInspectionDetailActivity.this, "获取成功", 1000).show();
-				adapter=new WrittenInspectionDetailAdatper(CheckDeviceDetailActivity.this, list);
+				adapter=new WrittenInspectionDetailAdatper(CheckDeviceActivity.this, list);
 				inspectionProjectLv.setAdapter(adapter);
 				
 				for(int i=0;i<list.size();i++){
@@ -210,16 +217,16 @@ public class CheckDeviceDetailActivity extends Activity implements OnClickListen
 				
 				break;
 			case -1:
-				Toast.makeText(CheckDeviceDetailActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(CheckDeviceActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(CheckDeviceDetailActivity.this, "获取失败", 1000).show();
+				Toast.makeText(CheckDeviceActivity.this, "获取失败", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(CheckDeviceDetailActivity.this, "参数错误", 1000).show();
+				Toast.makeText(CheckDeviceActivity.this, "参数错误", 1000).show();
 				break;
 			case 2:
-				Toast.makeText(CheckDeviceDetailActivity.this, "提交成功", 1000).show();
+				Toast.makeText(CheckDeviceActivity.this, "提交成功", 1000).show();
 				Intent data=new Intent();  
 	            //请求代码可以自己设置，这里设置成20  
 	            setResult(20, data);  
@@ -307,7 +314,7 @@ public class CheckDeviceDetailActivity extends Activity implements OnClickListen
 	private void submitResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/xj/commit_item_result?"
+		String url = "http://211.155.229.136:8080/assetapi2/xj/commit_item_result?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&recordIds="+id+"&detailIds="+ sbId.toString()
 				+ "&resultIds=" + sbResult.toString() ;

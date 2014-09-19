@@ -6,7 +6,7 @@ package com.itmanapp.entity;
  * @class description 待巡检系统计划类
  * 
  */
-public class InspectionPlanEntity {
+public class CheckPlanEntity {
 	
 	
 	public static final int TYPE_ROOM = 1;

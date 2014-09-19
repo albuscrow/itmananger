@@ -18,7 +18,7 @@ public class DeviceNeedToCheck {
     String tmrName;
     String tcName;
     String txcName;
-    String txcId;
+    long txcId;
     String txpNames;
 	
 	/**
@@ -96,13 +96,13 @@ public class DeviceNeedToCheck {
 	/**
 	 * @return the txcId
 	 */
-	public String getTxcId() {
+	public long getTxcId() {
 		return txcId;
 	}
 	/**
 	 * @param txcId the txcId to set
 	 */
-	public void setTxcId(String txcId) {
+	public void setTxcId(long txcId) {
 		this.txcId = txcId;
 	}
 	/**

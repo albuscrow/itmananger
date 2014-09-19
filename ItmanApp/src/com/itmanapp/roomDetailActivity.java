@@ -141,7 +141,7 @@ public class roomDetailActivity extends Activity implements OnClickListener{
 			}
 		});;
 		
-		cxzgjlBtn=(Button)findViewById(R.id.cxzgjlBtn);
+		cxzgjlBtn=(Button)findViewById(R.id.related_file_Btn);
 		cxzgjlBtn.setOnClickListener(this);
 		glsbBtn=(Button)findViewById(R.id.glsbBtn);
 		glsbBtn.setOnClickListener(this);
@@ -158,7 +158,7 @@ public class roomDetailActivity extends Activity implements OnClickListener{
 		case R.id.backBtn:
 			finish();
 			break;
-		case R.id.cxzgjlBtn:
+		case R.id.related_file_Btn:
 			Intent intent1=new Intent(roomDetailActivity.this,RelatedFileActivity.class);
 			if(entity.getTmrId()>-1){
 				intent1.putExtra("id", entity.getTmrId());

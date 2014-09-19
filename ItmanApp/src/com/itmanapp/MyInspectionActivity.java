@@ -33,7 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.itmanapp.adapter.PendingInspectionEquipmentAdatper;
+import com.itmanapp.adapter.NeedToCheckDeviceAdatper;
 import com.itmanapp.entity.PendingInspectionEquipmentEntity;
 import com.itmanapp.json.GetMyInspectionJson;
 import com.itmanapp.util.AppManager;
@@ -65,7 +65,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 	private XListView myInspectionLv;
 	
 	/**待巡检记录适配器*/
-	private PendingInspectionEquipmentAdatper adapter;
+	private NeedToCheckDeviceAdatper adapter;
 	
 	/**数据接收集合*/
 	private List<PendingInspectionEquipmentEntity> list = new ArrayList<PendingInspectionEquipmentEntity>();
@@ -127,7 +127,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 		
 		myInspectionLv=(XListView)findViewById(R.id.myInspectionLv);
 		myInspectionLv.setOnItemClickListener(this);
-		adapter=new PendingInspectionEquipmentAdatper(MyInspectionActivity.this, listAll);
+//		adapter=new PendingInspectionEquipmentAdatper(MyInspectionActivity.this, listAll);
 		myInspectionLv.setAdapter(adapter);
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);

@@ -12,7 +12,9 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -71,29 +73,18 @@ public class CheckListActivity extends Activity implements OnClickListener,OnIte
     /**系统名称*/
 	private TextView roomNameTV;
 	
-	private Intent intent;
-	
-	private long roomId;
-	
-    private String roomCode;
-	
-	private String roomName;
-	
+	private int userId;
+
+	private SharedPreferences spf;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_cabinet_list);
+		setContentView(R.layout.activity_check_list);
 		AppManager.getAppManager().addActivity(this);
-		intent=getIntent();
-		roomId=intent.getLongExtra("roomId", -1);
-		roomCode = intent.getStringExtra("roomCode");
-		roomName = intent.getStringExtra("roomName");
-		if (roomCode == null) {
-			roomCode = "";
-		}
-		if (roomName == null) {
-			roomName = "";
-		}
+		
+		spf = getSharedPreferences("user",Context.MODE_PRIVATE);
+		userId=spf.getInt("Id", 0);
 		getView();
 	}
 	
@@ -106,12 +97,6 @@ public class CheckListActivity extends Activity implements OnClickListener,OnIte
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
-		
-		roomCodeTV=(TextView)findViewById(R.id.code);
-		roomNameTV=(TextView)findViewById(R.id.name);
-		
-		roomCodeTV.setText(roomCode+"");
-		roomNameTV.setText(roomName+"");
 		
 		relatedDeviceLv=(ListView)findViewById(R.id.relatedDeviceLv);
 		relatedDeviceLv.setOnItemClickListener(this);
@@ -138,9 +123,10 @@ public class CheckListActivity extends Activity implements OnClickListener,OnIte
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/cabinet/list?"
+		String url = "http://211.155.229.136:8080/assetapi2/xj/plans?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&roomId="+roomId;
+				+ "&userId="+userId
+				+ "&page=" + 1;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();

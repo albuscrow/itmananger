@@ -98,6 +98,7 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 		
 		//add by albuscrow
 		belongsCabinet = (TextView) findViewById(R.id.belongsCabinetTv);
+		findViewById(R.id.related_file_Btn).setOnClickListener(this);
 		
 		mDialog = new ProgressDialog(DeviceDetailActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
@@ -265,7 +266,20 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 		case R.id.backBtn:
 			finish();
 			break;
-		}
+			
+		case R.id.related_file_Btn:
+			Intent intent1=new Intent(DeviceDetailActivity.this,RelatedFileActivity.class);
+			if(entity.getAdId()>-1){
+				intent1.putExtra("id", entity.getAdId());
+			}
+
+			intent1.putExtra("type", RelatedFileActivity.TYPE_DEVICE);
+
+			if(entity.getAdName()!=null&&!entity.getAdName().equals("")){
+				intent1.putExtra("name", entity.getAdName());
+			}
+			startActivity(intent1);
+			break;		}
 		
 	}
 

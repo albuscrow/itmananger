@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.itmanapp.R;
-import com.itmanapp.entity.InspectionPlanEntity;
+import com.itmanapp.entity.CheckPlanEntity;
 
 /**
  * @date 2014-8-6
@@ -23,10 +23,10 @@ public class InspectionPlanAdatper extends BaseAdapter {
 
 	private Context context;
 
-	private List<InspectionPlanEntity> list = new ArrayList<InspectionPlanEntity>();
+	private List<CheckPlanEntity> list = new ArrayList<CheckPlanEntity>();
 
 	public InspectionPlanAdatper(Context context,
-			List<InspectionPlanEntity> list) {
+			List<CheckPlanEntity> list) {
 		super();
 		this.context = context;
 		this.list = list;
@@ -68,7 +68,7 @@ public class InspectionPlanAdatper extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		InspectionPlanEntity inspectionPlanEntity = list.get(position);
+		CheckPlanEntity inspectionPlanEntity = list.get(position);
 		holder.planName.setText(inspectionPlanEntity.getTxpName()+"");
 		holder.planType.setText(inspectionPlanEntity.getTxpTypeStr());
 		holder.name.setText(inspectionPlanEntity.getName()+"");
@@ -76,16 +76,16 @@ public class InspectionPlanAdatper extends BaseAdapter {
 		holder.date.setText(inspectionPlanEntity.getPlanDate()+"");
 		
 		switch (inspectionPlanEntity.getTxpType()) {
-		case InspectionPlanEntity.TYPE_ROOM:
+		case CheckPlanEntity.TYPE_ROOM:
 			holder.codeLabel.setText("机房编号：");
 			holder.nameLabel.setText("机房名称：");
 			break;
 
-		case InspectionPlanEntity.TYPE_CABINET:
+		case CheckPlanEntity.TYPE_CABINET:
 			holder.codeLabel.setText("机柜编号：");
 			holder.nameLabel.setText("机柜名称：");
 			break;
-		case InspectionPlanEntity.TYPE_DEVICE:
+		case CheckPlanEntity.TYPE_DEVICE:
 			holder.codeLabel.setText("设备编号：");
 			holder.nameLabel.setText("设备名称：");
 			break;		default:

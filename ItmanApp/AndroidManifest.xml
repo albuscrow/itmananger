@@ -120,7 +120,7 @@
         
         
         <!-- 待巡检系统计划页面 -->
-        <activity android:name="com.itmanapp.InspectionSystemPlanActivity">
+        <activity android:name="com.itmanapp.InspectionPlanActivity">
         </activity> 
         
         <!-- 巡检设备页面 -->
@@ -195,6 +195,20 @@
         <activity android:name="com.itmanapp.CabinetDetailActivity">
         </activity>
         
+        <activity android:name="com.itmanapp.CheckListActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp.CheckDeviceListActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp.CheckPlanActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp.CheckDeviceActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp.GetOrderActivity">
+        </activity>
     </application>
 
 </manifest>

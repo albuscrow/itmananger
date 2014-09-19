@@ -32,7 +32,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.adapter.InspectionPlanAdatper;
-import com.itmanapp.entity.InspectionPlanEntity;
+import com.itmanapp.entity.CheckPlanEntity;
 import com.itmanapp.json.GetInspectionPlanJson;
 import com.itmanapp.util.AppManager;
 import com.itmanapp.util.NetworkCheck;
@@ -67,10 +67,10 @@ public class CheckPlanActivity extends Activity implements
 	private InspectionPlanAdatper adapter;
 
 	/** 服务端解析数据 */
-	private List<InspectionPlanEntity> list = new ArrayList<InspectionPlanEntity>();
+	private List<CheckPlanEntity> list = new ArrayList<CheckPlanEntity>();
 
 	/** 适配类显示数据 */
-	private List<InspectionPlanEntity> listAll = new ArrayList<InspectionPlanEntity>();
+	private List<CheckPlanEntity> listAll = new ArrayList<CheckPlanEntity>();
 
 	/** 页码 */
 	private int pageIndex = 1;
@@ -287,7 +287,7 @@ public class CheckPlanActivity extends Activity implements
 	 * 
 	 * @return void
 	 */
-	private void setLvData(List<InspectionPlanEntity> list) {
+	private void setLvData(List<CheckPlanEntity> list) {
 		// 刷新数据、适配数据
 		if (updateFlag) {
 			// 适配数据

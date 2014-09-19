@@ -2,7 +2,27 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="#484848"
+        android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/phoneTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="400-800-8003"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#FFFFFF" />
+    </LinearLayout> 
+    
     <RelativeLayout
         android:id="@+id/head"
         android:layout_width="match_parent"
@@ -28,9 +48,19 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_below="@id/head"
+        android:layout_above="@id/_phone"
+        android:layout_height="match_parent" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
     <LinearLayout
         android:id="@+id/_info"
-        android:layout_below="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -192,29 +222,12 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/cxzgjl"
-        android:layout_below="@id/_info"
         android:text="领取"
         android:textColor="#FFFFFF"
         android:textSize="16dp" />
-    
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:background="#484848"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/phoneTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="400-800-8003"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#FFFFFF" />
     </LinearLayout>
+    </ScrollView>
+    
+
 
 </RelativeLayout>

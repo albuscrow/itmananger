@@ -11,18 +11,18 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/asmiAddDateTv"
+            android:id="@+id/addDateTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginRight="20dp"
-            android:text="管理设备" />
+            android:layout_marginLeft="20dp" />
 
         <ImageView
-            android:id="@+id/imageView1"
             android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="12dp"
             android:layout_height="wrap_content"
             android:src="@drawable/line_2" />
 
@@ -45,7 +45,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="编码：" />
+                        android:text="机柜编码：" />
 
                     <TextView
                         android:id="@+id/codingTv"
@@ -61,7 +61,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="名称：" />
+                        android:text="机柜名称：" />
 
                     <TextView
                         android:id="@+id/nameTv"
@@ -77,17 +77,16 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="设备型号：" />
+                        android:text="机柜位置：" />
 
                     <TextView
-                        android:id="@+id/deviceTypeTv"
+                        android:id="@+id/position"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
             
             <ImageView
-                android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="5dp"

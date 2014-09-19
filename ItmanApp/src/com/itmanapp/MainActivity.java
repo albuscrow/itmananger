@@ -144,7 +144,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		switch (v.getId()) {
 		//系统查询
 		case R.id.social_searchLayout:
-			Intent intent=new Intent(MainActivity.this,SystemSearchActivity.class);
+			Intent intent=new Intent(MainActivity.this,RoomSearchActivity.class);
 			startActivity(intent);
 			break;
 			

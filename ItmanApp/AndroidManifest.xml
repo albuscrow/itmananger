@@ -79,15 +79,15 @@
         
         
         <!-- 系统查询页面 -->
-        <activity android:name="com.itmanapp.SystemSearchActivity">
+        <activity android:name="com.itmanapp.RoomSearchActivity">
         </activity>
         
         <!-- 系统查询详细页面 -->
-        <activity android:name="com.itmanapp.SystemSeachDetailActivity">
+        <activity android:name="com.itmanapp.roomDetailActivity">
         </activity>
         
         <!-- 系统整改历史页面-->
-        <activity android:name="com.itmanapp.SystemModifyInfoActivity">
+        <activity android:name="com.itmanapp.RelatedFileActivity">
         </activity>
         
         <!-- 关联设备页面 -->
@@ -114,7 +114,7 @@
         </activity>
         
         <!-- 设备查询结果页面 -->
-        <activity android:name="com.itmanapp.EquipmentSearchDetailActivity">
+        <activity android:name="com.itmanapp.DeviceDetailActivity">
         </activity>
         
         
@@ -183,6 +183,16 @@
         
         <!-- 我的报修详细页面 -->
         <activity android:name="com.itmanapp.MyRepairDetailActivity">
+        </activity>
+        
+        
+        <activity android:name="com.itmanapp.RoomListActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp.CabinetListActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp.CabinetDetailActivity">
         </activity>
         
     </application>

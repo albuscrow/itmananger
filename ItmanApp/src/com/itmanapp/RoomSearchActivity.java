@@ -14,9 +14,11 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -32,8 +34,8 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.itmanapp.entity.SystemSearchEntity;
-import com.itmanapp.json.GetSystemSearchJson;
+import com.itmanapp.entity.RoomEntity;
+import com.itmanapp.json.GetRoomSearchJson;
 import com.itmanapp.util.AppManager;
 import com.itmanapp.widget.spiner.AbstractSpinerAdapter;
 import com.itmanapp.widget.spiner.SpinerPopWindow;
@@ -44,7 +46,7 @@ import com.itmanapp.widget.spiner.SpinerPopWindow;
  * @class description 系统查询页面
  * 
  */
-public class SystemSearchActivity extends Activity implements OnClickListener, AbstractSpinerAdapter.IOnItemSelectListener{
+public class RoomSearchActivity extends Activity implements OnClickListener, AbstractSpinerAdapter.IOnItemSelectListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -79,14 +81,14 @@ public class SystemSearchActivity extends Activity implements OnClickListener, A
 	private List<String> nameList = new ArrayList<String>();
 
 	/**系统查询结果实体类*/
-	private SystemSearchEntity entity = null;
+	private ArrayList<RoomEntity> entity = null;
 	
 	private int flag=0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sys_search);
+		setContentView(R.layout.activity_room_search);
 		AppManager.getAppManager().addActivity(this);
 		getView();
 	}
@@ -121,19 +123,21 @@ public class SystemSearchActivity extends Activity implements OnClickListener, A
 				
 				if(flag==0){
 					systemCode=searchEdt.getText().toString().trim();
+					url = baseurl + "&systemCode="+systemCode;
 					systemName="";
 					unitName="";
 					if (isEmpty(systemCode)) {
-						Toast.makeText(SystemSearchActivity.this, "不能为空",
+						Toast.makeText(RoomSearchActivity.this, "不能为空",
 								1000).show();
 						return;
 					}
 				}else if(flag==1){
 					systemName=searchEdt.getText().toString().trim();
+					url = baseurl + "&systemName="+systemName;
 					systemCode="";
 					unitName="";
 					if (isEmpty(systemName)) {
-						Toast.makeText(SystemSearchActivity.this, "不能为空",
+						Toast.makeText(RoomSearchActivity.this, "不能为空",
 								1000).show();
 						return;
 					}
@@ -144,10 +148,12 @@ public class SystemSearchActivity extends Activity implements OnClickListener, A
 					}
 				}else if(flag==2){
 					unitName=searchEdt.getText().toString().trim();
+					url = baseurl + "&unitName=" + unitName;
+							
 					systemCode="";
 					systemName="";
 					if (isEmpty(unitName)) {
-						Toast.makeText(SystemSearchActivity.this, "不能为空",
+						Toast.makeText(RoomSearchActivity.this, "不能为空",
 								1000).show();
 						return;
 					}
@@ -169,10 +175,16 @@ public class SystemSearchActivity extends Activity implements OnClickListener, A
 			}
 		});
 		
-		mDialog = new ProgressDialog(SystemSearchActivity.this);
+		mDialog = new ProgressDialog(RoomSearchActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 	}
 	
+	
+	static String baseurl = "http://211.155.229.136:8080/assetapi2/room/roomList?"
+			+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
+	
+	static String url = null;
+
 	/**
 	 * description 解析数据
 	 * 
@@ -182,12 +194,6 @@ public class SystemSearchActivity extends Activity implements OnClickListener, A
 	 */
 	private void getResult() {
 
-		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/system/detail?"
-				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&systemCode="+systemCode
-				+ "&unitName="+unitName
-				+ "&systemName="+systemName;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -199,9 +205,9 @@ public class SystemSearchActivity extends Activity implements OnClickListener, A
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						int result = GetSystemSearchJson.getJson(response.toString());
+						int result = GetRoomSearchJson.getJson(response.toString());
 						if (result == 1) {
-							entity = GetSystemSearchJson.entity;
+							entity = (ArrayList<RoomEntity>) GetRoomSearchJson.entity;
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
@@ -214,6 +220,7 @@ public class SystemSearchActivity extends Activity implements OnClickListener, A
 						} else if (result == 103) {
 							handler.sendEmptyMessage(103);
 						}
+						
 
 					}
 				}, new Response.ErrorListener() {
@@ -241,23 +248,21 @@ public class SystemSearchActivity extends Activity implements OnClickListener, A
 			switch (msg.what) {
 			case 1:
 				//Toast.makeText(SystemSearchActivity.this, "获取成功", 1000).show();
-				Intent intent=new Intent(SystemSearchActivity.this,SystemSeachDetailActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putSerializable("entity", entity);
-				intent.putExtras(bundle);
+				Intent intent=new Intent(RoomSearchActivity.this, RoomListActivity.class);
+				intent.putExtra("rooms", entity);
 				startActivity(intent);
 				break;
 			case -1:
-				Toast.makeText(SystemSearchActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(RoomSearchActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(SystemSearchActivity.this, "获取失败", 1000).show();
+				Toast.makeText(RoomSearchActivity.this, "获取失败", 1000).show();
 				break;
 			case 101:
-				Toast.makeText(SystemSearchActivity.this, "系统信息不存在", 1000).show();
+				Toast.makeText(RoomSearchActivity.this, "系统信息不存在", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(SystemSearchActivity.this, "参数错误", 1000).show();
+				Toast.makeText(RoomSearchActivity.this, "参数错误", 1000).show();
 				break;
 			}
 			// 关闭ProgressDialog

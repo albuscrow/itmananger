@@ -3,9 +3,7 @@ package com.itmanapp;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import org.json.JSONObject;
@@ -19,10 +17,7 @@ import android.os.Message;
 import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,24 +26,31 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.itmanapp.adapter.FileListAdatper;
-import com.itmanapp.adapter.RelatedDeviceAdatper;
+import com.itmanapp.entity.CabinetEntity;
+import com.itmanapp.entity.EquipmentEntity;
 import com.itmanapp.entity.RelatedDeviceEntity;
-import com.itmanapp.json.GetModifyInfoJson;
-import com.itmanapp.json.GetRelatedDeviceJson;
+import com.itmanapp.json.GetCabinetDetailJson;
+import com.itmanapp.json.GetDeviceDetailJson;
 import com.itmanapp.util.AppManager;
+import com.itmanapp.util.CommonUtil;
 
-/**
- * @date 2014-7-17
- * @author wangpeng
- * @class description 关联设备页面
- * 
- */
-public class RelatedDeviceActivity extends Activity implements OnClickListener,OnItemClickListener{
+public class CabinetDetailActivity extends Activity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
 	
+	/**所属系统*/
+	private TextView belongsRoomTv;
+	
+	/**设备编号*/
+	private TextView deviceCodeTv;
+	
+	/**设备类型*/
+	private TextView deviceNameTv;
+	
+	/**设备配置*/
+	private TextView deviceUnitTv;
+    	
     private String key;
 	
 	private String base;
@@ -58,39 +60,24 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	/** 进度框 */
 	private ProgressDialog mDialog = null;
 	
-	/**列表控件 */
-	private ListView relatedDeviceLv;
+	private CabinetEntity entity=null;
 	
-	/**相关设备列表适配器*/
-	private RelatedDeviceAdatper adapter;
-	
-	/**数据集合*/
-	private List<RelatedDeviceEntity> deviceList = new ArrayList<RelatedDeviceEntity>();
-	
-	/**系统编号*/
-    private TextView codeTv;
-	
-    /**系统名称*/
-	private TextView nameTv;
-	
-	private Intent intent;
-	
-	private long cabinetId;
-	
-    private String cabinetCode;
-	
-	private String cabinetName;
+	private Long cabinetId;
+
+	private TextView deviceDepartmentTv;
+
+	private TextView devicePositionTv;
+
+	private TextView deviceTime;
+
+	private TextView deviceDesp;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sys_related_device);
+		setContentView(R.layout.activity_cabinet_detail);
 		AppManager.getAppManager().addActivity(this);
-		intent=getIntent();
-		cabinetId=intent.getLongExtra("cabinetId", -1);
-		cabinetCode=intent.getStringExtra("cabinetCode");
-		cabinetName=intent.getStringExtra("cabinetName");
-		
 		getView();
 	}
 	
@@ -98,20 +85,24 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	 * 控件显示
 	 */
 	private void getView() {
-		mDialog = new ProgressDialog(RelatedDeviceActivity.this);
-		mDialog.setMessage(getString(R.string.login_msg));
+		Intent intent=getIntent();
+		cabinetId=intent.getLongExtra("cabinetId", -1);
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
 		
-		codeTv=(TextView)findViewById(R.id.code);
-		nameTv=(TextView)findViewById(R.id.name);
+		belongsRoomTv=(TextView)findViewById(R.id.belongsRoomTv);
+		deviceCodeTv=(TextView)findViewById(R.id.code);
+		deviceNameTv=(TextView)findViewById(R.id.name);
+		deviceUnitTv=(TextView)findViewById(R.id.unit);
+		deviceDepartmentTv=(TextView)findViewById(R.id.department);
+		devicePositionTv=(TextView)findViewById(R.id.position);
+		deviceTime=(TextView)findViewById(R.id.time);
+		deviceDesp=(TextView)findViewById(R.id.desp);
 		
-		codeTv.setText(cabinetCode+"");
-		nameTv.setText(cabinetName+"");
 		
-		relatedDeviceLv=(ListView)findViewById(R.id.relatedDeviceLv);
-		relatedDeviceLv.setOnItemClickListener(this);
+		mDialog = new ProgressDialog(this);
+		mDialog.setMessage(getString(R.string.login_msg));
 		
 		key = getRandomString(5);
 		String kb = key + "ASSET-HJTECH";
@@ -125,6 +116,7 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 		
 	}
 	
+	
 	/**
 	 * description 解析数据
 	 * 
@@ -135,7 +127,7 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/device/list?"
+		String url = "http://211.155.229.136:8080/assetapi2/cabinet/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&tcId="+cabinetId;
 		System.out.println(url);
@@ -149,10 +141,10 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						deviceList=GetRelatedDeviceJson.getJson(response.toString());
-						int result = GetRelatedDeviceJson.result;
+						
+						int result = GetCabinetDetailJson.getJson(response.toString());
 						if (result == 1) {
-							System.out.println("List:"+deviceList);
+							entity=GetCabinetDetailJson.entity;
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
@@ -160,8 +152,6 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 							handler.sendEmptyMessage(0);
 						} else if (result == 101) {
 							handler.sendEmptyMessage(101);
-						} else if (result == 102) {
-							handler.sendEmptyMessage(102);
 						} else if (result == 103) {
 							handler.sendEmptyMessage(103);
 						}
@@ -191,18 +181,28 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
-				//Toast.makeText(RelatedDeviceActivity.this, "获取成功", 1000).show();
-				adapter=new RelatedDeviceAdatper(RelatedDeviceActivity.this, deviceList);
-				relatedDeviceLv.setAdapter(adapter);
+				//Toast.makeText(EquipmentSearchDetailActivity.this, "获取成功", 1000).show();
+				belongsRoomTv.setText(entity.getRoomName()+"");
+				deviceCodeTv.setText(entity.getTcCode()+"");
+				deviceNameTv.setText(entity.getTcName()+""); 
+				deviceUnitTv.setText(entity.getUnitName()+"");
+				deviceDepartmentTv.setText(entity.getDepName()+"");
+				devicePositionTv.setText(entity.getTcPosition()+"");
+				deviceTime.setText(entity.getTcLayDate()+"");
+				deviceDesp.setText(entity.getTcDescription()+"");
+
 				break;
 			case -1:
-				Toast.makeText(RelatedDeviceActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(CabinetDetailActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(RelatedDeviceActivity.this, "获取失败", 1000).show();
+				Toast.makeText(CabinetDetailActivity.this, "获取失败", 1000).show();
+				break;
+			case 101:
+				Toast.makeText(CabinetDetailActivity.this, "设备不存在", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(RelatedDeviceActivity.this, "参数错误", 1000).show();
+				Toast.makeText(CabinetDetailActivity.this, "参数错误", 1000).show();
 				break;
 			}
 			// 关闭ProgressDialog
@@ -253,21 +253,14 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 		return hex.toString().toUpperCase();
 	}
 
+	/**点击事件*/
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
+		switch(v.getId()){
 		case R.id.backBtn:
 			finish();
 			break;
 		}
 		
 	}
-
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Intent resultIntent = new Intent(RelatedDeviceActivity.this,DeviceDetailActivity.class);
-		resultIntent.putExtra("deviceCode", deviceList.get(arg2).getAdCode());
-		startActivity(resultIntent);
-	}
-
 }

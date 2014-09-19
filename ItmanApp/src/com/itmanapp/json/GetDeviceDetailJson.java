@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import com.itmanapp.entity.EquipmentEntity;
 import com.itmanapp.entity.LoginEntity;
+import com.itmanapp.entity.RelatedDeviceEntity;
 
 /**
  * @date 2014-7-15
@@ -12,9 +13,9 @@ import com.itmanapp.entity.LoginEntity;
  * @class description 设备数据详细解析类
  * 
  */
-public class GetEptDetailJson {
+public class GetDeviceDetailJson {
 	
-	public static EquipmentEntity entity=null;
+	public static RelatedDeviceEntity entity=null;
 	
 	public static int getJson(String response){
 		int result = 0; 
@@ -23,18 +24,19 @@ public class GetEptDetailJson {
 			result=job.getInt("result");
 			if(result==1){
 				JSONObject js = job.getJSONObject("details");
-				entity=new EquipmentEntity();
+				entity=new RelatedDeviceEntity();
 				entity.setAdBuyDate(js.getString("adBuyDate"));
 				entity.setAdCode(js.getString("adCode"));
 				entity.setAdDesp(js.getString("adDesp"));
 				entity.setAdId(js.getInt("adId"));
 				entity.setAdPosition(js.getString("adPosition"));
-				entity.setAdWarranty(js.getString("adWarranty"));
 				entity.setModelName(js.getString("modelName"));
-				entity.setSupplyId(js.getString("supplyId"));
 				entity.setSupplyName(js.getString("supplyName"));
-				entity.setSystemId(js.getString("systemId"));
 				entity.setAsName(js.getString("asName"));
+				entity.setTdcName(js.getString("tdcName"));
+				entity.setAsName(js.getString("asName"));
+				entity.setTmrName(js.getString("tmrName"));
+				entity.setCabinetId(js.getLong("cabinetId"));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

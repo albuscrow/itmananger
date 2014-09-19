@@ -59,7 +59,7 @@ public class PendingInspectionEquipmentAdatper extends BaseAdapter {
 			v = inflater.inflate(R.layout.list_item_written_inspection, null);
 			holder.inspectionTimeTv = (TextView) v.findViewById(R.id.inspectionTimeTv);
 			holder.inspectionPlanTv = (TextView) v.findViewById(R.id.inspectionPlanTv);
-			holder.systemNameTv = (TextView) v.findViewById(R.id.systemNameTv);
+			holder.systemNameTv = (TextView) v.findViewById(R.id.related_name);
 			holder.deviceNameTv = (TextView) v.findViewById(R.id.deviceNameTv);
 			holder.statusTv = (TextView) v.findViewById(R.id.statusTv);
 			v.setTag(holder);

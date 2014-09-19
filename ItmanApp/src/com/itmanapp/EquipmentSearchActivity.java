@@ -84,7 +84,7 @@ public class EquipmentSearchActivity extends Activity implements Callback {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						String result=edt.getText().toString().trim();
-						Intent resultIntent = new Intent(EquipmentSearchActivity.this,EquipmentSearchDetailActivity.class);
+						Intent resultIntent = new Intent(EquipmentSearchActivity.this,DeviceDetailActivity.class);
 						resultIntent.putExtra("deviceCode", result);
 						startActivity(resultIntent);
 					}
@@ -150,7 +150,7 @@ public class EquipmentSearchActivity extends Activity implements Callback {
 		if (resultString.equals("")) {
 			Toast.makeText(EquipmentSearchActivity.this, "Scan failed!", Toast.LENGTH_SHORT).show();
 		}else {
-			Intent resultIntent = new Intent(EquipmentSearchActivity.this,EquipmentSearchDetailActivity.class);
+			Intent resultIntent = new Intent(EquipmentSearchActivity.this,DeviceDetailActivity.class);
 			resultIntent.putExtra("deviceCode", resultString);
 			startActivity(resultIntent);
 			

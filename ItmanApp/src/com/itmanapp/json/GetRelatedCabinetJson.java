@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.itmanapp.entity.CabinetEntity;
 import com.itmanapp.entity.RelatedDeviceEntity;
 
 /**
@@ -15,12 +16,12 @@ import com.itmanapp.entity.RelatedDeviceEntity;
  * @class description 整改历史数据解析类
  * 
  */
-public class GetRelatedDeviceJson {
+public class GetRelatedCabinetJson {
 	
-	public static int result = 0;
+	public static int result = 0; 
 	
-	public static List<RelatedDeviceEntity> getJson(String response){
-		List<RelatedDeviceEntity> modifyInfoList = new ArrayList<RelatedDeviceEntity>();
+	public static List<CabinetEntity> getJson(String response){
+		List<CabinetEntity> modifyInfoList = new ArrayList<CabinetEntity>();
 		try {
 			JSONObject job=new JSONObject(response);
 			result=job.getInt("result");
@@ -28,16 +29,13 @@ public class GetRelatedDeviceJson {
 				if (job != null ) {
 					JSONArray jsonArray = job.getJSONArray("details");
 					for (int i = 0; i < jsonArray.length(); i++) {
-						RelatedDeviceEntity entity=new RelatedDeviceEntity();
+						CabinetEntity entity=new CabinetEntity();
 						JSONObject js = jsonArray.getJSONObject(i);
-						entity.setAdId(js.getInt("adId"));
-						entity.setAdCode(js.getString("adCode"));
-						entity.setAdName(js.getString("adName"));
-						entity.setTdcName(js.getString("tdcName"));
-						entity.setAdDesp(js.getString("adDesp"));
-						entity.setAdPosition(js.getString("adPosition"));
-						entity.setAsName(js.getString("asName"));
-						entity.setTmrName(js.getString("tmrName"));
+						entity.setTcName(js.getString("tcName"));
+						entity.setTcCode(js.getString("tcCode"));
+						entity.setTcPosition(js.getString("tcPosition"));
+						entity.setTcLayDate(js.getString("tcLayDate"));
+						entity.setTcId(js.getLong("tcId"));
 						modifyInfoList.add(entity);
 					}
 				}

@@ -3,7 +3,9 @@ package com.itmanapp;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import org.json.JSONObject;
@@ -18,6 +20,7 @@ import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,34 +29,27 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.itmanapp.entity.EquipmentEntity;
-import com.itmanapp.json.GetEptDetailJson;
+import com.itmanapp.adapter.FileListAdatper;
+import com.itmanapp.entity.FileEntity;
+import com.itmanapp.json.GetModifyInfoJson;
 import com.itmanapp.util.AppManager;
 
 /**
- * @date 2014-7-15
+ * @date 2014-7-11
  * @author wangpeng
- * @class description 设备查询结果页面
+ * @class description 系统整改历史页面
  * 
  */
-public class EquipmentSearchDetailActivity extends Activity implements OnClickListener{
+public class RelatedFileActivity extends Activity implements OnClickListener{
+	
+	public static final int TYPE_ROOM = 1;
+	public static final int TYPE_CABINET = 2;
+	public static final int TYPE_DEVICE = 3;
 
 	/** 返回按钮 */
 	private ImageView backBtn;
 	
-	/**所属系统*/
-	private TextView belongsSystemsTv;
-	
-	/**设备编号*/
-	private TextView deviceIdTv;
-	
-	/**设备类型*/
-	private TextView deviceTypeTv;
-	
-	/**设备配置*/
-	private TextView deviceConfigurationTv;
-    	
-    private String key;
+	private String key;
 	
 	private String base;
 
@@ -62,15 +58,39 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 	/** 进度框 */
 	private ProgressDialog mDialog = null;
 	
-	private EquipmentEntity entity=null;
+	/**列表控件 */
+	private ListView modifyInfoLv;
 	
-	private String deviceCode;
+	/**系统整改历史适配器 */
+	private FileListAdatper adapter;
+	
+	/** 数据集合*/
+	private List<FileEntity> modifyInfoList = new ArrayList<FileEntity>();
+	
+	/**编号显示 */
+	private TextView relatedType;
+	
+	/** 系统名称显示*/
+	private TextView relatedNameTv;
+	
+	/**系统编码 */
+	private Intent intent;
+	
+	private long id;
+	
+	private String name;
+	private int type;
+	private TextView relatedBelong;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_ept_search_detail);
+		setContentView(R.layout.activity_related_file);
 		AppManager.getAppManager().addActivity(this);
+		intent=getIntent();
+		id=intent.getLongExtra("id", -1);
+		name=intent.getStringExtra("name");
+		type = intent.getIntExtra("type", -1);
 		getView();
 	}
 	
@@ -78,24 +98,51 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 	 * 控件显示
 	 */
 	private void getView() {
-		Intent intent=getIntent();
-		deviceCode=intent.getStringExtra("deviceCode");
+		mDialog = new ProgressDialog(RelatedFileActivity.this);
+		mDialog.setMessage(getString(R.string.login_msg));
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
 		
-		belongsSystemsTv=(TextView)findViewById(R.id.belongsSystemsTv);
-		deviceIdTv=(TextView)findViewById(R.id.deviceIdTv);
-		deviceTypeTv=(TextView)findViewById(R.id.deviceTypeTv);
-		deviceConfigurationTv=(TextView)findViewById(R.id.deviceConfigurationTv);
+		relatedType=(TextView)findViewById(R.id.related_type);
+		relatedNameTv=(TextView)findViewById(R.id.related_name);
+		relatedBelong = (TextView)findViewById(R.id.related_file_belong);
 		
-		mDialog = new ProgressDialog(EquipmentSearchDetailActivity.this);
-		mDialog.setMessage(getString(R.string.login_msg));
+		relatedNameTv.setText(name+"");
+		
+		modifyInfoLv=(ListView)findViewById(R.id.modifyInfoLv);
 		
 		key = getRandomString(5);
 		String kb = key + "ASSET-HJTECH";
 		base = md5(kb);
 		code = Base64.encodeToString(base.getBytes(), Base64.DEFAULT);
+		
+		url = "http://211.155.229.136:8080/assetapi2/file/list?"
+				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+				+ "&referId="+id
+				+ "&type=";	
+		switch (type) {
+		case TYPE_ROOM:
+			relatedBelong.setText("所属机房：");
+			relatedType.setText("机房关联");
+			url += 1;
+			break;
+			
+		case TYPE_CABINET:
+			relatedBelong.setText("所属机柜：");
+			relatedType.setText("机柜关联");
+			url += 2;
+			break;
+			
+		case TYPE_DEVICE:
+			relatedBelong.setText("所属设备：");
+			relatedType.setText("设备关联");
+			url += 3;
+			break;
+
+		default:
+			break;
+		}
 
 		mDialog.show();
 		mDialog.setCanceledOnTouchOutside(false);
@@ -105,6 +152,7 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 	}
 	
 	
+	String url = null;	
 	/**
 	 * description 解析数据
 	 * 
@@ -113,11 +161,7 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 	 * @return void
 	 */
 	private void getResult() {
-
-		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/device/detail?"
-				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&deviceCode="+deviceCode;
+		System.out.println("huh");
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -129,10 +173,10 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						
-						int result = GetEptDetailJson.getJson(response.toString());
+						modifyInfoList=GetModifyInfoJson.getJson(response.toString());
+						int result = GetModifyInfoJson.result;
 						if (result == 1) {
-							entity=GetEptDetailJson.entity;
+							System.out.println("List:"+modifyInfoList);
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
@@ -140,6 +184,8 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 							handler.sendEmptyMessage(0);
 						} else if (result == 101) {
 							handler.sendEmptyMessage(101);
+						} else if (result == 102) {
+							handler.sendEmptyMessage(102);
 						} else if (result == 103) {
 							handler.sendEmptyMessage(103);
 						}
@@ -169,23 +215,18 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
-				//Toast.makeText(EquipmentSearchDetailActivity.this, "获取成功", 1000).show();
-				belongsSystemsTv.setText(entity.getAsName()+"");
-				deviceIdTv.setText(entity.getAdCode()+"");
-				deviceTypeTv.setText(entity.getModelName()+""); 
-				deviceConfigurationTv.setText(entity.getAdDesp()+"");
+				//Toast.makeText(SystemModifyInfoActivity.this, "获取成功", 1000).show();
+				adapter=new FileListAdatper(RelatedFileActivity.this, modifyInfoList);
+				modifyInfoLv.setAdapter(adapter);
 				break;
 			case -1:
-				Toast.makeText(EquipmentSearchDetailActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(RelatedFileActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(EquipmentSearchDetailActivity.this, "获取失败", 1000).show();
-				break;
-			case 101:
-				Toast.makeText(EquipmentSearchDetailActivity.this, "设备不存在", 1000).show();
+				Toast.makeText(RelatedFileActivity.this, "获取失败", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(EquipmentSearchDetailActivity.this, "参数错误", 1000).show();
+				Toast.makeText(RelatedFileActivity.this, "参数错误", 1000).show();
 				break;
 			}
 			// 关闭ProgressDialog
@@ -236,10 +277,12 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 		return hex.toString().toUpperCase();
 	}
 
-	/**点击事件*/
+	/***
+	 * 点击事件 
+	 */
 	@Override
 	public void onClick(View v) {
-		switch(v.getId()){
+		switch (v.getId()) {
 		case R.id.backBtn:
 			finish();
 			break;
@@ -247,5 +290,4 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 		
 	}
 
-	
 }

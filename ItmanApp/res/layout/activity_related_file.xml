@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="系统整改历史"
+            android:text="关联文件"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -41,13 +41,12 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="系统编号：" />
+                android:text="关联类型：" />
 
             <TextView
-                android:id="@+id/systemNumberTv"
+                android:id="@+id/related_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -58,13 +57,12 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/related_file_belong"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="系统名称：" />
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/systemNameTv"
+                android:id="@+id/related_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

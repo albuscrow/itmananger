@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.itmanapp.entity.ModifyInfoEntity;
+import com.itmanapp.entity.FileEntity;
 
 /**
  * @date 2014-7-17
@@ -19,8 +19,8 @@ public class GetModifyInfoJson {
 	
 	public static int result = 0; 
 	
-	public static List<ModifyInfoEntity> getJson(String response){
-		List<ModifyInfoEntity> modifyInfoList = new ArrayList<ModifyInfoEntity>();
+	public static List<FileEntity> getJson(String response){
+		List<FileEntity> modifyInfoList = new ArrayList<FileEntity>();
 		try {
 			JSONObject job=new JSONObject(response);
 			result=job.getInt("result");
@@ -28,14 +28,18 @@ public class GetModifyInfoJson {
 				if (job != null ) {
 					JSONArray jsonArray = job.getJSONArray("details");
 					for (int i = 0; i < jsonArray.length(); i++) {
-						ModifyInfoEntity entity=new ModifyInfoEntity();
+						FileEntity entity=new FileEntity();
 						JSONObject js = jsonArray.getJSONObject(i);
-						entity.setAsmiDesp(js.getString("asmiDesp"));
-						entity.setAsmiAddDate(js.getString("asmiAddDate"));
-						entity.setAsmiAddPerson(js.getInt("asmiAddPerson"));
-						entity.setAsmiFile(js.getString("asmiFile"));
-						entity.setAsmiHeadId(js.getInt("asmiHeadId"));
-						entity.setAsmiId(js.getInt("asmiId"));
+						entity.setFileType(js.getString("fileType"));
+						entity.setTfaAddDate(js.getLong("tfaAddDate"));
+						entity.setTfaAddPerson(js.getLong("tfaAddPerson"));
+						entity.setTfaFilePath(js.getString("tfaFilePath"));
+						entity.setTfaFileType(js.getInt("tfaFileType"));
+						entity.setTfaId(js.getLong("tfaId"));
+						entity.setTfaName(js.getString("tfaName"));
+						entity.setTfaReferId(js.getLong("tfaReferId"));
+						entity.setTfaType(js.getInt("tfaType"));
+						entity.setAddDate(js.getString("addDate"));
 						modifyInfoList.add(entity);
 					}
 				}

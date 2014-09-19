@@ -32,20 +32,18 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.adapter.FileListAdatper;
+import com.itmanapp.adapter.RelatedCabinetAdatper;
 import com.itmanapp.adapter.RelatedDeviceAdatper;
+import com.itmanapp.entity.CabinetEntity;
 import com.itmanapp.entity.RelatedDeviceEntity;
 import com.itmanapp.json.GetModifyInfoJson;
+import com.itmanapp.json.GetRelatedCabinetJson;
 import com.itmanapp.json.GetRelatedDeviceJson;
 import com.itmanapp.util.AppManager;
 
-/**
- * @date 2014-7-17
- * @author wangpeng
- * @class description 关联设备页面
- * 
- */
-public class RelatedDeviceActivity extends Activity implements OnClickListener,OnItemClickListener{
-	
+public class CabinetListActivity extends Activity implements OnClickListener,OnItemClickListener {
+
+
 	/** 返回按钮 */
 	private ImageView backBtn;
 	
@@ -62,35 +60,40 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	private ListView relatedDeviceLv;
 	
 	/**相关设备列表适配器*/
-	private RelatedDeviceAdatper adapter;
+	private RelatedCabinetAdatper adapter;
 	
 	/**数据集合*/
-	private List<RelatedDeviceEntity> deviceList = new ArrayList<RelatedDeviceEntity>();
+	private List<CabinetEntity> cabinetList = new ArrayList<CabinetEntity>();
 	
 	/**系统编号*/
-    private TextView codeTv;
+    private TextView roomCodeTV;
 	
     /**系统名称*/
-	private TextView nameTv;
+	private TextView roomNameTV;
 	
 	private Intent intent;
 	
-	private long cabinetId;
+	private long roomId;
 	
-    private String cabinetCode;
+    private String roomCode;
 	
-	private String cabinetName;
+	private String roomName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sys_related_device);
+		setContentView(R.layout.activity_cabinet_list);
 		AppManager.getAppManager().addActivity(this);
 		intent=getIntent();
-		cabinetId=intent.getLongExtra("cabinetId", -1);
-		cabinetCode=intent.getStringExtra("cabinetCode");
-		cabinetName=intent.getStringExtra("cabinetName");
-		
+		roomId=intent.getLongExtra("roomId", -1);
+		roomCode = intent.getStringExtra("roomCode");
+		roomName = intent.getStringExtra("roomName");
+		if (roomCode == null) {
+			roomCode = "";
+		}
+		if (roomName == null) {
+			roomName = "";
+		}
 		getView();
 	}
 	
@@ -98,17 +101,17 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	 * 控件显示
 	 */
 	private void getView() {
-		mDialog = new ProgressDialog(RelatedDeviceActivity.this);
+		mDialog = new ProgressDialog(CabinetListActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
 		
-		codeTv=(TextView)findViewById(R.id.code);
-		nameTv=(TextView)findViewById(R.id.name);
+		roomCodeTV=(TextView)findViewById(R.id.code);
+		roomNameTV=(TextView)findViewById(R.id.name);
 		
-		codeTv.setText(cabinetCode+"");
-		nameTv.setText(cabinetName+"");
+		roomCodeTV.setText(roomCode+"");
+		roomNameTV.setText(roomName+"");
 		
 		relatedDeviceLv=(ListView)findViewById(R.id.relatedDeviceLv);
 		relatedDeviceLv.setOnItemClickListener(this);
@@ -135,9 +138,9 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/device/list?"
+		String url = "http://211.155.229.136:8080/assetapi2/cabinet/list?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&tcId="+cabinetId;
+				+ "&roomId="+roomId;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -149,10 +152,10 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						deviceList=GetRelatedDeviceJson.getJson(response.toString());
-						int result = GetRelatedDeviceJson.result;
+						cabinetList=GetRelatedCabinetJson.getJson(response.toString());
+						int result = GetRelatedCabinetJson.result;
 						if (result == 1) {
-							System.out.println("List:"+deviceList);
+							System.out.println("List:"+cabinetList);
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
@@ -192,17 +195,17 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 			switch (msg.what) {
 			case 1:
 				//Toast.makeText(RelatedDeviceActivity.this, "获取成功", 1000).show();
-				adapter=new RelatedDeviceAdatper(RelatedDeviceActivity.this, deviceList);
+				adapter=new RelatedCabinetAdatper(CabinetListActivity.this, cabinetList);
 				relatedDeviceLv.setAdapter(adapter);
 				break;
 			case -1:
-				Toast.makeText(RelatedDeviceActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(CabinetListActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(RelatedDeviceActivity.this, "获取失败", 1000).show();
+				Toast.makeText(CabinetListActivity.this, "获取失败", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(RelatedDeviceActivity.this, "参数错误", 1000).show();
+				Toast.makeText(CabinetListActivity.this, "参数错误", 1000).show();
 				break;
 			}
 			// 关闭ProgressDialog
@@ -265,9 +268,11 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Intent resultIntent = new Intent(RelatedDeviceActivity.this,DeviceDetailActivity.class);
-		resultIntent.putExtra("deviceCode", deviceList.get(arg2).getAdCode());
+		Intent resultIntent = new Intent(CabinetListActivity.this, RelatedDeviceActivity.class);
+		resultIntent.putExtra("cabinetId", cabinetList.get(arg2).getTcId());
+		resultIntent.putExtra("cabinetCode", cabinetList.get(arg2).getTcCode());
+		resultIntent.putExtra("cabinetName", cabinetList.get(arg2).getTcName());
 		startActivity(resultIntent);
+		
 	}
-
 }

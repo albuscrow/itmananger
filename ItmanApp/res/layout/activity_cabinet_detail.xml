@@ -23,12 +23,13 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="设备查询"
+            android:text="设备信息"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/_info"
         android:layout_below="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,13 +43,60 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="所属系统：" />
+                android:text="所属机房：" />
 
             <TextView
-                android:id="@+id/belongsSystemsTv"
+                android:id="@+id/belongsRoomTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="机柜编号：" />
+
+            <TextView
+                android:id="@+id/code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="机柜名称：" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+         
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用单位：" />
+
+            <TextView
+                android:id="@+id/unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -59,13 +107,12 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设备编号：" />
+                android:text="所属部门：" />
 
             <TextView
-                android:id="@+id/deviceIdTv"
+                android:id="@+id/department"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -76,17 +123,17 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设备类型：" />
+                android:text="位   置：" />
 
             <TextView
-                android:id="@+id/deviceTypeTv"
+                android:id="@+id/position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
+        
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,18 +141,46 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设备配置：" />
+                android:text="安放时间：" />
 
             <TextView
-                android:id="@+id/deviceConfigurationTv"
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
+        </LinearLayout> 
+        
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="描述：" />
+
+            <TextView
+                android:id="@+id/desp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>         
     </LinearLayout>
+    
+    <Button
+        android:id="@+id/cxzgjlBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/cxzgjl"
+        android:layout_below="@id/_info"
+        android:text="关联文件"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp" />
     
     <LinearLayout
         android:layout_width="wrap_content"

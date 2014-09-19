@@ -3,9 +3,7 @@ package com.itmanapp;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import org.json.JSONObject;
@@ -20,7 +18,6 @@ import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,23 +26,36 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.itmanapp.adapter.ModifyInfoAdatper;
-import com.itmanapp.entity.ModifyInfoEntity;
-import com.itmanapp.json.GetModifyInfoJson;
+import com.itmanapp.entity.EquipmentEntity;
+import com.itmanapp.entity.RelatedDeviceEntity;
+import com.itmanapp.json.GetDeviceDetailJson;
 import com.itmanapp.util.AppManager;
+import com.itmanapp.util.CommonUtil;
 
 /**
- * @date 2014-7-11
+ * @date 2014-7-15
  * @author wangpeng
- * @class description 系统整改历史页面
+ * @class description 设备查询结果页面
  * 
  */
-public class SystemModifyInfoActivity extends Activity implements OnClickListener{
-	
+public class DeviceDetailActivity extends Activity implements OnClickListener{
+
 	/** 返回按钮 */
 	private ImageView backBtn;
 	
-	private String key;
+	/**所属系统*/
+	private TextView roomTv;
+	
+	/**设备编号*/
+	private TextView deviceIdTv;
+	
+	/**设备类型*/
+	private TextView deviceTypeTv;
+	
+	/**设备配置*/
+	private TextView deviceConfigurationTv;
+    	
+    private String key;
 	
 	private String base;
 
@@ -54,39 +64,19 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 	/** 进度框 */
 	private ProgressDialog mDialog = null;
 	
-	/**列表控件 */
-	private ListView modifyInfoLv;
+	private RelatedDeviceEntity entity=null;
 	
-	/**系统整改历史适配器 */
-	private ModifyInfoAdatper adapter;
-	
-	/** 数据集合*/
-	private List<ModifyInfoEntity> modifyInfoList = new ArrayList<ModifyInfoEntity>();
-	
-	/**编号显示 */
-	private TextView systemNumberTv;
-	
-	/** 系统名称显示*/
-	private TextView systemNameTv;
-	
-	/**系统编码 */
-	private Intent intent;
-	
-	private int asId;
-	
-	private String asCode;
-	
-	private String systemName;
+	private String deviceCode;
+
+	private TextView belongsCabinet;
+
+	private TextView devicePosition;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sys_modify_info);
+		setContentView(R.layout.activity_device_detail);
 		AppManager.getAppManager().addActivity(this);
-		intent=getIntent();
-		asId=intent.getIntExtra("AsId", -1);
-		asCode=intent.getStringExtra("AsCode");
-		systemName=intent.getStringExtra("AsName");
 		getView();
 	}
 	
@@ -94,19 +84,23 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 	 * 控件显示
 	 */
 	private void getView() {
-		mDialog = new ProgressDialog(SystemModifyInfoActivity.this);
-		mDialog.setMessage(getString(R.string.login_msg));
+		Intent intent=getIntent();
+		deviceCode=intent.getStringExtra("deviceCode");
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
 		
-		systemNumberTv=(TextView)findViewById(R.id.systemNumberTv);
-		systemNameTv=(TextView)findViewById(R.id.systemNameTv);
+		roomTv=(TextView)findViewById(R.id.belongsRoomTv);
+		deviceIdTv=(TextView)findViewById(R.id.deviceIdTv);
+		deviceTypeTv=(TextView)findViewById(R.id.deviceTypeTv);
+		deviceConfigurationTv=(TextView)findViewById(R.id.deviceConfigurationTv);
+		devicePosition = (TextView)findViewById(R.id.deviceLocationTv);
 		
-		systemNumberTv.setText(asCode+"");
-		systemNameTv.setText(systemName+"");
+		//add by albuscrow
+		belongsCabinet = (TextView) findViewById(R.id.belongsCabinetTv);
 		
-		modifyInfoLv=(ListView)findViewById(R.id.modifyInfoLv);
+		mDialog = new ProgressDialog(DeviceDetailActivity.this);
+		mDialog.setMessage(getString(R.string.login_msg));
 		
 		key = getRandomString(5);
 		String kb = key + "ASSET-HJTECH";
@@ -120,6 +114,7 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 		
 	}
 	
+	
 	/**
 	 * description 解析数据
 	 * 
@@ -130,9 +125,9 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/system/modifyInfo?"
+		String url = "http://211.155.229.136:8080/assetapi2/device/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&systemId="+asId;
+				+ "&deviceCode="+deviceCode;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -144,10 +139,10 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						modifyInfoList=GetModifyInfoJson.getJson(response.toString());
-						int result = GetModifyInfoJson.result;
+						
+						int result = GetDeviceDetailJson.getJson(response.toString());
 						if (result == 1) {
-							System.out.println("List:"+modifyInfoList);
+							entity=GetDeviceDetailJson.entity;
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
@@ -155,8 +150,6 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 							handler.sendEmptyMessage(0);
 						} else if (result == 101) {
 							handler.sendEmptyMessage(101);
-						} else if (result == 102) {
-							handler.sendEmptyMessage(102);
 						} else if (result == 103) {
 							handler.sendEmptyMessage(103);
 						}
@@ -186,18 +179,35 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
-				//Toast.makeText(SystemModifyInfoActivity.this, "获取成功", 1000).show();
-				adapter=new ModifyInfoAdatper(SystemModifyInfoActivity.this, modifyInfoList);
-				modifyInfoLv.setAdapter(adapter);
+				//Toast.makeText(EquipmentSearchDetailActivity.this, "获取成功", 1000).show();
+				roomTv.setText(entity.getTmrName()+"");
+				deviceIdTv.setText(entity.getAdCode()+"");
+				deviceTypeTv.setText(entity.getTdcName()+"");
+				deviceConfigurationTv.setText(entity.getAdDesp()+"");
+				devicePosition.setText(entity.getAdPosition());
+				
+				belongsCabinet.setText(CommonUtil.decorateStringWithUnderlineAndColor(entity.getAsName()));
+				belongsCabinet.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(DeviceDetailActivity.this, CabinetDetailActivity.class);
+						intent.putExtra("cabinetId", entity.getCabinetId());
+						startActivity(intent);
+					}
+				});
 				break;
 			case -1:
-				Toast.makeText(SystemModifyInfoActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(DeviceDetailActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(SystemModifyInfoActivity.this, "获取失败", 1000).show();
+				Toast.makeText(DeviceDetailActivity.this, "获取失败", 1000).show();
+				break;
+			case 101:
+				Toast.makeText(DeviceDetailActivity.this, "设备不存在", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(SystemModifyInfoActivity.this, "参数错误", 1000).show();
+				Toast.makeText(DeviceDetailActivity.this, "参数错误", 1000).show();
 				break;
 			}
 			// 关闭ProgressDialog
@@ -248,12 +258,10 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 		return hex.toString().toUpperCase();
 	}
 
-	/***
-	 * 点击事件 
-	 */
+	/**点击事件*/
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
+		switch(v.getId()){
 		case R.id.backBtn:
 			finish();
 			break;
@@ -261,4 +269,5 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 		
 	}
 
+	
 }

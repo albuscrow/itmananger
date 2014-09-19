@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.itmanapp.R;
 import com.itmanapp.entity.FileEntity;
 import com.itmanapp.entity.RelatedDeviceEntity;
+import com.itmanapp.entity.RoomEntity;
 
 /**
  * @date 2014-7-17
@@ -20,14 +21,14 @@ import com.itmanapp.entity.RelatedDeviceEntity;
  * @class description 相关设备列表适配器
  * 
  */
-public class RelatedDeviceAdatper extends BaseAdapter {
+public class RoomListAdatper extends BaseAdapter {
 
 	private Context context;
 
-	private List<RelatedDeviceEntity> modifyInfoList = new ArrayList<RelatedDeviceEntity>();
+	private List<RoomEntity> modifyInfoList = new ArrayList<RoomEntity>();
 
-	public RelatedDeviceAdatper(Context context,
-			List<RelatedDeviceEntity> modifyInfoList) {
+	public RoomListAdatper(Context context,
+			List<RoomEntity> modifyInfoList) {
 		super();
 		this.context = context;
 		this.modifyInfoList = modifyInfoList;
@@ -57,27 +58,29 @@ public class RelatedDeviceAdatper extends BaseAdapter {
 			holder = new ViewHolder();
 			// 设置映射对象
 			inflater = LayoutInflater.from(context);
-			v = inflater.inflate(R.layout.list_item_related_device, null);
-			holder.nameTv = (TextView) v.findViewById(R.id.nameTv);
-			holder.codingTv = (TextView) v.findViewById(R.id.codingTv);
-			holder.deviceTypeTv = (TextView) v.findViewById(R.id.deviceTypeTv);
+			v = inflater.inflate(R.layout.list_item_room_list, null);
+			holder.projectTv = (TextView) v.findViewById(R.id.project);
+			holder.idTv = (TextView) v.findViewById(R.id.id);
+			holder.unitTv = (TextView) v.findViewById(R.id.use_unit);
 			v.setTag(holder);
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		holder.nameTv.setText(modifyInfoList.get(position).getAdName());
-		holder.codingTv.setText(modifyInfoList.get(position).getAdCode());
-		holder.deviceTypeTv.setText(modifyInfoList.get(position).getTdcName()); 
+		
+		//TODO
+		holder.projectTv.setText(modifyInfoList.get(position).getTmrName());
+		holder.idTv.setText(modifyInfoList.get(position).getTmrCode());
+		holder.unitTv.setText(modifyInfoList.get(position).getUnitName()); 
 		return v;
 	}
 
 	class ViewHolder {
 		/** 编码 */
-		private TextView codingTv;
-		/** 名称 */
-		private TextView nameTv;
-		/** 设备类型 */
-		private TextView deviceTypeTv;
+		private TextView idTv;
+		/** 项目 */
+		private TextView projectTv;
+		/** 使用单位 */
+		private TextView unitTv;
 	}
 
 }

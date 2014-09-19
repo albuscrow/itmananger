@@ -3,6 +3,7 @@
       <string-array name="name">
         <item>编          码 </item>
         <item>名          称 </item>
+        <!-- add by albuscrow  -->
         <item>使用单位</item>
     </string-array>
 </resources>

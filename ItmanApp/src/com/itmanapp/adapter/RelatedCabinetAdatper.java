@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.itmanapp.R;
+import com.itmanapp.entity.CabinetEntity;
 import com.itmanapp.entity.FileEntity;
 import com.itmanapp.entity.RelatedDeviceEntity;
 
@@ -20,22 +21,22 @@ import com.itmanapp.entity.RelatedDeviceEntity;
  * @class description 相关设备列表适配器
  * 
  */
-public class RelatedDeviceAdatper extends BaseAdapter {
+public class RelatedCabinetAdatper extends BaseAdapter {
 
 	private Context context;
 
-	private List<RelatedDeviceEntity> modifyInfoList = new ArrayList<RelatedDeviceEntity>();
+	private List<CabinetEntity> cabinetList = new ArrayList<CabinetEntity>();
 
-	public RelatedDeviceAdatper(Context context,
-			List<RelatedDeviceEntity> modifyInfoList) {
+	public RelatedCabinetAdatper(Context context,
+			List<CabinetEntity> cabinetList) {
 		super();
 		this.context = context;
-		this.modifyInfoList = modifyInfoList;
+		this.cabinetList = cabinetList;
 	}
 
 	@Override
 	public int getCount() {
-		return modifyInfoList.size();
+		return cabinetList.size();
 	}
 
 	@Override
@@ -57,17 +58,19 @@ public class RelatedDeviceAdatper extends BaseAdapter {
 			holder = new ViewHolder();
 			// 设置映射对象
 			inflater = LayoutInflater.from(context);
-			v = inflater.inflate(R.layout.list_item_related_device, null);
+			v = inflater.inflate(R.layout.list_item_related_cabinet, null);
 			holder.nameTv = (TextView) v.findViewById(R.id.nameTv);
 			holder.codingTv = (TextView) v.findViewById(R.id.codingTv);
-			holder.deviceTypeTv = (TextView) v.findViewById(R.id.deviceTypeTv);
+			holder.locationTv = (TextView) v.findViewById(R.id.position);
+			holder.addTime = (TextView)v.findViewById(R.id.addDateTv);
 			v.setTag(holder);
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		holder.nameTv.setText(modifyInfoList.get(position).getAdName());
-		holder.codingTv.setText(modifyInfoList.get(position).getAdCode());
-		holder.deviceTypeTv.setText(modifyInfoList.get(position).getTdcName()); 
+		holder.nameTv.setText(cabinetList.get(position).getTcName());
+		holder.codingTv.setText(cabinetList.get(position).getTcCode());
+		holder.locationTv.setText(cabinetList.get(position).getTcPosition()); 
+		holder.addTime.setText(cabinetList.get(position).getTcLayDate());
 		return v;
 	}
 
@@ -76,8 +79,10 @@ public class RelatedDeviceAdatper extends BaseAdapter {
 		private TextView codingTv;
 		/** 名称 */
 		private TextView nameTv;
-		/** 设备类型 */
-		private TextView deviceTypeTv;
+		/** 设备位置 */
+		private TextView locationTv;
+		
+		private TextView addTime;
 	}
 
 }

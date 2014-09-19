@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="系统查询"
+            android:text="机房查询"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -62,10 +62,10 @@
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="系统编号：" />
+                            android:text="机房编号：" />
 
                         <TextView
-                            android:id="@+id/systemNumberTv"
+                            android:id="@+id/related_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -76,13 +76,12 @@
                         android:padding="10dp" >
 
                         <TextView
-                            android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="系统名称：" />
+                            android:text="机房名称：" />
 
                         <TextView
-                            android:id="@+id/systemNameTv"
+                            android:id="@+id/related_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
@@ -93,24 +92,6 @@
                         android:padding="10dp" >
 
                         <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="系统类型：" />
-
-                        <TextView
-                            android:id="@+id/systemTypeTv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp" >
-
-                        <TextView
-                            android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="所在地址：" />
@@ -127,7 +108,6 @@
                         android:padding="10dp" >
 
                         <TextView
-                            android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="使用单位：" />
@@ -137,6 +117,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
+                    
+                    
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="所属部门：" />
+
+                        <TextView
+                            android:id="@+id/roomTypeTv"
+                            android:text="运维部"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -150,7 +149,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="系统管理" />
+                            android:text="机房管理" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -159,13 +158,12 @@
                             android:padding="10dp" >
 
                             <TextView
-                                android:id="@+id/textView2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="联系人：" />
 
                             <TextView
-                                android:id="@+id/systemContactTv"
+                                android:id="@+id/roomContactTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
@@ -177,13 +175,12 @@
                             android:padding="10dp" >
 
                             <TextView
-                                android:id="@+id/textView2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="联系电话：" />
 
                             <TextView
-                                android:id="@+id/systemPhoneTv"
+                                android:id="@+id/roomPhoneTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
@@ -197,11 +194,10 @@
                         android:orientation="vertical" >
 
                         <TextView
-                            android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="客户单位" />
+                            android:text="单位负责人" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -210,7 +206,6 @@
                             android:padding="10dp" >
 
                             <TextView
-                                android:id="@+id/textView2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="联系人：" />
@@ -228,7 +223,6 @@
                             android:padding="10dp" >
 
                             <TextView
-                                android:id="@+id/textView2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="联系电话：" />
@@ -241,7 +235,6 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="3dp" />
@@ -261,7 +254,7 @@
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/cxzgjl"
-                        android:text="查阅整改记录"
+                        android:text="关联文件"
                         android:textColor="#FFFFFF"
                         android:textSize="16dp" />
 
@@ -273,7 +266,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:background="@drawable/glsb"
-                        android:text="关联设备"
+                        android:text="关联机柜"
                         android:textColor="#FFFFFF"
                         android:textSize="16dp" />
                 </LinearLayout>

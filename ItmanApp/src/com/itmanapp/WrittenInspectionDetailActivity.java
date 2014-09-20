@@ -32,8 +32,8 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.adapter.WrittenInspectionDetailAdatper;
-import com.itmanapp.entity.InspectionProjectEntity;
-import com.itmanapp.json.GetInspectionProjectJson;
+import com.itmanapp.entity.CheckItemEntity;
+import com.itmanapp.json.GetItemJson;
 import com.itmanapp.util.AppManager;
 
 /**
@@ -74,7 +74,7 @@ public class WrittenInspectionDetailActivity extends Activity implements OnClick
 	private WrittenInspectionDetailAdatper adapter;
 	
 	/**数据集合*/
-	private List<InspectionProjectEntity> list = new ArrayList<InspectionProjectEntity>();
+	private List<CheckItemEntity> list = new ArrayList<CheckItemEntity>();
 	
 	/**id提交集合*/
 	private StringBuffer sbId=new StringBuffer();
@@ -157,8 +157,8 @@ public class WrittenInspectionDetailActivity extends Activity implements OnClick
 					public void onResponse(JSONObject response) {
 						System.out.println("@@" + response.toString());
 						
-						list=GetInspectionProjectJson.getJson(response.toString());
-						int result = GetInspectionProjectJson.result;
+						list=GetItemJson.getJson(response.toString());
+						int result = GetItemJson.result;
 						if (result == 1) {
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
@@ -200,11 +200,11 @@ public class WrittenInspectionDetailActivity extends Activity implements OnClick
 				
 				for(int i=0;i<list.size();i++){
 					if(i==(list.size()-1)){
-						sbId.append(list.get(i).getId());
+						sbId.append(list.get(i).getTxpId());
 					}else if(list.size()==1){
-						sbId.append(list.get(i).getId());
+						sbId.append(list.get(i).getTxpId());
 					}else{
-						sbId.append(list.get(i).getId()+",");
+						sbId.append(list.get(i).getTxpId()+",");
 					}
 				}
 				
@@ -281,11 +281,11 @@ public class WrittenInspectionDetailActivity extends Activity implements OnClick
 			
 			for(int i=0;i<list.size();i++){
 				if(i==(list.size()-1)){
-					sbResult.append(list.get(i).getStatus());
+					sbResult.append(list.get(i).getTxpStatus());
 				}else if(list.size()==1){
-					sbResult.append(list.get(i).getStatus());
+					sbResult.append(list.get(i).getTxpStatus());
 				}else{
-					sbResult.append(list.get(i).getStatus()+",");
+					sbResult.append(list.get(i).getTxpStatus()+",");
 				}
 			}
 			System.out.println("id-->"+sbId.toString()+"--Result-->"+sbResult.toString());

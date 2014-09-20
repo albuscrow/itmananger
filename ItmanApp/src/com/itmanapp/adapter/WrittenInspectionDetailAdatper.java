@@ -15,7 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.itmanapp.R;
-import com.itmanapp.entity.InspectionProjectEntity;
+import com.itmanapp.entity.CheckItemEntity;
 
 /**
  * @date 2014-7-29
@@ -27,10 +27,10 @@ public class WrittenInspectionDetailAdatper extends BaseAdapter {
 
 	private Context context;
 	
-	private List<InspectionProjectEntity> list = new ArrayList<InspectionProjectEntity>();
+	private List<CheckItemEntity> list = new ArrayList<CheckItemEntity>();
 
 	public WrittenInspectionDetailAdatper(Context context,
-			List<InspectionProjectEntity> list) {
+			List<CheckItemEntity> list) {
 		super();
 		this.context = context;
 		this.list =list;
@@ -43,7 +43,7 @@ public class WrittenInspectionDetailAdatper extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
-		return position;
+		return list.get(position);
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class WrittenInspectionDetailAdatper extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		holder.itemNameTv.setText(list.get(position).getItemName()+"");
+		holder.itemNameTv.setText(list.get(position).getTxpName()+"");
 
 		final String[] m={"正常","异常"};
 		
@@ -88,10 +88,10 @@ public class WrittenInspectionDetailAdatper extends BaseAdapter {
 				System.out.println(position+"--->>"+m[arg2]+"--"+arg2); 
 				if(m[arg2].toString().equals("正常")){
 					System.out.println(position+"--->>"+m[arg2]+"--"+arg2);
-					list.get(position).setStatus(1);
+					list.get(position).setTxpStatus(1);
 				}else if(m[arg2].toString().equals("异常")){
 					System.out.println(position+"--->>"+m[arg2]+"--"+arg2);
-					list.get(position).setStatus(2);
+					list.get(position).setTxpStatus(2);
 				}
 				
 			}

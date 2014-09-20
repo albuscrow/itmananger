@@ -39,7 +39,7 @@ import com.itmanapp.adapter.RelatedDeviceAdatper;
 import com.itmanapp.entity.CabinetEntity;
 import com.itmanapp.entity.RelatedDeviceEntity;
 import com.itmanapp.json.GetModifyInfoJson;
-import com.itmanapp.json.GetRelatedCabinetJson;
+import com.itmanapp.json.GetRelatedCabinetListJson;
 import com.itmanapp.json.GetRelatedDeviceJson;
 import com.itmanapp.util.AppManager;
 
@@ -138,8 +138,8 @@ public class CheckListActivity extends Activity implements OnClickListener,OnIte
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						cabinetList=GetRelatedCabinetJson.getJson(response.toString());
-						int result = GetRelatedCabinetJson.result;
+						cabinetList=GetRelatedCabinetListJson.getJson(response.toString());
+						int result = GetRelatedCabinetListJson.result;
 						if (result == 1) {
 							System.out.println("List:"+cabinetList);
 							handler.sendEmptyMessage(1);

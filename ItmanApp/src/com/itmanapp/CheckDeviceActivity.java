@@ -18,11 +18,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,10 +37,11 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.itmanapp.adapter.InspectionSpinnerAdapter;
 import com.itmanapp.adapter.WrittenInspectionDetailAdatper;
-import com.itmanapp.entity.InspectionProjectEntity;
+import com.itmanapp.entity.CheckItemEntity;
 import com.itmanapp.json.GetCheckDetailJson;
-import com.itmanapp.json.GetInspectionProjectJson;
+import com.itmanapp.json.GetItemJson;
 import com.itmanapp.util.AppManager;
 
 /**
@@ -69,13 +76,13 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 	private ProgressDialog mDialog = null;
 	
 	/**列表控件*/
-	private ListView inspectionProjectLv;
+	private LinearLayout inspectionProjectLv;
 	
 	/**待巡检提交-巡检项目-适配器*/
-	private WrittenInspectionDetailAdatper adapter;
+//	private WrittenInspectionDetailAdatper adapter;
 	
 	/**数据集合*/
-	private List<InspectionProjectEntity> list = new ArrayList<InspectionProjectEntity>();
+	private List<CheckItemEntity> list = new ArrayList<CheckItemEntity>();
 	
 	/**id提交集合*/
 	private StringBuffer sbId=new StringBuffer();
@@ -93,6 +100,8 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 	private String name;
 
 	private String deviceCode;
+
+	private TextView despTv;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +132,7 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		inspectionTargetTv=(TextView)findViewById(R.id.inspectionTargetTv);
 		deviceNameTv=(TextView)findViewById(R.id.deviceNameTv);
 		deviceNumberTv=(TextView)findViewById(R.id.deviceNumberTv);
+		despTv=(TextView)findViewById(R.id.desp);
 		
 		submitBtn=(Button)findViewById(R.id.submitBtn);
 		submitBtn.setOnClickListener(this);
@@ -138,7 +148,7 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		base = md5(kb);
 		code = Base64.encodeToString(base.getBytes(), Base64.DEFAULT);
 
-		inspectionProjectLv=(ListView)findViewById(R.id.inspectionProjectLv);
+		inspectionProjectLv=(LinearLayout)findViewById(R.id.inspectionProjectLv);
 		
 		getResult();
 		
@@ -166,8 +176,8 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 					public void onResponse(JSONObject response) {
 						System.out.println("@@" + response.toString());
 						
-						list=GetInspectionProjectJson.getJson(response.toString());
-						int result = GetInspectionProjectJson.result;
+						list=GetItemJson.getJson(response.toString());
+						int result = GetItemJson.result;
 						if (result == 1) {
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
@@ -176,6 +186,8 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 							handler.sendEmptyMessage(0);
 						} else if (result == 103) {
 							handler.sendEmptyMessage(103);
+						} else if(result == 104){
+							handler.sendEmptyMessage(104);
 						}
 
 					}
@@ -191,6 +203,50 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 				});
 		DemoApplication.getInstance().getRequestQueue().add(req);
 	}
+	
+	public View getView(final CheckItemEntity item, ViewGroup parent) {
+			// 设置映射对象
+			LayoutInflater inflater = LayoutInflater.from(this);
+			View v = inflater.inflate(R.layout.list_item_written_inspection_detail, null);
+			Spinner resultSpn = (Spinner) v.findViewById(R.id.resultSpn);
+			TextView itemNameTv = (TextView) v.findViewById(R.id.itemNameTv);
+			
+		itemNameTv.setText(item.getTxpName()+"");
+
+		final String[] m={"正常","异常"};
+		
+		InspectionSpinnerAdapter adapter=new InspectionSpinnerAdapter(this, m);
+		
+//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,android.R.layout.simple_spinner_item,m);
+//		//设置下拉列表的风格
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+         
+        //将adapter 添加到spinner中
+        resultSpn.setAdapter(adapter);
+        
+        resultSpn.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+//				System.out.println(position+"--->>"+m[arg2]+"--"+arg2); 
+				if(m[arg2].toString().equals("正常")){
+//					System.out.println(position+"--->>"+m[arg2]+"--"+arg2);
+					item.setTxpStatus(1);
+				}else if(m[arg2].toString().equals("异常")){
+//					System.out.println(position+"--->>"+m[arg2]+"--"+arg2);
+					item.setTxpStatus(2);
+				}
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				
+			}
+		});
+		return v;
+	}
 
 	/**
 	 * description 消息处理
@@ -204,18 +260,23 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 			switch (msg.what) {
 			case 1:
 				//Toast.makeText(WrittenInspectionDetailActivity.this, "获取成功", 1000).show();
-				adapter=new WrittenInspectionDetailAdatper(CheckDeviceActivity.this, list);
-				inspectionProjectLv.setAdapter(adapter);
+//				adapter=new WrittenInspectionDetailAdatper(CheckDeviceActivity.this, list);ListView
+				for (CheckItemEntity item : list) {
+					View view = getView(item, inspectionProjectLv);
+					inspectionProjectLv.addView(view);
+					
+				}
 				
 				for(int i=0;i<list.size();i++){
 					if(i==(list.size()-1)){
-						sbId.append(list.get(i).getId());
+						sbId.append(list.get(i).getTxpId());
 					}else if(list.size()==1){
-						sbId.append(list.get(i).getId());
+						sbId.append(list.get(i).getTxpId());
 					}else{
-						sbId.append(list.get(i).getId()+",");
+						sbId.append(list.get(i).getTxpId()+",");
 					}
 				}
+				
 				
 				break;
 			case -1:
@@ -227,6 +288,11 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 			case 103:
 				Toast.makeText(CheckDeviceActivity.this, "参数错误", 1000).show();
 				break;
+				
+			case 104:
+				Toast.makeText(CheckDeviceActivity.this, "用户不存在", 1000).show();
+				break;
+				
 			case 2:
 				Toast.makeText(CheckDeviceActivity.this, "提交成功", 1000).show();
 				Intent data=new Intent();  
@@ -290,11 +356,11 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 			
 			for(int i=0;i<list.size();i++){
 				if(i==(list.size()-1)){
-					sbResult.append(list.get(i).getStatus());
+					sbResult.append(list.get(i).getTxpStatus());
 				}else if(list.size()==1){
-					sbResult.append(list.get(i).getStatus());
+					sbResult.append(list.get(i).getTxpStatus());
 				}else{
-					sbResult.append(list.get(i).getStatus()+",");
+					sbResult.append(list.get(i).getTxpStatus()+",");
 				}
 			}
 			System.out.println("id-->"+sbId.toString()+"--Result-->"+sbResult.toString());
@@ -325,7 +391,8 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		String url = "http://211.155.229.136:8080/assetapi2/xj/commit_item_result?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&recordIds="+id+"&detailIds="+ sbId.toString()
-				+ "&resultIds=" + sbResult.toString() ;
+				+ "&resultIds=" + sbResult.toString()
+				+ "&recorddesp=" + despTv.getText();
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();

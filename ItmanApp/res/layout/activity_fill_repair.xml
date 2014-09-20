@@ -40,7 +40,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/account_detail_back"
             android:orientation="vertical" >
-
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,10 +52,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="所属系统：" />
+                    android:text="所属公司：" />
 
                 <TextView
-                    android:id="@+id/systemsTv"
+                    android:id="@+id/unitsTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edt_shape"
+                    android:singleLine="true"
+                    android:padding="3dp"
+                    android:textSize="16sp" >
+                </TextView>
+                 <ImageView
+                    android:id="@+id/unitsIgv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/xl" />
+                
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="所属部门：" />
+
+                <TextView
+                    android:id="@+id/depsTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -66,7 +97,7 @@
                 </TextView>
 
                 <ImageView
-                    android:id="@+id/systemsIgv"
+                    android:id="@+id/depsIgv"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="10dp"
@@ -80,7 +111,67 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="所属机房：" />
+
+                <TextView
+                    android:id="@+id/roomsTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edt_shape"
+                    android:singleLine="true"
+                    android:padding="3dp"
+                    android:textSize="16sp" >
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/roomsIgv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/xl" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="机        柜：" />
+
+                <TextView
+                    android:id="@+id/cabTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edt_shape"
+                    android:singleLine="true"
+                    android:padding="3dp"
+                    android:textSize="16sp" >
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/cabIgv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/xl" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp" >
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -112,7 +203,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
@@ -144,7 +234,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="top"

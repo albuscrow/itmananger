@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.itmanapp.entity.DeviceTypeEntity;
-import com.itmanapp.entity.InspectionProjectEntity;
+import com.itmanapp.entity.CheckItemEntity;
 
 /**
  * @date 2014-7-28
@@ -16,12 +16,12 @@ import com.itmanapp.entity.InspectionProjectEntity;
  * @class description 我的巡检-巡检项目-数据解析类
  * 
  */
-public class GetInspectionProjectJson {
+public class GetItemJson {
 	
     public static int result = 0; 
     
-	public static List<InspectionProjectEntity> getJson(String response){
-		List<InspectionProjectEntity> list = new ArrayList<InspectionProjectEntity>();
+	public static List<CheckItemEntity> getJson(String response){
+		List<CheckItemEntity> list = new ArrayList<CheckItemEntity>();
 		try {
 			JSONObject job=new JSONObject(response);
 			result=job.getInt("result");
@@ -29,12 +29,15 @@ public class GetInspectionProjectJson {
 				if (job != null ) {
 					JSONArray jsonArray = job.getJSONArray("details");
 					for (int i = 0; i < jsonArray.length(); i++) {
-						InspectionProjectEntity entity=new InspectionProjectEntity();
+						CheckItemEntity entity=new CheckItemEntity();
 						JSONObject js = jsonArray.getJSONObject(i);
-						entity.setId(js.getInt("id"));
-						entity.setItemName(js.getString("itemName"));
-						entity.setResult(js.getInt("result")); 
-						entity.setAddtime(js.getString("addtime"));
+						entity.setTxpId(js.getLong("txpId"));
+						entity.setTxpName(js.getString("txpName"));
+						entity.setTxpStatus(js.getInt("txpStatus"));
+//						entity.setId(js.getInt("id"));
+//						entity.setItemName(js.getString("itemName"));
+//						entity.setResult(js.getInt("result")); 
+//						entity.setAddtime(js.getString("addtime"));
 						list.add(entity);
 					}
 				}

@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.itmanapp.R;
-import com.itmanapp.entity.InspectionProjectEntity;
+import com.itmanapp.entity.CheckItemEntity;
 
 /**
  * @date 2014-7-17
@@ -23,10 +23,10 @@ public class InspectionProjectAdatper extends BaseAdapter {
 
 	private Context context;
 
-	private List<InspectionProjectEntity> list = new ArrayList<InspectionProjectEntity>();
+	private List<CheckItemEntity> list = new ArrayList<CheckItemEntity>();
 
 	public InspectionProjectAdatper(Context context,
-			List<InspectionProjectEntity> list) {
+			List<CheckItemEntity> list) {
 		super();
 		this.context = context;
 		this.list =list;
@@ -64,14 +64,14 @@ public class InspectionProjectAdatper extends BaseAdapter {
 			holder = (ViewHolder) v.getTag();
 		}
 		//int result=list.get(position).getResult();
-		int result=list.get(position).getResult();
+		int result=1;
 		if(result==1){
 			holder.resultTv.setText("正常");
 		}else{
 			holder.resultTv.setText("异常");
 		}
 		
-		holder.itemNameTv.setText(list.get(position).getItemName()+"");
+		holder.itemNameTv.setText(list.get(position).getTxpName()+"");
 		return v;
 	}
 

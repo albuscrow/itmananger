@@ -184,15 +184,16 @@
                     android:layout_marginRight="10dp"
                     android:src="@drawable/line_2" />
 
-                <ListView
+                <LinearLayout
                     android:id="@+id/inspectionProjectLv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:layout_marginLeft="20dp"
+                    android:orientation="vertical"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1" >
-                </ListView>
+                </LinearLayout>
             </LinearLayout>
                            <LinearLayout
                     android:layout_width="match_parent"

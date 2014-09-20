@@ -30,8 +30,8 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.adapter.InspectionProjectAdatper;
-import com.itmanapp.entity.InspectionProjectEntity;
-import com.itmanapp.json.GetInspectionProjectJson;
+import com.itmanapp.entity.CheckItemEntity;
+import com.itmanapp.json.GetItemJson;
 import com.itmanapp.util.AppManager;
 
 /**
@@ -70,7 +70,7 @@ public class MyInspectionDetailActivity extends Activity implements OnClickListe
 	private InspectionProjectAdatper adapter;
 	
 	/**数据集合*/
-	private List<InspectionProjectEntity> list = new ArrayList<InspectionProjectEntity>();
+	private List<CheckItemEntity> list = new ArrayList<CheckItemEntity>();
 	
     private Intent intent;
 	
@@ -145,9 +145,9 @@ public class MyInspectionDetailActivity extends Activity implements OnClickListe
 
 					@Override
 					public void onResponse(JSONObject response) {
-						list=GetInspectionProjectJson.getJson(response.toString());
+						list=GetItemJson.getJson(response.toString());
 						System.out.println("@@" + response.toString());
-						int result = GetInspectionProjectJson.result;
+						int result = GetItemJson.result;
 						if (result == 1) {
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {

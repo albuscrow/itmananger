@@ -19,8 +19,8 @@ public class GetRoomSearchJson {
 
 	public static List<RoomEntity> entity = new ArrayList<RoomEntity>();
 
+	public static int result = 0;
 	public static int getJson(String response) {
-		int result = 0;
 		try {
 			JSONObject job = new JSONObject(response);
 			result = job.getInt("result");

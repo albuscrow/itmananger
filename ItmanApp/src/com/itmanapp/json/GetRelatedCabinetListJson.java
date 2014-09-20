@@ -16,7 +16,7 @@ import com.itmanapp.entity.RelatedDeviceEntity;
  * @class description 整改历史数据解析类
  * 
  */
-public class GetRelatedCabinetJson {
+public class GetRelatedCabinetListJson {
 	
 	public static int result = 0; 
 	

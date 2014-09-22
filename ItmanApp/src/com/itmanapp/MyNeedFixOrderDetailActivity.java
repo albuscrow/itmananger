@@ -9,6 +9,20 @@ import java.util.Random;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Base64;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
@@ -17,28 +31,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.entity.WorkOrderEntity;
 import com.itmanapp.json.GetWorkOrderDetailJson;
 import com.itmanapp.util.AppManager;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Base64;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.itmanapp.util.CustomRequest;
 
 /**
- * @date 2014-7-17
+ * @date 2014-8-1
  * @author wangpeng
- * @class description 我的维修工单详细页面
+ * @class description 待确认工单详细页面
  * 
  */
-public class MyRepairOrderDetailActivity extends Activity implements OnClickListener{
+public class MyNeedFixOrderDetailActivity extends Activity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -64,6 +65,12 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 	/**维修状态*/
 	private TextView statusTv;
 	
+//	/**确认按钮*/
+//	private Button confirmBtn;
+//	
+//	/**放弃按钮*/
+//	private Button giveupBtn;
+	
     private String key;
 	
 	private String base;
@@ -73,25 +80,25 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 	/** 进度框 */
 	private ProgressDialog mDialog = null;
 	
-	private long detailId;
+	private Long detailId;
 	
 	/**工单实体类*/
 	private WorkOrderEntity entity=null;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_repair_order_detail);
+		setContentView(R.layout.activity_need_fix_order_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
 	}
-
+	
 	/**
 	 * 控件显示
 	 */
 	private void getView() {
 		detailId=getIntent().getLongExtra("id", 0);
-		mDialog = new ProgressDialog(MyRepairOrderDetailActivity.this);
+		mDialog = new ProgressDialog(MyNeedFixOrderDetailActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
@@ -104,6 +111,11 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 		deviceTypeTv=(TextView)findViewById(R.id.deviceTypeTv);
 		despTv=(TextView)findViewById(R.id.despTv);
 		statusTv=(TextView)findViewById(R.id.statusTv);
+		
+//		confirmBtn=(Button)findViewById(R.id.confirmBtn);
+//		confirmBtn.setOnClickListener(this);
+//		giveupBtn=(Button)findViewById(R.id.giveupBtn);
+//		giveupBtn.setOnClickListener(this);
 		
 		key = getRandomString(5);
 		String kb = key + "ASSET-HJTECH";
@@ -180,7 +192,7 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
-				//Toast.makeText(MyRepairOrderDetailActivity.this, "获取成功", 1000).show();
+				//Toast.makeText(PendingConfirmWorkOrdersDetailActivity.this, "获取成功", 1000).show();
 				if(entity!=null){
 					orderNumberTv.setText(entity.getOrderNo()+"");
 					assignTimeTv.setText(entity.getAllocateDate()+"");
@@ -188,6 +200,14 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 					belongsSystemTv.setText(entity.getRoomName()+"");
 					deviceTypeTv.setText(entity.getAdName()+"");
 					despTv.setText(entity.getDesp()+"");
+					((TextView)findViewById(R.id.dep)).setText(entity.getDepName());
+					((TextView)findViewById(R.id.cab)).setText(entity.getCabinetName());
+					((TextView)findViewById(R.id.dcode)).setText(entity.getTdCode());
+					((TextView)findViewById(R.id.dtype)).setText(entity.getTdcName());
+					((TextView)findViewById(R.id.dp)).setText(entity.getTdPosition());
+					((TextView)findViewById(R.id.dp)).setText(entity.getTdPosition());
+					((TextView)findViewById(R.id.fixp)).setText(entity.getItemNames());
+					
 					int status=entity.getOrderStatus();
 					//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败
 					if(status==1){
@@ -208,24 +228,27 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 						statusTv.setText("维修失败");
 					}
 				}else{
-					Toast.makeText(MyRepairOrderDetailActivity.this, "获取失败", 1000).show();
+					Toast.makeText(MyNeedFixOrderDetailActivity.this, "获取失败", 1000).show();
 				}
 				
 				break;
 			case -1:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(MyNeedFixOrderDetailActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "获取失败", 1000).show();
+				Toast.makeText(MyNeedFixOrderDetailActivity.this, "获取失败", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "参数错误", 1000).show();
+				Toast.makeText(MyNeedFixOrderDetailActivity.this, "参数错误", 1000).show();
 				break;
 			case 104:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "工单不存在", 1000).show();
+				Toast.makeText(MyNeedFixOrderDetailActivity.this, "工单不存在", 1000).show();
 				break;
 			case 111:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "提交成功", 1000).show();
+				Toast.makeText(MyNeedFixOrderDetailActivity.this, "提交成功", 1000).show();
+				Intent data=new Intent();  
+	            //请求代码可以自己设置，这里设置成20  
+	            setResult(20, data);  
 				finish();
 				break;
 			}
@@ -277,16 +300,76 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 		return hex.toString().toUpperCase();
 	}
 
-	/***
-	 * 点击事件
-	 */
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.backBtn:
 			finish();
 			break;
+			
+//		case R.id.confirmBtn:
+//			submitData(2);
+//			break;
+//
+//		case R.id.giveupBtn:
+//			submitData(1);
+//			break;
 		}
 	}
+	
+	/**
+	 * description 解析数据
+	 * 
+	 * @return void
+	 */
+	private void submitData(int status) {
+
+		// tencent 123456
+		String url = "http://211.155.229.136:8080/assetapi2/order/sure_or_giveup?"
+				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
+		
+		System.out.println(url);
+
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("detailId", String.valueOf(detailId));
+		params.put("status", String.valueOf(status));
+
+		CustomRequest req = new CustomRequest(Method.POST, url,
+				params, new Listener<JSONObject>() {
+
+					@Override
+					public void onResponse(JSONObject response) {
+
+						System.out.println("@@" + response.toString());
+						
+						try {
+							int result = response.getInt("result");
+							if (result == 1) {
+								handler.sendEmptyMessage(111);
+							} else if (result == -1) {
+								handler.sendEmptyMessage(-1);
+							} else if (result == 0) {
+								handler.sendEmptyMessage(0);
+							} else if (result == 103) {
+								handler.sendEmptyMessage(103);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						
+					}
+				}, new Response.ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						System.out.println("##" + error.toString());
+						handler.sendEmptyMessage(0);
+
+					}
+				});
+		DemoApplication.getInstance().getRequestQueue().add(req);
+	}
+
 	
 }

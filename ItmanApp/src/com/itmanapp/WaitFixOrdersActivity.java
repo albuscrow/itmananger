@@ -268,7 +268,7 @@ public class WaitFixOrdersActivity extends Activity implements OnItemClickListen
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Intent intent=new Intent(WaitFixOrdersActivity.this, PendingWorkOrderDetailActivity.class);
+		Intent intent=new Intent(WaitFixOrdersActivity.this, FixActivity.class);
 		intent.putExtra("id", listAll.get(arg2-1).getDetailId());
 		System.out.println(listAll.get(arg2-1).getDetailId());
 		position=arg2-1;

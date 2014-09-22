@@ -158,7 +158,7 @@
         </activity>
         
         <!-- 待维修工单详细页面 -->
-        <activity android:name="com.itmanapp.PendingWorkOrderDetailActivity">
+        <activity android:name="com.itmanapp.FixActivity">
         </activity>
         
         
@@ -211,6 +211,9 @@
         </activity>
         
         <activity android:name="com.itmanapp.WaitFixOrdersActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp.MyNeedFixOrderDetailActivity">
         </activity>
     </application>
 

@@ -40,7 +40,7 @@ import com.itmanapp.util.AppManager;
  * @class description 待维修工单详细页面
  * 
  */
-public class PendingWorkOrderDetailActivity extends Activity implements OnClickListener{
+public class FixActivity extends Activity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -73,7 +73,7 @@ public class PendingWorkOrderDetailActivity extends Activity implements OnClickL
 	private ProgressDialog mDialog = null;
 	
 	/**维修明细Id*/
-	private int detailId;
+	private Long detailId;
 	
 	/**工单实体类*/
 	private WorkOrderEntity entity=null;
@@ -81,7 +81,7 @@ public class PendingWorkOrderDetailActivity extends Activity implements OnClickL
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pending_work_order_detail);
+		setContentView(R.layout.fix_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
 	}
@@ -90,9 +90,9 @@ public class PendingWorkOrderDetailActivity extends Activity implements OnClickL
 	 * 控件显示
 	 */
 	private void getView() {
-		detailId=getIntent().getIntExtra("id", 0);
+		detailId=getIntent().getLongExtra("id", 0);
 		System.out.println("detailId==="+detailId);
-		mDialog = new ProgressDialog(PendingWorkOrderDetailActivity.this);
+		mDialog = new ProgressDialog(FixActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		
 		orderNumberTv=(TextView)findViewById(R.id.orderNumberTv);
@@ -130,7 +130,7 @@ public class PendingWorkOrderDetailActivity extends Activity implements OnClickL
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/order/detail?"
+		String url = "http://211.155.229.136:8080/assetapi2/order/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&detailId=" + detailId;
 		System.out.println(url);
@@ -186,7 +186,7 @@ public class PendingWorkOrderDetailActivity extends Activity implements OnClickL
 				if(entity!=null){
 					orderNumberTv.setText(entity.getOrderNo()+"");
 					allocationTimeTv.setText(entity.getAllocateDate()+"");
-					projectTv.setText(entity.getTdName()+"");
+					projectTv.setText(entity.getItemNames()+"");
 					int status=entity.getOrderStatus();
 					//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败
 					if(status==1){
@@ -207,21 +207,21 @@ public class PendingWorkOrderDetailActivity extends Activity implements OnClickL
 						statusTv.setText("维修失败");
 					}
 				}else{
-					Toast.makeText(PendingWorkOrderDetailActivity.this, "获取失败", 1000).show();
+					Toast.makeText(FixActivity.this, "获取失败", 1000).show();
 				}
 				break;
 			case -1:
-				Toast.makeText(PendingWorkOrderDetailActivity.this, "验证不通过，非法用户", 1000)
+				Toast.makeText(FixActivity.this, "验证不通过，非法用户", 1000)
 						.show();
 				break;
 			case 0:
-				Toast.makeText(PendingWorkOrderDetailActivity.this, "获取失败", 1000).show();
+				Toast.makeText(FixActivity.this, "获取失败", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(PendingWorkOrderDetailActivity.this, "参数错误", 1000).show();
+				Toast.makeText(FixActivity.this, "参数错误", 1000).show();
 				break;
 			case 111:
-				Toast.makeText(PendingWorkOrderDetailActivity.this, "提交成功", 1000).show();
+				Toast.makeText(FixActivity.this, "提交成功", 1000).show();
 				Intent data=new Intent();  
 	            //请求代码可以自己设置，这里设置成20  
 	            setResult(20, data);  
@@ -297,10 +297,19 @@ public class PendingWorkOrderDetailActivity extends Activity implements OnClickL
 		case R.id.repairCompleteBtn:
 			String desp=despEdt.getText().toString().trim();
 			if(isEmpty(desp)){
-				Toast.makeText(PendingWorkOrderDetailActivity.this, "维修描述未填写", 1000).show();
+				Toast.makeText(FixActivity.this, "维修描述未填写", 1000).show();
 				return;
 			}
 			submitData(desp);
+			break;
+			
+		case R.id.giveupBtn:
+			String desp2=despEdt.getText().toString().trim();
+			if(isEmpty(desp2)){
+				Toast.makeText(FixActivity.this, "维修描述未填写", 1000).show();
+				return;
+			}
+			submitData(desp2);
 			break;
 
 		default:

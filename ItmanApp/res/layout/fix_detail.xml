@@ -137,17 +137,37 @@
                 android:textSize="16sp" >
             </EditText>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/repairCompleteBtn"
+        
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/dl"
-            android:text="维修完成"
-            android:textColor="#FFFFFF" />
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/repairCompleteBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/cxzgjl"
+                android:text="维修完成"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp" />
+
+            <Button
+                android:id="@+id/giveupBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/glsb"
+                android:text="维修失败"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp" />
+        </LinearLayout> 
+        
     </LinearLayout>
 
     <LinearLayout

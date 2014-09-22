@@ -269,7 +269,7 @@ public class PendingWorkOrdersActivity extends Activity implements OnItemClickLi
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Intent intent=new Intent(PendingWorkOrdersActivity.this,PendingWorkOrderDetailActivity.class);
+		Intent intent=new Intent(PendingWorkOrdersActivity.this,FixActivity.class);
 		intent.putExtra("id", listAll.get(arg2-1).getDetailId());
 		position=arg2-1;
 		startActivityForResult(intent, 100);

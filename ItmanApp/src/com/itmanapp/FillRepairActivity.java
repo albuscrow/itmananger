@@ -542,11 +542,11 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void submitResult() {
 
-		try {
-			descriptionStr = URLEncoder.encode(descriptionStr, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			descriptionStr = URLEncoder.encode(descriptionStr, "UTF-8");
+//		} catch (UnsupportedEncodingException e1) {
+//			e1.printStackTrace();
+//		}
 		
 //		String url = "http://211.155.229.136:8080/assetapi2/order/add?"
 //				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="

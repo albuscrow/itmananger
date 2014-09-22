@@ -134,7 +134,7 @@
         
         
         <!-- 我的巡检页面 -->
-        <activity android:name="com.itmanapp.MyInspectionActivity">
+        <activity android:name="com.itmanapp.MyCheckActivity">
         </activity>
         
         <!-- 我的巡检详细页面 -->
@@ -208,6 +208,9 @@
         </activity>
         
         <activity android:name="com.itmanapp.GetOrderActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp.WaitFixOrdersActivity">
         </activity>
     </application>
 

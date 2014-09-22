@@ -36,9 +36,21 @@ public class GetCheckDeviceListJson {
 						entity.setTdName(js.getString("tdName"));
 						entity.setTdCode(js.getString("tdCode"));
 						try {
+							entity.setAddDate(js.getString("addDate"));
+						} catch (Exception e) {
+							System.out.println("no field called addDate");
+						}
+						
+						try {
 							entity.setTxrStatus(js.getInt("txrStatus"));
 						} catch (Exception e) {
 							e.printStackTrace();
+						}
+						
+						try {
+							
+						} catch (Exception e) {
+							// TODO: handle exception
 						}					
 					    list.add(entity);
 					}

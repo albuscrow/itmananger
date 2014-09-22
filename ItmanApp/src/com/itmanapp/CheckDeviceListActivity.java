@@ -130,7 +130,9 @@ public class CheckDeviceListActivity extends Activity implements
 			String url = "http://211.155.229.136:8080/assetapi2/xj/records?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&planId="+id
-					+ "&userId=" + userId;
+					+ "&userId=" + userId
+					+ "&status=0";
+			
 			System.out.println(url);
 
 			HashMap<String, String> params = new HashMap<String, String>();

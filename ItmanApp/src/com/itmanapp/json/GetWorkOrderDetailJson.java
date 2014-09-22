@@ -26,19 +26,25 @@ public class GetWorkOrderDetailJson {
 				JSONObject js = job.getJSONObject("details");
 				if(js!=null){
 					entity=new WorkOrderEntity();
+				
 					entity.setAddTime(js.getString("addTime"));
 					entity.setAllocateDate(js.getString("allocateDate"));
 					entity.setDesp(js.getString("desp"));
-					entity.setDetailId(js.getInt("detailId"));
+					entity.setDetailId(js.getLong("detailId"));
 					entity.setDetailStatus(js.getInt("detailStatus"));
-					entity.setOrderId(js.getInt("orderId"));
+					entity.setOrderId(js.getLong("orderId"));
 					entity.setOrderNo(js.getString("orderNo"));
 					entity.setOrderStatus(js.getInt("orderStatus"));
-					entity.setWxName(js.getString("wxName"));
-					entity.setAdCode(js.getString("adCode"));
+					
 					entity.setAdName(js.getString("adName"));
-					entity.setAsName(js.getString("asName"));
 					entity.setAuiName(js.getString("auiName"));
+					entity.setDepName(js.getString("depName"));
+					entity.setRoomName(js.getString("roomName"));
+					entity.setCabinetName(js.getString("cabinetName"));
+					entity.setTdcName(js.getString("tdcName"));
+					entity.setTdPosition(js.getString("tdPosition"));
+					entity.setItemNames(js.getString("itemNames"));
+					entity.setTdCode(js.getString("tdCode"));
 				}
 			}
 		} catch (JSONException e) {

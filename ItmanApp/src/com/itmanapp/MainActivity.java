@@ -162,7 +162,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			
 		//我的巡检
 		case R.id.myInspectionLayout:
-			Intent intent3=new Intent(MainActivity.this,MyInspectionActivity.class);
+			Intent intent3=new Intent(MainActivity.this,MyCheckActivity.class);
 			startActivity(intent3);
 			break;	
 			
@@ -174,7 +174,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			
 		//待维修工单
 		case R.id.pendingWorkOrdersLayout:
-			Intent intent6=new Intent(MainActivity.this,PendingWorkOrdersActivity.class);
+			Intent intent6=new Intent(MainActivity.this,WaitFixOrdersActivity.class);
 			startActivity(intent6);
 			break;
 			

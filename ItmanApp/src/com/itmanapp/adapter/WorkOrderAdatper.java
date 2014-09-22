@@ -67,7 +67,7 @@ public class WorkOrderAdatper extends BaseAdapter {
 		}
 		holder.assignTimeTv.setText(workOrderList.get(position).getAllocateDate()+"");
 		holder.assignNumberTv.setText(workOrderList.get(position).getOrderNo()+"");
-		holder.repairProjectTv.setText(workOrderList.get(position).getWxName()+"");
+		holder.repairProjectTv.setText(workOrderList.get(position).getTdName()+"");
 		
 		int status=workOrderList.get(position).getOrderStatus();
 		//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败

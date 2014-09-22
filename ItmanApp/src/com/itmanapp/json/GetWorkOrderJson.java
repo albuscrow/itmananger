@@ -36,12 +36,12 @@ public class GetWorkOrderJson {
 						entity.setAddTime(js.getString("addTime"));
 						entity.setAllocateDate(js.getString("allocateDate"));
 						entity.setDesp(js.getString("desp"));
-						entity.setDetailId(js.getInt("detailId"));
+						entity.setDetailId(js.getLong("detailId"));
 						entity.setDetailStatus(js.getInt("detailStatus"));
-						entity.setOrderId(js.getInt("orderId"));
+						entity.setOrderId(js.getLong("orderId"));
 						entity.setOrderNo(js.getString("orderNo"));
 						entity.setOrderStatus(js.getInt("orderStatus"));
-						entity.setWxName(js.getString("wxName"));
+						entity.setTdName(js.getString("tdName"));
 						modifyInfoList.add(entity);
 					}
 				}

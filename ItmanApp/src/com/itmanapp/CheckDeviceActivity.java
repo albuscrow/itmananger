@@ -307,6 +307,15 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 			}
 		}
 	};
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == 20) {
+			Intent intent=new Intent();  
+			//请求代码可以自己设置，这里设置成20  
+			setResult(20, intent);  
+			finish();
+		}
+	};
 
 	/**
 	 * description 随机生成5位字符串
@@ -369,7 +378,7 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 			
 		case R.id.bx_Btn:
 			Intent intent3=new Intent(CheckDeviceActivity.this,FillRepairActivity.class);
-			startActivity(intent3);
+			startActivityForResult(intent3, 2);
 			break;
 			
 		case R.id.backBtn:

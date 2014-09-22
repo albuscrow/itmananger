@@ -50,7 +50,7 @@ import com.itmanapp.widget.listview.XListView.IXListViewListener;
  * @class description 我的巡检页面
  * 
  */
-public class MyInspectionActivity extends Activity implements OnItemClickListener,OnClickListener{
+public class MyCheckActivity extends Activity implements OnItemClickListener,OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -125,12 +125,12 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 	 * 控件显示
 	 */
 	private void getView() {
-		mDialog = new ProgressDialog(MyInspectionActivity.this);
+		mDialog = new ProgressDialog(MyCheckActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		
 		myInspectionLv=(XListView)findViewById(R.id.myInspectionLv);
 		myInspectionLv.setOnItemClickListener(this);
-		adapter=new NeedToCheckDeviceAdatper(MyInspectionActivity.this, listAll);
+		adapter=new NeedToCheckDeviceAdatper(MyCheckActivity.this, listAll, true);
 		myInspectionLv.setAdapter(adapter);
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
@@ -165,7 +165,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 
 		if (!loading) {
 			// tencent 123456
-			String url = "http://211.155.229.136:8080/assetapi/xj/user_record?"
+			String url = "http://211.155.229.136:8080/assetapi2/xj/records?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&userId="+userId+"&status="+status+"&page="+pageIndex;
 			System.out.println(url);
@@ -180,7 +180,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 							loading = true;
 							System.out.println("@@" + response.toString());
 							list=GetCheckDeviceListJson.getJson(response.toString());
-							int result = GetMyInspectionJson.result;
+							int result = GetCheckDeviceListJson.result;
 							if (result == 1) {
 								if (list != null && list.size() > 0) {
 									// 适配数据
@@ -227,13 +227,13 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 				//Toast.makeText(MyInspectionActivity.this, "获取成功", 1000).show();
 				break;
 			case -1:
-				Toast.makeText(MyInspectionActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(MyCheckActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(MyInspectionActivity.this, "获取失败", 1000).show();
+				Toast.makeText(MyCheckActivity.this, "获取失败", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(MyInspectionActivity.this, "参数错误", 1000).show();
+				Toast.makeText(MyCheckActivity.this, "参数错误", 1000).show();
 				break;
 			}
 			// 关闭ProgressDialog
@@ -289,13 +289,10 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 	 **/
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//		System.out.println(listAll.get(arg2-1).getPlanName()+"");
-//		Intent intent=new Intent(MyInspectionActivity.this,MyInspectionDetailActivity.class);
-//		intent.putExtra("planName", listAll.get(arg2-1).getAsName()+"");
-//		intent.putExtra("adName", listAll.get(arg2-1).getAdName()+"");
-//		intent.putExtra("destId", listAll.get(arg2-1).getAdCode()+"");
-//		intent.putExtra("id", listAll.get(arg2-1).getId());
-//		startActivity(intent);
+		Intent intent=new Intent(MyCheckActivity.this,GetOrderActivity.class);
+		intent.putExtra("id", list.get(arg2).getTxrId());
+//		position=arg2;
+		startActivityForResult(intent, 100);
 	}
 
 	/**
@@ -405,7 +402,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 
 			@Override
 			public void onLoadMore() {
-				if (NetworkCheck.check(MyInspectionActivity.this) != null) {
+				if (NetworkCheck.check(MyCheckActivity.this) != null) {
 					if (!flag) {
 
 						flag = true;
@@ -486,7 +483,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 				listAll.clear();
 				adapter.notifyDataSetChanged();
 				refreshAndLoad();
-				Toast.makeText(MyInspectionActivity.this,
+				Toast.makeText(MyCheckActivity.this,
 						getString(R.string.no_data), Toast.LENGTH_SHORT).show();
 				// 停止加载更多复位页脚视图
 				myInspectionLv.stopLoadMore();
@@ -522,7 +519,7 @@ public class MyInspectionActivity extends Activity implements OnItemClickListene
 			// 无网络
 			case 0X320:
 				listAll.clear();
-				Toast.makeText(MyInspectionActivity.this,
+				Toast.makeText(MyCheckActivity.this,
 						getString(R.string.noNetwork), Toast.LENGTH_SHORT)
 						.show();
 				refreshAndLoad();

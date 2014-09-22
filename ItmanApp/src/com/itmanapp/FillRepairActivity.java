@@ -6,8 +6,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +38,7 @@ import com.itmanapp.json.GetRelatedDeviceJson;
 import com.itmanapp.json.GetRoomSearchJson;
 import com.itmanapp.json.GetUnitJson;
 import com.itmanapp.util.AppManager;
+import com.itmanapp.util.CustomRequest;
 import com.itmanapp.widget.spiner.AbstractSpinerAdapter.IOnItemSelectListener;
 import com.itmanapp.widget.spiner.SpinerPopWindow;
 
@@ -151,8 +155,8 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	/**设备Id*/
 	private long adId;
 	
-	/**维修类型Id*/
-	private int wxId;
+//	/**维修类型Id*/
+//	private long wxId;
 
 	private ImageView unitsIgv;
 
@@ -544,16 +548,28 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 			e1.printStackTrace();
 		}
 		
-		String url = "http://211.155.229.136:8080/assetapi/order/add?"
-				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&userId="+userId+"&systemId="+roomId+"&deviceId="+adId
-				+"&wxId="+wxId+"&desp="+descriptionStr;
+//		String url = "http://211.155.229.136:8080/assetapi2/order/add?"
+//				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+//				+ "&userId="+userId+"&roomId="+roomId+"&deviceId="+adId + "&cabinetId=" + cabId
+//				+ "&unitId=" + unitId + "&depId="+depId 
+//				+"&wxId="+getWxIdStr()+"&desp="+descriptionStr;
+		String url = "http://211.155.229.136:8080/assetapi2/order/add?"
+				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
+		
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("userId", String.valueOf(userId));
+		params.put("unitId", String.valueOf(unitId));
+		params.put("depId", String.valueOf(depId));
+		params.put("roomId", String.valueOf(roomId));
+		params.put("cabinetId", String.valueOf(cabId));
+		params.put("deviceId", String.valueOf(adId));
+		params.put("wxIds", getWxIdStr());
+		params.put("desp", descriptionStr);
 
-		JsonObjectRequest req = new JsonObjectRequest(Method.POST, url,
-				new JSONObject(params), new Listener<JSONObject>() {
+		CustomRequest req = new CustomRequest(Method.POST, url,
+				params, new Listener<JSONObject>() {
 
 					@Override
 					public void onResponse(JSONObject response) {
@@ -588,6 +604,17 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 					}
 				});
 		DemoApplication.getInstance().getRequestQueue().add(req);
+	}
+
+	private String getWxIdStr() {
+		String result = "";
+		for (Long i : item) {
+			result += (i.toString() + ",");
+		}
+		if (result.length() > 0) {
+			result = result.substring(0, result.length() - 1);
+		}
+		return result;
 	}
 
 	private List<String> unitNameList = new ArrayList<String>();
@@ -653,9 +680,11 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 			case 3:
 				//Toast.makeText(FillRepairActivity.this, "获取成功", 1000).show();
 				for(int i = 0; i < deviceTypeList.size(); i++){
-					deviceTypeStrList.add(deviceTypeList.get(i).getAdvItemName());
+					deviceTypeStrList.add(deviceTypeList.get(i).getTwcName());
+					deviceTypeNames.put(deviceTypeList.get(i).getTwcId(), deviceTypeList.get(i).getTwcName());
 				}
 				mSpinerPopWindow3 = new SpinerPopWindow(FillRepairActivity.this);
+				mSpinerPopWindow3.setNeedDismiss(false);
 				mSpinerPopWindow3.refreshData(deviceTypeStrList, 0);
 				mSpinerPopWindow3.setItemListener(FillRepairActivity.this);
 				
@@ -675,6 +704,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				break;
 			case 4:
 				Toast.makeText(FillRepairActivity.this, "添加成功", 1000).show();
+				setResult(20);
 				finish();
 				break;
 			}
@@ -756,6 +786,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				cabNameList.clear();
 				eptStrList.clear();
 				deviceTypeStrList.clear();
+				deviceTypeNames.clear();
 				showSpinWindow0();
 				first=0;
 			}
@@ -771,6 +802,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				cabNameList.clear();
 				eptStrList.clear();
 				deviceTypeStrList.clear();
+				deviceTypeNames.clear();
 				showSpinWindow05();
 				first=15;
 			}
@@ -781,6 +813,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				typeRepairTv.setText("");
 				eptStrList.clear();
 				deviceTypeStrList.clear();
+				deviceTypeNames.clear();
 				showSpinWindow15();
 				first=16;
 			}
@@ -795,6 +828,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				cabNameList.clear();
 				eptStrList.clear();
 				deviceTypeStrList.clear();
+				deviceTypeNames.clear();
 				showSpinWindow1();
 				first=1;
 			}
@@ -807,6 +841,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 			System.out.println("deviceTypeStrList"+deviceTypeStrList);
 			if(eptStrList.size()>0&&eptStrList!=null){
 				System.out.println("222222222");
+				deviceTypeNames.clear();
 				deviceTypeStrList.clear();
 				typeRepairTv.setText("");
 				showSpinWindow2();
@@ -886,14 +921,34 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		}
 	}
 	
+	Set<Long> item = new HashSet<Long>();
+	
 	private void setHero3(int pos){
 		if (pos >= 0 && pos <= deviceTypeStrList.size()){
-			String value = deviceTypeStrList.get(pos);
-			wxId=deviceTypeList.get(pos).getAdvId();
+			
+			long wxId=deviceTypeList.get(pos).getTwcId();
+			if (item.contains(wxId)) {
+				item.remove(wxId);
+			}else{
+				item.add(wxId);
+			}
+			String value = getItemStr();
 			typeRepairTv.setText(value);
 		}
 	}
 	
+
+	Map<Long, String> deviceTypeNames = new HashMap<>();
+	private String getItemStr() {
+		String result = "";
+		for (Long i : item) {
+			result += (deviceTypeNames.get(i) + ",");
+		}
+		if (result.length() > 0) {
+			result = result.substring(0, result.length() - 1);
+		}
+		return result;
+	}
 
 	private void setHero15(int pos){
 		if (pos >= 0 && pos <= cabList.size()){

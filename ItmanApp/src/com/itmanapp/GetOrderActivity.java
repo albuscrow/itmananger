@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -194,10 +195,14 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 
 						System.out.println("@@" + response.toString());
 						
-						int result = GetCheckDetailJson.getJson(response.toString());
+						int result = -1;
+						try {
+							result = response.getInt("result");
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 						if (result == 1) {
-							entity=GetCheckDetailJson.entity;
-							handler.sendEmptyMessage(1);
+							handler.sendEmptyMessage(10086);
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
 						} else if (result == 0) {
@@ -257,6 +262,16 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 			case 103:
 				Toast.makeText(GetOrderActivity.this, "参数错误", 1000).show();
 				break;
+			case 10086:
+				Toast.makeText(GetOrderActivity.this, "领取成功", 1000).show();
+				findViewById(R.id.get_Btn).setEnabled(false);
+				Intent intent1=new Intent(GetOrderActivity.this, CheckDeviceActivity.class);
+				intent1.putExtra("id", entity.getTxcId());
+				intent1.putExtra("planName", entity.getTxpName());
+				intent1.putExtra("name", entity.getTdName());
+				intent1.putExtra("code", entity.getTdCode());
+				startActivityForResult(intent1, 1);
+				break;
 			}
 			// 关闭ProgressDialog
 			if (mDialog != null && mDialog.isShowing()) {
@@ -314,16 +329,22 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 			finish();
 			break;
 		case R.id.get_Btn:
-			//TODO
-//			getOrder();
-			Intent intent1=new Intent(GetOrderActivity.this, CheckDeviceActivity.class);
-			intent1.putExtra("id", entity.getTxcId());
-			intent1.putExtra("planName", entity.getTxpName());
-			intent1.putExtra("name", entity.getTdName());
-			intent1.putExtra("code", entity.getTdCode());
-			startActivity(intent1);
+//			TODO
+			getOrder();
+			
 			break;
 		}
 		
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == 20) {
+			Intent intent=new Intent();  
+			//请求代码可以自己设置，这里设置成20  
+			setResult(20, intent);  
+			finish();
+		}
 	}
 }

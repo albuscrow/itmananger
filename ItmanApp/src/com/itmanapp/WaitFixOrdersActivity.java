@@ -45,7 +45,7 @@ import com.itmanapp.widget.listview.XListView.IXListViewListener;
  * @class description 待确认工单页面
  * 
  */
-public class PendingConfirmWorkOrdersActivity extends Activity implements OnItemClickListener,OnClickListener{
+public class WaitFixOrdersActivity extends Activity implements OnItemClickListener,OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -112,7 +112,7 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 	 * 控件显示
 	 */
 	private void getView() {
-		mDialog = new ProgressDialog(PendingConfirmWorkOrdersActivity.this);
+		mDialog = new ProgressDialog(WaitFixOrdersActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
@@ -120,7 +120,7 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 		
 		confirmWorkOrderLv=(XListView)findViewById(R.id.confirmWorkOrderLv);
 		confirmWorkOrderLv.setOnItemClickListener(this);
-		adapter=new WorkOrderAdatper(PendingConfirmWorkOrdersActivity.this, listAll);
+		adapter=new WorkOrderAdatper(WaitFixOrdersActivity.this, listAll);
 		confirmWorkOrderLv.setAdapter(adapter);
 		
 		key = getRandomString(5);
@@ -146,7 +146,7 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 			// tencent 123456
 			String url = "http://211.155.229.136:8080/assetapi2/order/list?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-					+ "&userId="+userId+"&status=1"+"&page="+pageIndex;
+					+ "&userId="+userId+"&status=2"+"&page="+pageIndex;
 			System.out.println(url);
 
 			HashMap<String, String> params = new HashMap<String, String>();
@@ -206,13 +206,13 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 				//Toast.makeText(PendingConfirmWorkOrdersActivity.this, "获取成功", 1000).show();
 				break;
 			case -1:
-				Toast.makeText(PendingConfirmWorkOrdersActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(WaitFixOrdersActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
-				Toast.makeText(PendingConfirmWorkOrdersActivity.this, "获取失败", 1000).show();
+				Toast.makeText(WaitFixOrdersActivity.this, "获取失败", 1000).show();
 				break;
 			case 103:
-				Toast.makeText(PendingConfirmWorkOrdersActivity.this, "参数错误", 1000).show();
+				Toast.makeText(WaitFixOrdersActivity.this, "参数错误", 1000).show();
 				break;
 			}
 			// 关闭ProgressDialog
@@ -268,7 +268,7 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Intent intent=new Intent(PendingConfirmWorkOrdersActivity.this,PendingConfirmWorkOrdersDetailActivity.class);
+		Intent intent=new Intent(WaitFixOrdersActivity.this, PendingWorkOrderDetailActivity.class);
 		intent.putExtra("id", listAll.get(arg2-1).getDetailId());
 		System.out.println(listAll.get(arg2-1).getDetailId());
 		position=arg2-1;
@@ -341,7 +341,7 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 
 			@Override
 			public void onLoadMore() {
-				if (NetworkCheck.check(PendingConfirmWorkOrdersActivity.this) != null) {
+				if (NetworkCheck.check(WaitFixOrdersActivity.this) != null) {
 					if (!flag) {
 
 						flag = true;
@@ -421,7 +421,7 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 			case 0X001:
 				listAll.clear();
 				refreshAndLoad();
-				Toast.makeText(PendingConfirmWorkOrdersActivity.this,
+				Toast.makeText(WaitFixOrdersActivity.this,
 						getString(R.string.no_data), Toast.LENGTH_SHORT).show();
 				// 停止加载更多复位页脚视图
 				confirmWorkOrderLv.stopLoadMore();
@@ -457,7 +457,7 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 			// 无网络
 			case 0X320:
 				listAll.clear();
-				Toast.makeText(PendingConfirmWorkOrdersActivity.this,
+				Toast.makeText(WaitFixOrdersActivity.this,
 						getString(R.string.noNetwork), Toast.LENGTH_SHORT)
 						.show();
 				refreshAndLoad();

@@ -26,13 +26,22 @@ public class NeedToCheckDeviceAdatper extends BaseAdapter {
 
 	private List<DeviceNeedToCheck> list = new ArrayList<DeviceNeedToCheck>();
 
+	private boolean needTime = false;
+
 	public NeedToCheckDeviceAdatper(Context context,
 			List<DeviceNeedToCheck> list2) {
 		super();
 		this.context = context;
 		this.list = list2;
 	}
-
+	
+	public NeedToCheckDeviceAdatper(Context context,
+			List<DeviceNeedToCheck> list2, boolean needTime) {
+		super();
+		this.context = context;
+		this.list = list2;
+		this.needTime = needTime;
+	}
 	@Override
 	public int getCount() {
 		return list.size();
@@ -61,15 +70,17 @@ public class NeedToCheckDeviceAdatper extends BaseAdapter {
 			holder.name = (TextView) v.findViewById(R.id.name);
 			holder.status = (TextView) v.findViewById(R.id.statu);
 			holder.code = (TextView) v.findViewById(R.id.code);
+			holder.time = (TextView) v.findViewById(R.id.time);
 			v.setTag(holder);
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		holder.name.setText(list.get(position).getTdName()+"");
-		holder.code.setText(list.get(position).getTdCode()+"");
+		DeviceNeedToCheck deviceNeedToCheck = list.get(position);
+		holder.name.setText(deviceNeedToCheck.getTdName()+"");
+		holder.code.setText(deviceNeedToCheck.getTdCode()+"");
 	 
 		
-		int status=list.get(position).getTxrStatus();
+		int status=deviceNeedToCheck.getTxrStatus();
 		if(status==0){
 			holder.status.setText("任务生成");
 		}else if(status==1){
@@ -80,6 +91,10 @@ public class NeedToCheckDeviceAdatper extends BaseAdapter {
 			holder.status.setText("已验收");
 		}else if(status==2){
 			holder.status.setText("已领取");
+		}
+		
+		if (needTime) {
+			holder.time.setText("分配时间：" + deviceNeedToCheck.getAddDate());
 		}
 		
 		return v;
@@ -94,6 +109,8 @@ public class NeedToCheckDeviceAdatper extends BaseAdapter {
 		private TextView status;
 		
 		private TextView code;
+		
+		private TextView time;
 	}
 
 }

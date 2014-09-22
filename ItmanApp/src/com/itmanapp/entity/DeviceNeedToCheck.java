@@ -20,7 +20,21 @@ public class DeviceNeedToCheck {
     String txcName;
     long txcId;
     String txpNames;
+    
+    String addDate;
 	
+	/**
+	 * @return the addDate
+	 */
+	public String getAddDate() {
+		return addDate;
+	}
+	/**
+	 * @param addDate the addDate to set
+	 */
+	public void setAddDate(String addDate) {
+		this.addDate = addDate;
+	}
 	/**
 	 * @return the txpName
 	 */

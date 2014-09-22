@@ -69,11 +69,31 @@ public class SpinerPopWindow extends PopupWindow implements OnItemClickListener{
 			mAdapter.refreshData(list, selIndex);
 		}
 	}
+	
+	boolean needDismiss = true;
+
+
+	/**
+	 * @return the needDismiss
+	 */
+	public boolean isNeedDismiss() {
+		return needDismiss;
+	}
+
+
+	/**
+	 * @param needDismiss the needDismiss to set
+	 */
+	public void setNeedDismiss(boolean needDismiss) {
+		this.needDismiss = needDismiss;
+	}
 
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
-		dismiss();
+		if (needDismiss) {
+			dismiss();
+		}
 		if (mItemSelectListener != null){
 			mItemSelectListener.onItemClick(pos);
 		}

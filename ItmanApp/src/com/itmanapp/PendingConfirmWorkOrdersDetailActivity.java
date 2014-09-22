@@ -31,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.entity.WorkOrderEntity;
 import com.itmanapp.json.GetWorkOrderDetailJson;
 import com.itmanapp.util.AppManager;
+import com.itmanapp.util.CustomRequest;
 
 /**
  * @date 2014-8-1
@@ -79,7 +80,7 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 	/** 进度框 */
 	private ProgressDialog mDialog = null;
 	
-	private int detailId;
+	private Long detailId;
 	
 	/**工单实体类*/
 	private WorkOrderEntity entity=null;
@@ -96,7 +97,7 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 	 * 控件显示
 	 */
 	private void getView() {
-		detailId=getIntent().getIntExtra("id", 0);
+		detailId=getIntent().getLongExtra("id", 0);
 		mDialog = new ProgressDialog(PendingConfirmWorkOrdersDetailActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		
@@ -138,7 +139,7 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/order/detail?"
+		String url = "http://211.155.229.136:8080/assetapi2/order/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&detailId="+detailId;
 		System.out.println(url);
@@ -196,9 +197,17 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 					orderNumberTv.setText(entity.getOrderNo()+"");
 					assignTimeTv.setText(entity.getAllocateDate()+"");
 					useNameTv.setText(entity.getAuiName()+"");
-					belongsSystemTv.setText(entity.getAsName()+"");
+					belongsSystemTv.setText(entity.getRoomName()+"");
 					deviceTypeTv.setText(entity.getAdName()+"");
 					despTv.setText(entity.getDesp()+"");
+					((TextView)findViewById(R.id.dep)).setText(entity.getDepName());
+					((TextView)findViewById(R.id.cab)).setText(entity.getCabinetName());
+					((TextView)findViewById(R.id.dcode)).setText(entity.getTdCode());
+					((TextView)findViewById(R.id.dtype)).setText(entity.getTdcName());
+					((TextView)findViewById(R.id.dp)).setText(entity.getTdPosition());
+					((TextView)findViewById(R.id.dp)).setText(entity.getTdPosition());
+					((TextView)findViewById(R.id.fixp)).setText(entity.getItemNames());
+					
 					int status=entity.getOrderStatus();
 					//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败
 					if(status==1){
@@ -316,15 +325,17 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 	private void submitData(int status) {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/order/sure_or_giveup?"
-				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&detailId="+detailId+"&status="+status;
+		String url = "http://211.155.229.136:8080/assetapi2/order/sure_or_giveup?"
+				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
+		
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("detailId", String.valueOf(detailId));
+		params.put("status", String.valueOf(status));
 
-		JsonObjectRequest req = new JsonObjectRequest(Method.POST, url,
-				new JSONObject(params), new Listener<JSONObject>() {
+		CustomRequest req = new CustomRequest(Method.POST, url,
+				params, new Listener<JSONObject>() {
 
 					@Override
 					public void onResponse(JSONObject response) {

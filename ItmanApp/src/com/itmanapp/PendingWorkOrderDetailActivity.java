@@ -186,7 +186,7 @@ public class PendingWorkOrderDetailActivity extends Activity implements OnClickL
 				if(entity!=null){
 					orderNumberTv.setText(entity.getOrderNo()+"");
 					allocationTimeTv.setText(entity.getAllocateDate()+"");
-					projectTv.setText(entity.getWxName()+"");
+					projectTv.setText(entity.getTdName()+"");
 					int status=entity.getOrderStatus();
 					//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败
 					if(status==1){

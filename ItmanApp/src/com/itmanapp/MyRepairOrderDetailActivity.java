@@ -184,9 +184,9 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 				if(entity!=null){
 					orderNumberTv.setText(entity.getOrderNo()+"");
 					assignTimeTv.setText(entity.getAllocateDate()+"");
-					useNameTv.setText(entity.getAuiName()+"");
-					belongsSystemTv.setText(entity.getAsName()+"");
-					deviceTypeTv.setText(entity.getAdName()+"");
+//					useNameTv.setText(entity.getAuiName()+"");
+//					belongsSystemTv.setText(entity.getAsName()+"");
+//					deviceTypeTv.setText(entity.getAdName()+"");
 					despTv.setText(entity.getDesp()+"");
 					int status=entity.getOrderStatus();
 					//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败

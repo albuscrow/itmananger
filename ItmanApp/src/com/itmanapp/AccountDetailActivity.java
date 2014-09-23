@@ -34,7 +34,9 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.entity.LoginEntity;
+import com.itmanapp.entity.UserDetailEntity;
 import com.itmanapp.json.GetLoginJson;
+import com.itmanapp.json.GetUserDetailJson;
 import com.itmanapp.util.AppManager;
 
 /**
@@ -75,7 +77,7 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 	private ProgressDialog mDialog = null;
 	
 	/**用户实体类*/
-	private LoginEntity entity = null; 
+	private UserDetailEntity entity = null; 
 	
 	/**本地保存*/
 	private SharedPreferences spf = null;
@@ -137,7 +139,7 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 
 		System.out.println("loginUser:"+loginUser);
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/unituser/detail?"
+		String url = "http://211.155.229.136:8080/assetapi2/unituser/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&loginUser=" + loginUser + "&loginPass=" + pwd
 				+ "&accountType=1";
@@ -152,13 +154,15 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						entity=GetLoginJson.getJson(response.toString());
-						int result = 1; 
+						entity=GetUserDetailJson.getJson(response.toString());
+						int result = GetUserDetailJson.result; 
+						
 						try {
 							result = response.getInt("result");
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						
 						if (result == 1) {
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
@@ -199,9 +203,9 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 			case 1:
 				//Toast.makeText(AccountDetailActivity.this, "成功获取数据", 1000).show();
 				if(entity!=null){
-					accountNameTv.setText(entity.getAccount()+"");
-					nameTv.setText(entity.getName()+"");
-					mailAdrressTv.setText(entity.getEmail()+"");
+					accountNameTv.setText(entity.getTuiAccount()+"");
+					nameTv.setText(entity.getTuiName()+"");
+					mailAdrressTv.setText(entity.getTuiEmail()+"");
 				}else{
 					Toast.makeText(AccountDetailActivity.this, "获取失败", 1000).show();
 				}

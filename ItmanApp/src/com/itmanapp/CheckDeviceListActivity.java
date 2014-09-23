@@ -258,6 +258,7 @@ public class CheckDeviceListActivity extends Activity implements
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Intent intent=new Intent(CheckDeviceListActivity.this,GetOrderActivity.class);
 		intent.putExtra("id", list.get(arg2).getTxrId());
+		intent.putExtra("status", list.get(arg2).getTxrStatus());
 		position=arg2;
 		startActivityForResult(intent, 100);
 	}

@@ -77,6 +77,8 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 
 	private TextView project;
 
+	private int status;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 	private void getView() {
 		Intent intent=getIntent();
 		id=intent.getLongExtra("id", -1);
+		status = intent.getIntExtra("status", -1);
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
@@ -106,7 +109,11 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 		deviceType=(TextView)findViewById(R.id.type);
 		project=(TextView)findViewById(R.id.project);
 
-		findViewById(R.id.get_Btn).setOnClickListener(this);
+		if (status == 1) {
+			findViewById(R.id.get_Btn).setOnClickListener(this);
+		}else{
+			findViewById(R.id.get_Btn).setVisibility(View.GONE);
+		}
 		
 		mDialog = new ProgressDialog(this);
 		mDialog.setMessage(getString(R.string.login_msg));

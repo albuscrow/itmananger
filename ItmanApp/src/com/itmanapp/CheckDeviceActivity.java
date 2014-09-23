@@ -1,5 +1,9 @@
 package com.itmanapp;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -12,11 +16,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +57,7 @@ import com.itmanapp.entity.CheckItemEntity;
 import com.itmanapp.json.GetCheckDetailJson;
 import com.itmanapp.json.GetItemJson;
 import com.itmanapp.util.AppManager;
+import com.itmanapp.util.NetUtils;
 
 /**
  * @date 2014-7-29
@@ -116,6 +131,153 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		
 		getView();
 	}
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// 结果码不等于取消时候
+		if (resultCode != RESULT_CANCELED) {
+			if (resultCode == 20) {
+				Intent intent=new Intent();  
+				//请求代码可以自己设置，这里设置成20  
+				setResult(20, intent);  
+				finish();
+				return;
+			}
+			
+			switch (requestCode) {
+			case IMAGE_REQUEST_CODE:
+				file = new File(data.getData().getPath());
+				Bitmap bitmap = decodeUriAsBitmap(data.getData());
+				final File tempFile = new File(getCacheDir(), "fileNeedToUpload" + System.currentTimeMillis() + ".png");
+				try {
+					bitmap.compress(CompressFormat.PNG, 80, new FileOutputStream(tempFile));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				ImageView view = new ImageView(this);
+				view.setImageBitmap(bitmap);
+				new AlertDialog.Builder(this).setView(view).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+						new Thread(new Runnable() {
+
+							@Override
+							public void run() {
+
+								String urlForUploadFile = "http://211.155.229.136:8080/assetapi2/file/upload?"
+										+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+										+ "&referId="+id+"&userId="+getSharedPreferences("user",Context.MODE_PRIVATE).getInt("Id", 0)
+										+ "&type=6";
+								try {
+									if (NetUtils.post(tempFile,urlForUploadFile) != 200) {
+										return;
+									}
+									handler.sendEmptyMessage(10088);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+
+							}
+						}).start();
+
+					}
+				}).setTitle("是否上传?").show();
+				break;
+			case CAMERA_REQUEST_CODE:
+				File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);  
+				File tempFile2 = new File(path,TEMP_PHOTO_FILE);
+				file = tempFile2;
+				Bitmap bitmap2 = decodeUriAsBitmap(Uri.fromFile(tempFile2));
+				
+				ImageView view2 = new ImageView(this);
+				view2.setImageBitmap(bitmap2);
+				new AlertDialog.Builder(this).setView(view2).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+
+						new Thread(new Runnable() {
+
+							@Override
+							public void run() {
+
+								String urlForUploadFile = "http://211.155.229.136:8080/assetapi2/file/upload?"
+										+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+										+ "&referId="+ id +"&userId="+getSharedPreferences("user",Context.MODE_PRIVATE).getInt("Id", 0)
+										+ "&type=7";
+								try {
+									if (NetUtils.post(file,urlForUploadFile) != 200) {
+										return;
+									}
+									handler.sendEmptyMessage(10088);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+
+							}
+						}).start();
+
+					}
+				}).setTitle("是否上传?").show();
+				break;
+			
+			}
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+		Uri imageUri = getTempUri(); // The Uri to store the big bitmap
+
+		File file = null;
+	private Bitmap decodeUriAsBitmap(Uri uri) {
+		Bitmap bitmap = null;
+		try {
+			Options options = new Options();
+			options.inJustDecodeBounds = true;
+			BitmapFactory.decodeStream(getContentResolver()
+					.openInputStream(uri), null, options);
+			
+			int width = options.outWidth;
+			int height = options.outHeight;
+			int samplerSize = width * height / (1000 * 500);
+			
+			options.inJustDecodeBounds = false;
+			options.inSampleSize = samplerSize;
+			
+			bitmap = BitmapFactory.decodeStream(getContentResolver()
+					.openInputStream(uri), null, options);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bitmap;
+	}
+
+	
+	private static final int IMAGE_REQUEST_CODE = 20;
+	private static final int CAMERA_REQUEST_CODE = 30;
+	
+	private Uri getTempUri() {
+		return Uri.fromFile(getTempFile());
+	}
+	
+	private static final String TEMP_PHOTO_FILE = "temporary_holder.jpg";
+	
+	private File getTempFile() {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			File file = new File(Environment.getExternalStorageDirectory(),
+					TEMP_PHOTO_FILE);
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return file;
+		} else {
+			return null;
+		}
+	}
 	
 	/**
 	 * 控件显示
@@ -142,6 +304,7 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		inspectionTargetTv.setText(planName);
 		deviceNameTv.setText(name);
 		deviceNumberTv.setText(deviceCode);
+		findViewById(R.id.take_photo).setOnClickListener(this);
 		
 		key = getRandomString(5);
 		String kb = key + "ASSET-HJTECH";
@@ -308,15 +471,6 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		}
 	};
 	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode == 20) {
-			Intent intent=new Intent();  
-			//请求代码可以自己设置，这里设置成20  
-			setResult(20, intent);  
-			finish();
-		}
-	};
-
 	/**
 	 * description 随机生成5位字符串
 	 * 
@@ -384,9 +538,36 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		case R.id.backBtn:
 			finish();
 			break;
+			
+		case R.id.take_photo:
+			new AlertDialog.Builder(this).setTitle("从哪里获取图片").setItems(
+					new CharSequence[] { "相册", "相机" }, new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if (which == 0) {
+								Intent photoPickerIntent = new Intent( Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+								photoPickerIntent.setType("image/*");
+								photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+								photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
+								startActivityForResult(photoPickerIntent, IMAGE_REQUEST_CODE);
+							}else{
+								Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+								intentFromCapture.putExtra("outputFormat",Bitmap.CompressFormat.JPEG.toString());
+								intentFromCapture.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+								File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);  
+								File tempFile = new File(path,TEMP_PHOTO_FILE);
+								// 判断存储卡是否可以用，可用进行存储
+								intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
+								startActivityForResult(intentFromCapture, CAMERA_REQUEST_CODE);
+							}
+							dialog.dismiss();
+						}
+					}).show();		
+			break;
 		}
 	}
-	
+
 	/**
 	 * description 提交数据
 	 * 

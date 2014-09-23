@@ -70,7 +70,7 @@
                 android:background="@drawable/account_detail_back"
                 android:orientation="vertical" >
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp" >
@@ -78,14 +78,25 @@
                     <TextView
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_height="wrap_content"
                         android:text="巡检计划：" />
 
                     <TextView
                         android:id="@+id/inspectionTargetTv"
                         android:layout_width="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/textView2"
                         android:layout_height="wrap_content" />
-                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/take_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@null"
+                    android:src="@drawable/take_photo" />                </RelativeLayout>
 
                 <ImageView
                     android:id="@+id/imageView1"

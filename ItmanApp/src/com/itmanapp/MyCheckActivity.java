@@ -290,7 +290,8 @@ public class MyCheckActivity extends Activity implements OnItemClickListener,OnC
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Intent intent=new Intent(MyCheckActivity.this,GetOrderActivity.class);
-		intent.putExtra("id", list.get(arg2).getTxrId());
+		intent.putExtra("id", list.get(arg2 - 1).getTxrId());
+		intent.putExtra("status", list.get(arg2 - 1).getTxrStatus());
 //		position=arg2;
 		startActivityForResult(intent, 100);
 	}
@@ -326,7 +327,7 @@ public class MyCheckActivity extends Activity implements OnItemClickListener,OnC
 			completedBtn.setTextColor(Color.parseColor("#0e63c2"));
 			allBtn.setTextColor(Color.parseColor("#8C8C8C"));
 
-			status="1";
+			status="2";
 			listAll.clear();
 			getResult(status);
 			break;

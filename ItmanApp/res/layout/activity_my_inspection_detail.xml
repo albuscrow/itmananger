@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/account_detail_back"
+            android:background="@drawable/modify_info"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -76,7 +76,6 @@
                     android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="设        备：" />
@@ -94,7 +93,6 @@
                     android:padding="10dp" >
 
                     <TextView
-                        android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="设备编号：" />
@@ -128,7 +126,6 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/line_2" />

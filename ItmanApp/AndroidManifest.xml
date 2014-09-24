@@ -83,7 +83,7 @@
         </activity>
         
         <!-- 系统查询详细页面 -->
-        <activity android:name="com.itmanapp.roomDetailActivity">
+        <activity android:name="com.itmanapp.RoomDetailActivity">
         </activity>
         
         <!-- 系统整改历史页面-->

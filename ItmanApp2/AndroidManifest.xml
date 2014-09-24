@@ -165,6 +165,36 @@
         <activity android:name="com.itmanapp2.RepairAcceptanceDetailActivity">
         </activity>
         
+                <activity android:name="com.itmanapp2.RoomListActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.CabinetListActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.CabinetDetailActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.CheckListActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.CheckDeviceListActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.CheckPlanActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.CheckDeviceActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.GetOrderActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.WaitFixOrdersActivity">
+        </activity>
+        
+        <activity android:name="com.itmanapp2.MyNeedFixOrderDetailActivity">
+        </activity>
+        
         
     </application>
 

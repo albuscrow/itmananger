@@ -79,13 +79,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="维修项目：" />
+                        android:text="设备名称：" />
 
                     <TextView
                         android:id="@+id/repairProjectTv"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="文件" />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -108,7 +107,6 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"

@@ -530,43 +530,43 @@ public class FixActivity extends Activity implements OnClickListener{
 		System.out.println(url);
 		
 
-//		HashMap<String, String> params = new HashMap<String, String>();
-//
-//		JsonObjectRequest req = new JsonObjectRequest(Method.POST, url,
-//				new JSONObject(params), new Listener<JSONObject>() {
-//
-//					@Override
-//					public void onResponse(JSONObject response) {
-//
-//						System.out.println("@@" + response.toString());
-//						
-//						try {
-//							int result = response.getInt("result");
-//							if (result == 1) {
-//								handler.sendEmptyMessage(111);
-//							} else if (result == -1) {
-//								handler.sendEmptyMessage(-1);
-//							} else if (result == 0) {
-//								handler.sendEmptyMessage(0);
-//							} else if (result == 103) {
-//								handler.sendEmptyMessage(103);
-//							}
-//						} catch (JSONException e) {
-//							e.printStackTrace();
-//						}
-//						
-//					}
-//				}, new Response.ErrorListener() {
-//
-//					@Override
-//					public void onErrorResponse(VolleyError error) {
-//
-//						System.out.println("##" + error.toString());
-//						handler.sendEmptyMessage(0);
-//
-//					}
-//				});
-//		DemoApplication.getInstance().getRequestQueue().add(req);
+		HashMap<String, String> params = new HashMap<String, String>();
+
+		JsonObjectRequest req = new JsonObjectRequest(Method.POST, url,
+				new JSONObject(params), new Listener<JSONObject>() {
+
+					@Override
+					public void onResponse(JSONObject response) {
+
+						System.out.println("@@" + response.toString());
+						
+						try {
+							int result = response.getInt("result");
+							if (result == 1) {
+								handler.sendEmptyMessage(111);
+							} else if (result == -1) {
+								handler.sendEmptyMessage(-1);
+							} else if (result == 0) {
+								handler.sendEmptyMessage(0);
+							} else if (result == 103) {
+								handler.sendEmptyMessage(103);
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						
+					}
+				}, new Response.ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						System.out.println("##" + error.toString());
+						handler.sendEmptyMessage(0);
+
+					}
+				});
+		DemoApplication.getInstance().getRequestQueue().add(req);
 	}
 
 	

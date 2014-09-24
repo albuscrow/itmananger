@@ -144,7 +144,7 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						modifyInfoList=GetModifyInfoJson.getJson(response.toString());
+//						modifyInfoList=GetModifyInfoJson.getJson(response.toString());
 						int result = GetModifyInfoJson.result;
 						if (result == 1) {
 							System.out.println("List:"+modifyInfoList);

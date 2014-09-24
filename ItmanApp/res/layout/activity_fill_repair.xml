@@ -38,7 +38,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/account_detail_back"
+            android:background="@drawable/modify_info"
             android:orientation="vertical" >
             
             <LinearLayout

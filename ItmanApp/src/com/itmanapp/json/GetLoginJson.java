@@ -25,11 +25,12 @@ public class GetLoginJson {
 			if(result==1){
 				JSONObject js = job.getJSONObject("details");
 				entity=new LoginEntity();
-				entity.setAccount(js.getString("account"));
-				entity.setEmail(js.getString("email"));
-				entity.setId(js.getInt("id"));
-				entity.setName(js.getString("name"));
-				entity.setTitle(js.getString("title"));
+			
+				entity.setTuiId(js.getLong("tuiId"));
+				entity.setTuiName(js.getString("tuiName"));
+				entity.setTuiAccount(js.getString("tuiAccount"));
+				entity.setTuiEmail(js.getString("tuiEmail"));
+				entity.setTuiPassword(js.getString("tuiPassword"));
 				
 			}
 		} catch (JSONException e) {

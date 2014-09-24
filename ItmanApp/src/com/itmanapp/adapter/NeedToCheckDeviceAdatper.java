@@ -84,13 +84,13 @@ public class NeedToCheckDeviceAdatper extends BaseAdapter {
 		if(status==0){
 			holder.status.setText("任务生成");
 		}else if(status==1){
-			holder.status.setText("巡检完成");
+			holder.status.setText("已领取");
 		}else if(status==3){
 			holder.status.setText("已打印");
 		}else if(status==4){
 			holder.status.setText("已验收");
 		}else if(status==2){
-			holder.status.setText("已领取");
+			holder.status.setText("巡检完成");
 		}
 		
 		if (needTime) {

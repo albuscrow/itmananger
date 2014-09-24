@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="待确认工单"
+            android:text="待维修工单"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/account_detail_back"
+            android:background="@drawable/modify_info"
             android:orientation="vertical" >
 
             <LinearLayout

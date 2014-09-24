@@ -116,8 +116,14 @@ public class CheckDeviceListActivity extends Activity implements
 		mDialog.show();
 		mDialog.setCanceledOnTouchOutside(false);
 
-		getResult();
 
+	}
+	
+	
+	@Override
+	protected void onResume() {
+		getResult();
+		super.onResume();
 	}
 
 	/**
@@ -195,7 +201,7 @@ public class CheckDeviceListActivity extends Activity implements
 						1000).show();
 				break;
 			case 0:
-				Toast.makeText(CheckDeviceListActivity.this, "获取失败", 1000)
+				Toast.makeText(CheckDeviceListActivity.this, "无数据", 1000)
 						.show();
 				break;
 			case 103:
@@ -259,6 +265,7 @@ public class CheckDeviceListActivity extends Activity implements
 		Intent intent=new Intent(CheckDeviceListActivity.this,GetOrderActivity.class);
 		intent.putExtra("id", list.get(arg2).getTxrId());
 		intent.putExtra("status", list.get(arg2).getTxrStatus());
+		intent.putExtra("canEdit", true);
 		position=arg2;
 		startActivityForResult(intent, 100);
 	}

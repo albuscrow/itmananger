@@ -24,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -123,6 +124,8 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 		adapter=new WorkOrderAdatper(PendingConfirmWorkOrdersActivity.this, listAll);
 		confirmWorkOrderLv.setAdapter(adapter);
 		
+		((TextView)findViewById(R.id.textView1)).setText("待确认工单");
+		
 		key = getRandomString(5);
 		String kb = key + "ASSET-HJTECH";
 		base = md5(kb);
@@ -146,7 +149,8 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 			// tencent 123456
 			String url = "http://211.155.229.136:8080/assetapi2/order/list?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-					+ "&userId="+userId+"&status=1"+"&page="+pageIndex;
+					+ "&userId="+userId+"&status=1"+"&page="+pageIndex
+					+ "&accountType=1";
 			System.out.println(url);
 
 			HashMap<String, String> params = new HashMap<String, String>();

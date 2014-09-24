@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.itmanapp2.R;
 import com.itmanapp2.entity.RepairAcceptanceEntity;
+import com.itmanapp2.entity.WorkOrderEntity;
 
 /**
  * @date 2014-7-27
@@ -23,10 +24,10 @@ public class RepairAcceptanceAdatper extends BaseAdapter {
 
 	private Context context;
 
-	private List<RepairAcceptanceEntity> warrantyList = new ArrayList<RepairAcceptanceEntity>();
+	private List<WorkOrderEntity> warrantyList = new ArrayList<WorkOrderEntity>();
 
 	public RepairAcceptanceAdatper(Context context,
-			List<RepairAcceptanceEntity> warrantyList) {
+			List<WorkOrderEntity> warrantyList) {
 		super();
 		this.context = context;
 		this.warrantyList = warrantyList;
@@ -67,7 +68,7 @@ public class RepairAcceptanceAdatper extends BaseAdapter {
 		}
 		holder.warrantyTimeTv.setText(warrantyList.get(position).getAllocateDate()+"");
 		holder.orderNumberTv.setText(warrantyList.get(position).getOrderNo()+"");
-		holder.wxProjectTv.setText(warrantyList.get(position).getWxName()+"");
+		holder.wxProjectTv.setText(warrantyList.get(position).getTdName()+"");
 		
 		int status=warrantyList.get(position).getOrderStatus();
 		//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败

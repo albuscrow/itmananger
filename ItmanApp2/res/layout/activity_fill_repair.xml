@@ -1,10 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/back" >
@@ -23,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="填写报修"
+            android:text="蓝宇运维管理系统"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -31,7 +30,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/head"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -40,9 +38,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/account_detail_back"
+            android:background="@drawable/modify_info"
             android:orientation="vertical" >
-
+            
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,26 +48,24 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="所属系统："
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:text="所属部门：" />
 
                 <TextView
-                    android:id="@+id/systemsTv"
+                    android:id="@+id/depsTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edt_shape"
-                    android:padding="3dp"
-                    android:textColor="#999999"
                     android:singleLine="true"
+                    android:padding="3dp"
                     android:textSize="16sp" >
                 </TextView>
 
                 <ImageView
-                    android:id="@+id/systemsIgv"
+                    android:id="@+id/depsIgv"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="10dp"
@@ -83,11 +79,71 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="设        备："
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:text="所属机房：" />
+
+                <TextView
+                    android:id="@+id/roomsTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edt_shape"
+                    android:singleLine="true"
+                    android:padding="3dp"
+                    android:textSize="16sp" >
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/roomsIgv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/xl" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="机        柜：" />
+
+                <TextView
+                    android:id="@+id/cabTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edt_shape"
+                    android:singleLine="true"
+                    android:padding="3dp"
+                    android:textSize="16sp" >
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/cabIgv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/xl" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:text="设        备：" />
 
                 <TextView
                     android:id="@+id/equipmentTv"
@@ -95,9 +151,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edt_shape"
-                    android:padding="3dp"
-                    android:textColor="#999999"
                     android:singleLine="true"
+                    android:padding="3dp"
                     android:textSize="16sp" >
                 </TextView>
 
@@ -116,11 +171,10 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="报修类型："
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:text="报修类型：" />
 
                 <TextView
                     android:id="@+id/typeRepairTv"
@@ -128,9 +182,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/edt_shape"
-                    android:padding="3dp"
                     android:singleLine="true"
-                    android:textColor="#999999"
+                    android:padding="3dp"
                     android:textSize="16sp" >
                 </TextView>
 
@@ -145,23 +198,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="top"
                 android:layout_marginBottom="10dp"
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="top"
-                    android:text="问题描述："
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:text="问题描述：" />
 
                 <EditText
                     android:id="@+id/descriptionTv"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginRight="10dp"
-                    android:textColor="#999999"
+                    android:gravity="top|left"
                     android:layout_weight="1"
                     android:background="@drawable/edt_shape"
                     android:textSize="16sp" >
@@ -187,24 +240,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:background="#484848"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/phoneTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="400-800-8003"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

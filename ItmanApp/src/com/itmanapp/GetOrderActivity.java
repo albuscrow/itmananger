@@ -18,6 +18,7 @@ import android.os.Message;
 import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,6 +88,8 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 		AppManager.getAppManager().addActivity(this);
 		getView();
 	}
+
+	boolean canEdit = false;
 	
 	/**
 	 * 控件显示
@@ -95,6 +98,7 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 		Intent intent=getIntent();
 		id=intent.getLongExtra("id", -1);
 		status = intent.getIntExtra("status", -1);
+		canEdit = intent.getBooleanExtra("canEdit", false);
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
@@ -109,12 +113,16 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 		deviceType=(TextView)findViewById(R.id.type);
 		project=(TextView)findViewById(R.id.project);
 
-		if (status == 1) {
-			findViewById(R.id.get_Btn).setOnClickListener(this);
+		Button button = (Button) findViewById(R.id.get_Btn);
+		if (canEdit) {
+			button.setOnClickListener(this);
+			if (status == 1) {
+				button.setBackgroundResource(R.drawable.glsb);
+				button.setText("填写检查结果");
+			}
 		}else{
-			findViewById(R.id.get_Btn).setVisibility(View.GONE);
+			button.setVisibility(View.GONE);
 		}
-		
 		mDialog = new ProgressDialog(this);
 		mDialog.setMessage(getString(R.string.login_msg));
 		
@@ -191,6 +199,10 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&txrId="+id;
 		System.out.println(url);
+		if (status == 1) {
+			handler.sendEmptyMessage(10086);
+			return;
+		}
 
 		HashMap<String, String> params = new HashMap<String, String>();
 
@@ -270,8 +282,10 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 				Toast.makeText(GetOrderActivity.this, "参数错误", 1000).show();
 				break;
 			case 10086:
-				Toast.makeText(GetOrderActivity.this, "领取成功", 1000).show();
-				findViewById(R.id.get_Btn).setEnabled(false);
+				if (status == 0) {
+					Toast.makeText(GetOrderActivity.this, "领取成功", 1000).show();
+				}
+//				findViewById(R.id.get_Btn).setEnabled(false);
 				Intent intent1=new Intent(GetOrderActivity.this, CheckDeviceActivity.class);
 				intent1.putExtra("id", entity.getTxcId());
 				intent1.putExtra("planName", entity.getTxpName());

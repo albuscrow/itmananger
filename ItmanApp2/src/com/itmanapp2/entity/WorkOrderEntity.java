@@ -173,5 +173,25 @@ public class WorkOrderEntity {
 				+ getClass() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
 	}
+	
+	private String tdName;
+
+	/**
+	 * @return the tdName
+	 */
+	public String getTdName() {
+		return tdName;
+	}
+
+	/**
+	 * @param tdName the tdName to set
+	 */
+	public void setTdName(String tdName) {
+		this.tdName = tdName;
+	}
+
+
+	
+	
 
 }

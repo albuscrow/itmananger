@@ -271,7 +271,7 @@ public class RepairAcceptanceDetailActivity extends Activity implements
 	private void submitData(int status) {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/order/acceptance?"
+		String url = "http://211.155.229.136:8080/assetapi2/order/acceptance?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&detailId=" + detailId + "&status=" + status;
 		System.out.println(url);

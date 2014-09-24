@@ -148,7 +148,7 @@ public class MyRepairActivity extends Activity implements OnItemClickListener,On
 
 		if (!loading) {
 			// tencent 123456
-			String url = "http://211.155.229.136:8080/assetapi/order/warranty?"
+			String url = "http://211.155.229.136:8080/assetapi2/order/warranty?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&userId="+userId+"&status="+"&page="+pageIndex
 					+ "&accountType=2";

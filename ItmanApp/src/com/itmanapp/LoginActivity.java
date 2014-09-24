@@ -135,7 +135,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private void getLoginResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/unituser/login?"
+		String url = "http://211.155.229.136:8080/assetapi2/unituser/login?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&loginUser=" + acountStr + "&loginPass=" + pwd
 				+ "&accountType=1";
@@ -158,10 +158,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 								SharedPreferences sharedPreferences = getSharedPreferences(
 										"user", MODE_PRIVATE);
 								Editor editor = sharedPreferences.edit();
-								editor.putInt("Id", entity.getId());
-								editor.putString("Name", entity.getName());
-								editor.putString("LoginUser", entity.getAccount().trim());
-								editor.putString("Email", entity.getEmail());
+								editor.putInt("Id", new Long(entity.getTuiId()).intValue());
+								editor.putString("Name", entity.getTuiName());
+								editor.putString("LoginUser", entity.getTuiAccount());
+								editor.putString("Email", entity.getTuiEmail());
 								editor.putString("pwd", pwdStr);
 								editor.putBoolean("loginFlag", true);
 								editor.commit();

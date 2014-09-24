@@ -7,204 +7,464 @@ package com.itmanapp.entity;
  * 
  */
 public class LoginEntity {
-
-	/**添加时间*/
-	private String createTime;
-	/***/
-	private String startDate;
-	/***/
-	private String groupName;
-	/**性别*/
-	private int sex;
-	/**备注*/
-	private String remark;
-	/***/
-	private String qanswer;
-	/**系统主题*/
-	private String theme;
-	/***/
-	private String endDate;
-	/**编码*/
-	private String code;
-	/**id*/
-	private int id;
-	/**用户组id*/
-	private int groupId;
-	/***/
-	private String createUserName;
-	/**职称*/
-	private String title;
-	/**修改人姓名*/
-	private String modifyUserName;
-	/**修改人id*/
-	private int modifyUserId;
-	/**状态*/
-	private int deleteMark;
-	/**邮箱*/
-	private String email;
-	/**姓名*/
-	private String name;
-	/***/
-	private String sortType;
-	/**登录账号*/
-	private String account;
-	/**密码提示问题*/
-	private String question;
-	/**修改时间*/
-	private String modifyTime;
-	/**添加人id*/
-	private int createUserId;
-	public String getCreateTime() {
-		return createTime;
+    long tuiId;
+    String tuiCode;
+    String tuiAccount;
+    String tuiPassword;
+    String tuiName;
+    String tuiSex;
+    String tuiTitle;
+    String tuiTheme;
+    String tuiEmail;
+    long tuiRoleId;
+    long tuiDepId;
+    String tuiQuestion;
+    String tuiQanswer;
+    String tuiRemark;
+    int tuiSortcode;
+    int tuiStatus;
+    long tuiAddPerson;
+    String tuiAddDate;
+    String tuiPhone;
+    long unitId;
+	/**
+	 * @return the tuiId
+	 */
+	public long getTuiId() {
+		return tuiId;
 	}
-	public void setCreateTime(String createTime) {
-		this.createTime = createTime;
+	/**
+	 * @param tuiId the tuiId to set
+	 */
+	public void setTuiId(long tuiId) {
+		this.tuiId = tuiId;
 	}
-	public String getStartDate() {
-		return startDate;
+	/**
+	 * @return the tuiCode
+	 */
+	public String getTuiCode() {
+		return tuiCode;
 	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	/**
+	 * @param tuiCode the tuiCode to set
+	 */
+	public void setTuiCode(String tuiCode) {
+		this.tuiCode = tuiCode;
 	}
-	public String getGroupName() {
-		return groupName;
+	/**
+	 * @return the tuiAccount
+	 */
+	public String getTuiAccount() {
+		return tuiAccount;
 	}
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	/**
+	 * @param tuiAccount the tuiAccount to set
+	 */
+	public void setTuiAccount(String tuiAccount) {
+		this.tuiAccount = tuiAccount;
 	}
-	public int getSex() {
-		return sex;
+	/**
+	 * @return the tuiPassword
+	 */
+	public String getTuiPassword() {
+		return tuiPassword;
 	}
-	public void setSex(int sex) {
-		this.sex = sex;
+	/**
+	 * @param tuiPassword the tuiPassword to set
+	 */
+	public void setTuiPassword(String tuiPassword) {
+		this.tuiPassword = tuiPassword;
 	}
-	public String getRemark() {
-		return remark;
+	/**
+	 * @return the tuiName
+	 */
+	public String getTuiName() {
+		return tuiName;
 	}
-	public void setRemark(String remark) {
-		this.remark = remark;
+	/**
+	 * @param tuiName the tuiName to set
+	 */
+	public void setTuiName(String tuiName) {
+		this.tuiName = tuiName;
 	}
-	public String getQanswer() {
-		return qanswer;
+	/**
+	 * @return the tuiSex
+	 */
+	public String getTuiSex() {
+		return tuiSex;
 	}
-	public void setQanswer(String qanswer) {
-		this.qanswer = qanswer;
+	/**
+	 * @param tuiSex the tuiSex to set
+	 */
+	public void setTuiSex(String tuiSex) {
+		this.tuiSex = tuiSex;
 	}
-	public String getTheme() {
-		return theme;
+	/**
+	 * @return the tuiTitle
+	 */
+	public String getTuiTitle() {
+		return tuiTitle;
 	}
-	public void setTheme(String theme) {
-		this.theme = theme;
+	/**
+	 * @param tuiTitle the tuiTitle to set
+	 */
+	public void setTuiTitle(String tuiTitle) {
+		this.tuiTitle = tuiTitle;
 	}
-	public String getEndDate() {
-		return endDate;
+	/**
+	 * @return the tuiTheme
+	 */
+	public String getTuiTheme() {
+		return tuiTheme;
 	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+	/**
+	 * @param tuiTheme the tuiTheme to set
+	 */
+	public void setTuiTheme(String tuiTheme) {
+		this.tuiTheme = tuiTheme;
 	}
-	public String getCode() {
-		return code;
+	/**
+	 * @return the tuiEmail
+	 */
+	public String getTuiEmail() {
+		return tuiEmail;
 	}
-	public void setCode(String code) {
-		this.code = code;
+	/**
+	 * @param tuiEmail the tuiEmail to set
+	 */
+	public void setTuiEmail(String tuiEmail) {
+		this.tuiEmail = tuiEmail;
 	}
-	public int getId() {
-		return id;
+	/**
+	 * @return the tuiRoleId
+	 */
+	public long getTuiRoleId() {
+		return tuiRoleId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	/**
+	 * @param tuiRoleId the tuiRoleId to set
+	 */
+	public void setTuiRoleId(long tuiRoleId) {
+		this.tuiRoleId = tuiRoleId;
 	}
-	public int getGroupId() {
-		return groupId;
+	/**
+	 * @return the tuiDepId
+	 */
+	public long getTuiDepId() {
+		return tuiDepId;
 	}
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
+	/**
+	 * @param tuiDepId the tuiDepId to set
+	 */
+	public void setTuiDepId(long tuiDepId) {
+		this.tuiDepId = tuiDepId;
 	}
-	public String getCreateUserName() {
-		return createUserName;
+	/**
+	 * @return the tuiQuestion
+	 */
+	public String getTuiQuestion() {
+		return tuiQuestion;
 	}
-	public void setCreateUserName(String createUserName) {
-		this.createUserName = createUserName;
+	/**
+	 * @param tuiQuestion the tuiQuestion to set
+	 */
+	public void setTuiQuestion(String tuiQuestion) {
+		this.tuiQuestion = tuiQuestion;
 	}
-	public String getTitle() {
-		return title;
+	/**
+	 * @return the tuiQanswer
+	 */
+	public String getTuiQanswer() {
+		return tuiQanswer;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	/**
+	 * @param tuiQanswer the tuiQanswer to set
+	 */
+	public void setTuiQanswer(String tuiQanswer) {
+		this.tuiQanswer = tuiQanswer;
 	}
-	public String getModifyUserName() {
-		return modifyUserName;
+	/**
+	 * @return the tuiRemark
+	 */
+	public String getTuiRemark() {
+		return tuiRemark;
 	}
-	public void setModifyUserName(String modifyUserName) {
-		this.modifyUserName = modifyUserName;
+	/**
+	 * @param tuiRemark the tuiRemark to set
+	 */
+	public void setTuiRemark(String tuiRemark) {
+		this.tuiRemark = tuiRemark;
 	}
-	public int getModifyUserId() {
-		return modifyUserId;
+	/**
+	 * @return the tuiSortcode
+	 */
+	public int getTuiSortcode() {
+		return tuiSortcode;
 	}
-	public void setModifyUserId(int modifyUserId) {
-		this.modifyUserId = modifyUserId;
+	/**
+	 * @param tuiSortcode the tuiSortcode to set
+	 */
+	public void setTuiSortcode(int tuiSortcode) {
+		this.tuiSortcode = tuiSortcode;
 	}
-	public int getDeleteMark() {
-		return deleteMark;
+	/**
+	 * @return the tuiStatus
+	 */
+	public int getTuiStatus() {
+		return tuiStatus;
 	}
-	public void setDeleteMark(int deleteMark) {
-		this.deleteMark = deleteMark;
+	/**
+	 * @param tuiStatus the tuiStatus to set
+	 */
+	public void setTuiStatus(int tuiStatus) {
+		this.tuiStatus = tuiStatus;
 	}
-	public String getEmail() {
-		return email;
+	/**
+	 * @return the tuiAddPerson
+	 */
+	public long getTuiAddPerson() {
+		return tuiAddPerson;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	/**
+	 * @param tuiAddPerson the tuiAddPerson to set
+	 */
+	public void setTuiAddPerson(long tuiAddPerson) {
+		this.tuiAddPerson = tuiAddPerson;
 	}
-	public String getName() {
-		return name;
+	/**
+	 * @return the tuiAddDate
+	 */
+	public String getTuiAddDate() {
+		return tuiAddDate;
 	}
-	public void setName(String name) {
-		this.name = name;
+	/**
+	 * @param tuiAddDate the tuiAddDate to set
+	 */
+	public void setTuiAddDate(String tuiAddDate) {
+		this.tuiAddDate = tuiAddDate;
 	}
-	public String getSortType() {
-		return sortType;
+	/**
+	 * @return the tuiPhone
+	 */
+	public String getTuiPhone() {
+		return tuiPhone;
 	}
-	public void setSortType(String sortType) {
-		this.sortType = sortType;
+	/**
+	 * @param tuiPhone the tuiPhone to set
+	 */
+	public void setTuiPhone(String tuiPhone) {
+		this.tuiPhone = tuiPhone;
 	}
-	public String getAccount() {
-		return account;
+	/**
+	 * @return the unitId
+	 */
+	public long getUnitId() {
+		return unitId;
 	}
-	public void setAccount(String account) {
-		this.account = account;
+	/**
+	 * @param unitId the unitId to set
+	 */
+	public void setUnitId(long unitId) {
+		this.unitId = unitId;
 	}
-	public String getQuestion() {
-		return question;
-	}
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-	public String getModifyTime() {
-		return modifyTime;
-	}
-	public void setModifyTime(String modifyTime) {
-		this.modifyTime = modifyTime;
-	}
-	public int getCreateUserId() {
-		return createUserId;
-	}
-	public void setCreateUserId(int createUserId) {
-		this.createUserId = createUserId;
-	}
-	@Override
-	public String toString() {
-		return "LoginEntity [createTime=" + createTime + ", startDate="
-				+ startDate + ", groupName=" + groupName + ", sex=" + sex
-				+ ", remark=" + remark + ", qanswer=" + qanswer + ", theme="
-				+ theme + ", endDate=" + endDate + ", code=" + code + ", id="
-				+ id + ", groupId=" + groupId + ", createUserName="
-				+ createUserName + ", title=" + title + ", modifyUserName="
-				+ modifyUserName + ", modifyUserId=" + modifyUserId
-				+ ", deleteMark=" + deleteMark + ", email=" + email + ", name="
-				+ name + ", sortType=" + sortType + ", account=" + account
-				+ ", question=" + question + ", modifyTime=" + modifyTime
-				+ ", createUserId=" + createUserId + "]";
-	}
+    
+//	/**添加时间*/
+//	private String createTime;
+//	/***/
+//	private String startDate;
+//	/***/
+//	private String groupName;
+//	/**性别*/
+//	private int sex;
+//	/**备注*/
+//	private String remark;
+//	/***/
+//	private String qanswer;
+//	/**系统主题*/
+//	private String theme;
+//	/***/
+//	private String endDate;
+//	/**编码*/
+//	private String code;
+//	/**id*/
+//	private int id;
+//	/**用户组id*/
+//	private int groupId;
+//	/***/
+//	private String createUserName;
+//	/**职称*/
+//	private String title;
+//	/**修改人姓名*/
+//	private String modifyUserName;
+//	/**修改人id*/
+//	private int modifyUserId;
+//	/**状态*/
+//	private int deleteMark;
+//	/**邮箱*/
+//	private String email;
+//	/**姓名*/
+//	private String name;
+//	/***/
+//	private String sortType;
+//	/**登录账号*/
+//	private String account;
+//	/**密码提示问题*/
+//	private String question;
+//	/**修改时间*/
+//	private String modifyTime;
+//	/**添加人id*/
+//	private int createUserId;
+//	public String getCreateTime() {
+//		return createTime;
+//	}
+//	public void setCreateTime(String createTime) {
+//		this.createTime = createTime;
+//	}
+//	public String getStartDate() {
+//		return startDate;
+//	}
+//	public void setStartDate(String startDate) {
+//		this.startDate = startDate;
+//	}
+//	public String getGroupName() {
+//		return groupName;
+//	}
+//	public void setGroupName(String groupName) {
+//		this.groupName = groupName;
+//	}
+//	public int getSex() {
+//		return sex;
+//	}
+//	public void setSex(int sex) {
+//		this.sex = sex;
+//	}
+//	public String getRemark() {
+//		return remark;
+//	}
+//	public void setRemark(String remark) {
+//		this.remark = remark;
+//	}
+//	public String getQanswer() {
+//		return qanswer;
+//	}
+//	public void setQanswer(String qanswer) {
+//		this.qanswer = qanswer;
+//	}
+//	public String getTheme() {
+//		return theme;
+//	}
+//	public void setTheme(String theme) {
+//		this.theme = theme;
+//	}
+//	public String getEndDate() {
+//		return endDate;
+//	}
+//	public void setEndDate(String endDate) {
+//		this.endDate = endDate;
+//	}
+//	public String getCode() {
+//		return code;
+//	}
+//	public void setCode(String code) {
+//		this.code = code;
+//	}
+//	public int getId() {
+//		return id;
+//	}
+//	public void setId(int id) {
+//		this.id = id;
+//	}
+//	public int getGroupId() {
+//		return groupId;
+//	}
+//	public void setGroupId(int groupId) {
+//		this.groupId = groupId;
+//	}
+//	public String getCreateUserName() {
+//		return createUserName;
+//	}
+//	public void setCreateUserName(String createUserName) {
+//		this.createUserName = createUserName;
+//	}
+//	public String getTitle() {
+//		return title;
+//	}
+//	public void setTitle(String title) {
+//		this.title = title;
+//	}
+//	public String getModifyUserName() {
+//		return modifyUserName;
+//	}
+//	public void setModifyUserName(String modifyUserName) {
+//		this.modifyUserName = modifyUserName;
+//	}
+//	public int getModifyUserId() {
+//		return modifyUserId;
+//	}
+//	public void setModifyUserId(int modifyUserId) {
+//		this.modifyUserId = modifyUserId;
+//	}
+//	public int getDeleteMark() {
+//		return deleteMark;
+//	}
+//	public void setDeleteMark(int deleteMark) {
+//		this.deleteMark = deleteMark;
+//	}
+//	public String getEmail() {
+//		return email;
+//	}
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
+//	public String getName() {
+//		return name;
+//	}
+//	public void setName(String name) {
+//		this.name = name;
+//	}
+//	public String getSortType() {
+//		return sortType;
+//	}
+//	public void setSortType(String sortType) {
+//		this.sortType = sortType;
+//	}
+//	public String getAccount() {
+//		return account;
+//	}
+//	public void setAccount(String account) {
+//		this.account = account;
+//	}
+//	public String getQuestion() {
+//		return question;
+//	}
+//	public void setQuestion(String question) {
+//		this.question = question;
+//	}
+//	public String getModifyTime() {
+//		return modifyTime;
+//	}
+//	public void setModifyTime(String modifyTime) {
+//		this.modifyTime = modifyTime;
+//	}
+//	public int getCreateUserId() {
+//		return createUserId;
+//	}
+//	public void setCreateUserId(int createUserId) {
+//		this.createUserId = createUserId;
+//	}
+//	@Override
+//	public String toString() {
+//		return "LoginEntity [createTime=" + createTime + ", startDate="
+//				+ startDate + ", groupName=" + groupName + ", sex=" + sex
+//				+ ", remark=" + remark + ", qanswer=" + qanswer + ", theme="
+//				+ theme + ", endDate=" + endDate + ", code=" + code + ", id="
+//				+ id + ", groupId=" + groupId + ", createUserName="
+//				+ createUserName + ", title=" + title + ", modifyUserName="
+//				+ modifyUserName + ", modifyUserId=" + modifyUserId
+//				+ ", deleteMark=" + deleteMark + ", email=" + email + ", name="
+//				+ name + ", sortType=" + sortType + ", account=" + account
+//				+ ", question=" + question + ", modifyTime=" + modifyTime
+//				+ ", createUserId=" + createUserId + "]";
+//	}
 
 }

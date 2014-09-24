@@ -34,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp2.adapter.RepairAcceptanceAdatper;
 import com.itmanapp2.entity.RepairAcceptanceEntity;
+import com.itmanapp2.entity.WorkOrderEntity;
 import com.itmanapp2.json.GetRepairAcceptanceJson;
 import com.itmanapp2.util.AppManager;
 import com.itmanapp2.util.NetworkCheck;
@@ -67,10 +68,10 @@ public class RepairAcceptanceActivity  extends Activity implements OnItemClickLi
 	private RepairAcceptanceAdatper adapter;
 	
 	/**接收数据集合*/
-	private List<RepairAcceptanceEntity> list = new ArrayList<RepairAcceptanceEntity>();
+	private List<WorkOrderEntity> list = new ArrayList<WorkOrderEntity>();
 	
 	/**适配数据集合*/
-	private List<RepairAcceptanceEntity> listAll = new ArrayList<RepairAcceptanceEntity>();
+	private List<WorkOrderEntity> listAll = new ArrayList<WorkOrderEntity>();
 
 	/** 页码 */
 	private int pageIndex = 1;
@@ -150,7 +151,7 @@ public class RepairAcceptanceActivity  extends Activity implements OnItemClickLi
 
 		if (!loading) {
 			// tencent 123456
-			String url = "http://211.155.229.136:8080/assetapi/order/list?"
+			String url = "http://211.155.229.136:8080/assetapi2/order/list?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&userId="+userId+"&status=3"+"&page="+pageIndex
 					+ "&accountType=2";
@@ -285,7 +286,7 @@ public class RepairAcceptanceActivity  extends Activity implements OnItemClickLi
 		intent.putExtra("id", listAll.get(arg2-1).getDetailId());
 		intent.putExtra("orderNumber", listAll.get(arg2-1).getOrderNo());
 		intent.putExtra("assignTime", listAll.get(arg2-1).getAllocateDate());
-		intent.putExtra("wxProject", listAll.get(arg2-1).getWxName());
+		intent.putExtra("wxProject", listAll.get(arg2-1).getDesp());
 		intent.putExtra("status", listAll.get(arg2-1).getOrderStatus());
 		position=arg2-1;
 		System.out.println(arg2);
@@ -323,7 +324,7 @@ public class RepairAcceptanceActivity  extends Activity implements OnItemClickLi
 	 * 
 	 * @return void
 	 */
-	private void setLvData(List<RepairAcceptanceEntity> list) {
+	private void setLvData(List<WorkOrderEntity> list) {
 		// 刷新数据、适配数据
 		if (updateFlag) {
 			// 适配数据

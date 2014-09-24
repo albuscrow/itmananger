@@ -292,6 +292,7 @@ public class MyCheckActivity extends Activity implements OnItemClickListener,OnC
 		Intent intent=new Intent(MyCheckActivity.this,GetOrderActivity.class);
 		intent.putExtra("id", list.get(arg2 - 1).getTxrId());
 		intent.putExtra("status", list.get(arg2 - 1).getTxrStatus());
+		intent.putExtra("canEdit", false);
 //		position=arg2;
 		startActivityForResult(intent, 100);
 	}

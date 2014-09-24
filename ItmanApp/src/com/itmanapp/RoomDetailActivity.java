@@ -23,7 +23,7 @@ import com.itmanapp.util.CommonUtil;
  * @class description 系统查询页面
  * 
  */
-public class roomDetailActivity extends Activity implements OnClickListener{
+public class RoomDetailActivity extends Activity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -159,7 +159,7 @@ public class roomDetailActivity extends Activity implements OnClickListener{
 			finish();
 			break;
 		case R.id.related_file_Btn:
-			Intent intent1=new Intent(roomDetailActivity.this,RelatedFileActivity.class);
+			Intent intent1=new Intent(RoomDetailActivity.this,RelatedFileActivity.class);
 			if(entity.getTmrId()>-1){
 				intent1.putExtra("id", entity.getTmrId());
 			}
@@ -173,7 +173,7 @@ public class roomDetailActivity extends Activity implements OnClickListener{
 			break;
 
 		case R.id.glsbBtn:
-			Intent intent2=new Intent(roomDetailActivity.this,CabinetListActivity.class);
+			Intent intent2=new Intent(RoomDetailActivity.this,CabinetListActivity.class);
 			if(entity.getTmrId()>-1){
 				intent2.putExtra("roomId", entity.getTmrId());
 			}

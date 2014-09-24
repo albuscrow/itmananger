@@ -3,6 +3,8 @@ package com.itmanapp2.json;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.SharedPreferences;
+
 import com.itmanapp2.entity.LoginEntity;
 
 /**
@@ -23,12 +25,14 @@ public class GetLoginJson {
 			if(result==1){
 				JSONObject js = job.getJSONObject("details");
 				entity=new LoginEntity();
-				entity.setAuuId(js.getInt("auuId"));
-				entity.setAuiName(js.getString("auiName"));
-				entity.setAuuName(js.getString("auuName"));
-				entity.setAuuLoginUser(js.getString("auuLoginUser"));
-				entity.setAuuMail(js.getString("auuEmail"));
-				entity.setAuuPhone(js.getString("auuPhone"));
+			
+				entity.setTuiId(js.getLong("tuiId"));
+				entity.setTuiName(js.getString("tuiName"));
+				entity.setTuiAccount(js.getString("tuiAccount"));
+				entity.setTuiEmail(js.getString("tuiEmail"));
+				entity.setTuiPassword(js.getString("tuiPassword"));
+				entity.setTuiPhone(js.getString("tuiPhone"));
+				
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

@@ -139,7 +139,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private void getLoginResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/unituser/login?"
+		String url = "http://211.155.229.136:8080/assetapi2/unituser/login?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&loginUser=" + acountStr + "&loginPass=" + pwd
 				+ "&accountType=2";
@@ -162,14 +162,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 								SharedPreferences sharedPreferences = getSharedPreferences(
 										"user", MODE_PRIVATE);
 								Editor editor = sharedPreferences.edit();
-								editor.putInt("auuId", entity.getAuuId());
-								editor.putString("auiName", entity.getAuiName());
-								editor.putString("auuName", entity.getAuuName());
-								editor.putString("auuLoginUser", entity.getAuuLoginUser());
-								editor.putString("auuEmail", entity.getAuuMail());
-								editor.putString("auuPhone", entity.getAuuPhone());
+								editor.putInt("auuId", Long.valueOf(entity.getTuiId()).intValue());
+								editor.putString("auiName", entity.getTuiName());
+								editor.putString("auuName", entity.getTuiName());
+								editor.putString("auuLoginUser", entity.getTuiAccount());
+								editor.putString("auuEmail", entity.getTuiEmail());
+								editor.putString("auuPhone", entity.getTuiPhone());
 								editor.putString("pwd", pwdStr);
+								editor.putLong("unitId", entity.getUnitId());
 								editor.putBoolean("loginFlag", true);
+								
 								editor.commit();
 							}
 							handler.sendEmptyMessage(1);

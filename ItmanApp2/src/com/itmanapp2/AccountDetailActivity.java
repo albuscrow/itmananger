@@ -148,7 +148,7 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/unituser/detail?"
+		String url = "http://211.155.229.136:8080/assetapi2/unituser/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&loginUser=" + loginUser + "&loginPass=" + pwd
 				+ "&accountType=2";
@@ -210,11 +210,11 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 			case 1:
 				//Toast.makeText(AccountDetailActivity.this, "成功获取数据", 1000).show();
 				if(entity!=null){
-					unitNameTv.setText(entity.getAuiName()+"");
-					accountNameTv.setText(entity.getAuuLoginUser()+"");
-					nameTv.setText(entity.getAuuName()+"");
-					phoneNumberTv.setText(entity.getAuuPhone()+"");
-					mailAdrressTv.setText(entity.getAuuMail()+"");
+					unitNameTv.setText(entity.getTuiName()+"");
+					accountNameTv.setText(entity.getTuiAccount()+"");
+					nameTv.setText(entity.getTuiName()+"");
+					phoneNumberTv.setText(entity.getTuiPhone()+"");
+					mailAdrressTv.setText(entity.getTuiEmail()+"");
 				}
 				
 				break;

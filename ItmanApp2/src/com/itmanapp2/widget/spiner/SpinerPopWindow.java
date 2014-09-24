@@ -2,9 +2,6 @@ package com.itmanapp2.widget.spiner;
 
 import java.util.List;
 
-import com.itmanapp2.R;
-import com.itmanapp2.widget.spiner.AbstractSpinerAdapter.IOnItemSelectListener;
-
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -14,6 +11,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+
+import com.itmanapp2.R;
+import com.itmanapp2.widget.spiner.AbstractSpinerAdapter.IOnItemSelectListener;
 
 /**
  * @date 2014-7-11
@@ -54,9 +54,7 @@ public class SpinerPopWindow extends PopupWindow implements OnItemClickListener{
     	ColorDrawable dw = new ColorDrawable(0x00);
 		setBackgroundDrawable(dw);
 	
-		
 		mListView = (ListView) view.findViewById(R.id.listview);
-		
 
 		mAdapter = new NormalSpinerAdapter(mContext);	
 		mListView.setAdapter(mAdapter);	
@@ -71,11 +69,31 @@ public class SpinerPopWindow extends PopupWindow implements OnItemClickListener{
 			mAdapter.refreshData(list, selIndex);
 		}
 	}
+	
+	boolean needDismiss = true;
+
+
+	/**
+	 * @return the needDismiss
+	 */
+	public boolean isNeedDismiss() {
+		return needDismiss;
+	}
+
+
+	/**
+	 * @param needDismiss the needDismiss to set
+	 */
+	public void setNeedDismiss(boolean needDismiss) {
+		this.needDismiss = needDismiss;
+	}
 
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View view, int pos, long arg3) {
-		dismiss();
+		if (needDismiss) {
+			dismiss();
+		}
 		if (mItemSelectListener != null){
 			mItemSelectListener.onItemClick(pos);
 		}

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.itmanapp2.entity.DeviceTypeEntity;
 
+
 /**
  * @date 2014-7-18
  * @author wangpeng
@@ -30,10 +31,8 @@ public class GetDeviceTypeJson {
 					for (int i = 0; i < jsonArray.length(); i++) {
 						DeviceTypeEntity entity=new DeviceTypeEntity();
 						JSONObject js = jsonArray.getJSONObject(i);
-						entity.setAdvAddDate(js.getString("advAddDate"));
-						entity.setAdvDeviceTypeid(js.getInt("advDeviceTypeid"));
-						entity.setAdvId(js.getInt("advId"));
-						entity.setAdvItemName(js.getString("advItemName"));
+						entity.setTwcName(js.getString("twcName"));
+						entity.setTwcId(js.getLong("twcId"));
 						deviceTypeList.add(entity);
 					}
 				}

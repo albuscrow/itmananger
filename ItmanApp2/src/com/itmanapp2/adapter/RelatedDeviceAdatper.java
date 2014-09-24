@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.itmanapp2.R;
+import com.itmanapp2.entity.FileEntity;
 import com.itmanapp2.entity.RelatedDeviceEntity;
 
 /**
@@ -66,7 +67,7 @@ public class RelatedDeviceAdatper extends BaseAdapter {
 		}
 		holder.nameTv.setText(modifyInfoList.get(position).getAdName());
 		holder.codingTv.setText(modifyInfoList.get(position).getAdCode());
-		holder.deviceTypeTv.setText(modifyInfoList.get(position).getSwName()); 
+		holder.deviceTypeTv.setText(modifyInfoList.get(position).getTdcName()); 
 		return v;
 	}
 

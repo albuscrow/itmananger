@@ -146,7 +146,8 @@ public class WaitFixOrdersActivity extends Activity implements OnItemClickListen
 			// tencent 123456
 			String url = "http://211.155.229.136:8080/assetapi2/order/list?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-					+ "&userId="+userId+"&status=2"+"&page="+pageIndex;
+					+ "&userId="+userId+"&status=2"+"&page="+pageIndex
+					+ "&accountType=1";
 			System.out.println(url);
 
 			HashMap<String, String> params = new HashMap<String, String>();

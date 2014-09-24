@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@drawable/account_detail_back"
+            android:background="@drawable/modify_info"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -65,7 +65,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="分配时间：" />
@@ -82,7 +81,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="维修项目：" />
@@ -100,7 +98,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="维修状态：" />

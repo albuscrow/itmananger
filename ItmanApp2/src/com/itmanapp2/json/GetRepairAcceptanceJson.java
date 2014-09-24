@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.itmanapp2.entity.RepairAcceptanceEntity;
 import com.itmanapp2.entity.WarrantyEntity;
+import com.itmanapp2.entity.WorkOrderEntity;
 
 /**
  * @date 2014-8-1
@@ -22,8 +23,8 @@ public class GetRepairAcceptanceJson {
 	
 	public static int total = 0; 
 	
-	public static List<RepairAcceptanceEntity> getJson(String response){
-		List<RepairAcceptanceEntity> list = new ArrayList<RepairAcceptanceEntity>();
+	public static List<WorkOrderEntity> getJson(String response){
+		List<WorkOrderEntity> list = new ArrayList<WorkOrderEntity>();
 		try {
 			JSONObject job=new JSONObject(response);
 			result=job.getInt("result");
@@ -32,7 +33,7 @@ public class GetRepairAcceptanceJson {
 				if (job != null ) {
 					JSONArray jsonArray = job.getJSONArray("details");
 					for (int i = 0; i < jsonArray.length(); i++) {
-						RepairAcceptanceEntity entity=new RepairAcceptanceEntity();
+						WorkOrderEntity entity=new WorkOrderEntity();
 						JSONObject js = jsonArray.getJSONObject(i);
 						entity.setAddTime(js.getString("addTime"));
 						entity.setAllocateDate(js.getString("allocateDate"));
@@ -42,7 +43,8 @@ public class GetRepairAcceptanceJson {
 						entity.setOrderId(js.getInt("orderId"));
 						entity.setOrderNo(js.getString("orderNo"));
 						entity.setOrderStatus(js.getInt("orderStatus"));
-						entity.setWxName(js.getString("wxName"));
+						entity.setTdName(js.getString("tdName"));
+//						entity.setWxName(js.getString("wxName"));
 						list.add(entity);
 					}
 				}

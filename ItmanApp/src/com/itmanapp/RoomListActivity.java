@@ -101,7 +101,7 @@ public class RoomListActivity extends Activity implements OnClickListener, OnIte
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Intent resultIntent = new Intent(RoomListActivity.this,roomDetailActivity.class);
+		Intent resultIntent = new Intent(RoomListActivity.this,RoomDetailActivity.class);
 		resultIntent.putExtra("room", rooms.get(arg2));
 		startActivity(resultIntent);
 		

@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.itmanapp.entity.RoomEntity;
+import com.itmanapp2.entity.RoomEntity;
 
 /**
  * @date 2014-7-17

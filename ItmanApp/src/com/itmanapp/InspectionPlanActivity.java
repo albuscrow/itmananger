@@ -151,7 +151,7 @@ public class InspectionPlanActivity extends Activity implements
 
 		if (!loading) {
 
-			String url = "http://211.155.229.136:8080/assetapi2/xj/plans?"
+			String url = "http://121.40.188.122:8080/assetapi2/xj/plans?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&userId=" + userId + "&page=" + pageIndex;
 			System.out.println(url);

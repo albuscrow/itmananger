@@ -60,10 +60,9 @@
                             android:src="@drawable/xtcx" />
 
                         <TextView
-                            android:id="@+id/textView1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="系统查询"
+                            android:text="机房查询"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -88,7 +87,6 @@
                             android:src="@drawable/sbcx" />
 
                         <TextView
-                            android:id="@+id/textView1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="设备查询"
@@ -121,7 +119,6 @@
                             android:src="@drawable/syicon" />
 
                         <TextView
-                            android:id="@+id/textView1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="填写报修"
@@ -148,7 +145,6 @@
                             android:src="@drawable/repair_acceptance" />
 
                         <TextView
-                            android:id="@+id/textView1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="待验收工单"
@@ -182,7 +178,6 @@
                             android:src="@drawable/sj" />
 
                         <TextView
-                            android:id="@+id/textView1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="我的报修"
@@ -210,7 +205,6 @@
                             android:src="@drawable/sz" />
 
                         <TextView
-                            android:id="@+id/textView1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="系统设置"

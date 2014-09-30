@@ -139,7 +139,7 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/order/detail?"
+		String url = "http://121.40.188.122:8080/assetapi2/order/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&detailId="+detailId;
 		System.out.println(url);
@@ -325,7 +325,7 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 	private void submitData(int status) {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/order/sure_or_giveup?"
+		String url = "http://121.40.188.122:8080/assetapi2/order/sure_or_giveup?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
 		
 		System.out.println(url);

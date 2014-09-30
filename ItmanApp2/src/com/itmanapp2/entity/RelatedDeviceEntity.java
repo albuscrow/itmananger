@@ -29,6 +29,20 @@ public class RelatedDeviceEntity implements Serializable {
     String modelName;
     String tmrName;
     String tdcName;
+    long unitId;
+    
+	/**
+	 * @return the unitId
+	 */
+	public long getUnitId() {
+		return unitId;
+	}
+	/**
+	 * @param unitId the unitId to set
+	 */
+	public void setUnitId(long unitId) {
+		this.unitId = unitId;
+	}
 	/**
 	 * @return the adId
 	 */

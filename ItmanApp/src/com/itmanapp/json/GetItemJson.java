@@ -31,9 +31,10 @@ public class GetItemJson {
 					for (int i = 0; i < jsonArray.length(); i++) {
 						CheckItemEntity entity=new CheckItemEntity();
 						JSONObject js = jsonArray.getJSONObject(i);
-						entity.setTxpId(js.getLong("txpId"));
+						entity.setDetailId(js.getLong("detailId"));
 						entity.setTxpName(js.getString("txpName"));
-						entity.setTxpStatus(js.getInt("txpStatus"));
+//						entity.setTxpStatus(js.getInt("txpStatus"));
+						
 //						entity.setId(js.getInt("id"));
 //						entity.setItemName(js.getString("itemName"));
 //						entity.setResult(js.getInt("result")); 

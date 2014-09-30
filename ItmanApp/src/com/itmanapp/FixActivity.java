@@ -149,7 +149,7 @@ public class FixActivity extends Activity implements OnClickListener{
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/order/detail?"
+		String url = "http://121.40.188.122:8080/assetapi2/order/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&detailId=" + detailId;
 		System.out.println(url);
@@ -391,7 +391,7 @@ public class FixActivity extends Activity implements OnClickListener{
 							@Override
 							public void run() {
 
-								String urlForUploadFile = "http://211.155.229.136:8080/assetapi2/file/upload?"
+								String urlForUploadFile = "http://121.40.188.122:8080/assetapi2/file/upload?"
 										+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 										+ "&referId="+detailId+"&userId="+getSharedPreferences("user",Context.MODE_PRIVATE).getInt("Id", 0)
 										+ "&type=7";
@@ -428,7 +428,7 @@ public class FixActivity extends Activity implements OnClickListener{
 							@Override
 							public void run() {
 
-								String urlForUploadFile = "http://211.155.229.136:8080/assetapi2/file/upload?"
+								String urlForUploadFile = "http://121.40.188.122:8080/assetapi2/file/upload?"
 										+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 										+ "&referId="+detailId+"&userId="+getSharedPreferences("user",Context.MODE_PRIVATE).getInt("Id", 0)
 										+ "&type=7";
@@ -519,11 +519,11 @@ public class FixActivity extends Activity implements OnClickListener{
 		}
 		String url;
 		if (status == 1) {
-			url = "http://211.155.229.136:8080/assetapi2/order/complete?"
+			url = "http://121.40.188.122:8080/assetapi2/order/complete?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&detailId="+detailId+"&desp="+desp;
 		}else{
-			url = "http://211.155.229.136:8080/assetapi2/order/lose?"
+			url = "http://121.40.188.122:8080/assetapi2/order/lose?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&detailId="+detailId+"&desp="+desp;
 		}

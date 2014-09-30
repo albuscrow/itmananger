@@ -256,7 +256,7 @@ public class RepairAcceptanceDetailActivity extends Activity implements
 			break;
 
 		case R.id.giveupBtn:
-			submitData(4);
+			submitData(5);
 			break;
 		}
 	}
@@ -271,7 +271,7 @@ public class RepairAcceptanceDetailActivity extends Activity implements
 	private void submitData(int status) {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/order/acceptance?"
+		String url = "http://121.40.188.122:8080/assetapi2/order/acceptance?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&detailId=" + detailId + "&status=" + status;
 		System.out.println(url);

@@ -11,7 +11,9 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -80,16 +82,20 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 
 	private int status;
 
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_get_order);
 		AppManager.getAppManager().addActivity(this);
+		
 		getView();
 	}
 
 	boolean canEdit = false;
+
+	private long userId;
 	
 	/**
 	 * 控件显示
@@ -99,6 +105,7 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 		id=intent.getLongExtra("id", -1);
 		status = intent.getIntExtra("status", -1);
 		canEdit = intent.getBooleanExtra("canEdit", false);
+		userId = getSharedPreferences("user", Context.MODE_PRIVATE).getInt("Id", -1);
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
@@ -149,7 +156,7 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/xj/detail?"
+		String url = "http://121.40.188.122:8080/assetapi2/xj/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&txrId="+id;
 		System.out.println(url);
@@ -192,12 +199,29 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 		DemoApplication.getInstance().getRequestQueue().add(req);
 	}
 	
+	@Override
+	protected void onResume() {
+		Button button = (Button) findViewById(R.id.get_Btn);
+		if (canEdit) {
+			button.setOnClickListener(this);
+			if (status == 1) {
+				button.setBackgroundResource(R.drawable.glsb);
+				button.setText("填写检查结果");
+			}
+		}else{
+			button.setVisibility(View.GONE);
+		}
+
+		super.onResume();
+	}
+	
 	private void getOrder() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/xj/sure?"
+		String url = "http://121.40.188.122:8080/assetapi2/xj/sure?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&txrId="+id;
+				+ "&txrId="+id
+				+ "&userId=" + userId;
 		System.out.println(url);
 		if (status == 1) {
 			handler.sendEmptyMessage(10086);
@@ -267,7 +291,6 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 				devicePosition.setText(entity.getTdPosition()+"");
 				deviceType.setText(entity.getTxcName()+"");
 				project.setText(entity.getTxpNames());
-
 				break;
 			case -1:
 				Toast.makeText(GetOrderActivity.this, "验证不通过，非法用户", 1000).show();
@@ -287,10 +310,13 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 				}
 //				findViewById(R.id.get_Btn).setEnabled(false);
 				Intent intent1=new Intent(GetOrderActivity.this, CheckDeviceActivity.class);
-				intent1.putExtra("id", entity.getTxcId());
+				intent1.putExtra("id", entity.getTxrId());
 				intent1.putExtra("planName", entity.getTxpName());
 				intent1.putExtra("name", entity.getTdName());
 				intent1.putExtra("code", entity.getTdCode());
+				intent1.putExtra("cabName", entity.getTcName());
+				intent1.putExtra("roomName", entity.getTmrName());
+				status = 1;
 				startActivityForResult(intent1, 1);
 				break;
 			}

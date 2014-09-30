@@ -42,7 +42,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="编码：" />
+                        android:text="编        码：" />
 
                     <TextView
                         android:id="@+id/codingTv"
@@ -58,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="名称：" />
+                        android:text="名        称：" />
 
                     <TextView
                         android:id="@+id/nameTv"

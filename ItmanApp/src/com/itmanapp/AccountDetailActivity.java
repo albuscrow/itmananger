@@ -139,7 +139,7 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 
 		System.out.println("loginUser:"+loginUser);
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/unituser/detail?"
+		String url = "http://121.40.188.122:8080/assetapi2/unituser/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&loginUser=" + loginUser + "&loginPass=" + pwd
 				+ "&accountType=1";

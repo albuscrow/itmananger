@@ -162,6 +162,7 @@
                             android:background="@drawable/editview_bg"
                             android:gravity="top"
                             android:lines="3"
+                            android:textSize="15sp"
                             android:padding="5dp" />
                     </LinearLayout>
                 </LinearLayout>

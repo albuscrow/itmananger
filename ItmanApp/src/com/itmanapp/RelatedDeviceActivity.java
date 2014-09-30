@@ -135,7 +135,7 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/device/list?"
+		String url = "http://121.40.188.122:8080/assetapi2/device/list?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&tcId="+cabinetId;
 		System.out.println(url);

@@ -39,9 +39,11 @@ public class GetWarrantyJson {
 						entity.setNumber(js.getString("number"));
 						entity.setStatus(js.getInt("status"));
 						entity.setSuredate(js.getString("suredate"));
-						entity.setWxName(js.getString("wxName"));
-						entity.setAsName(js.getString("asName"));
+//						entity.setWxName(js.getString("wxName"));
+//						entity.setAsName(js.getString("asName"));
 						entity.setAdName(js.getString("adName"));
+						entity.setItemNames(js.getString("itemNames"));
+						entity.setTcName(js.getString("tcName"));
 						warrantyList.add(entity);
 					}
 				}

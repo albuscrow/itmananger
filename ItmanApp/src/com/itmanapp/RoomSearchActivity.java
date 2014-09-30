@@ -133,7 +133,12 @@ public class RoomSearchActivity extends Activity implements OnClickListener, Abs
 					}
 				}else if(flag==1){
 					systemName=searchEdt.getText().toString().trim();
-					url = baseurl + "&systemName="+systemName;
+					try {
+						url = baseurl + "&roomName="+URLEncoder.encode(systemName, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					systemCode="";
 					unitName="";
 					if (isEmpty(systemName)) {
@@ -148,7 +153,12 @@ public class RoomSearchActivity extends Activity implements OnClickListener, Abs
 					}
 				}else if(flag==2){
 					unitName=searchEdt.getText().toString().trim();
-					url = baseurl + "&unitName=" + unitName;
+					try {
+						url = baseurl + "&unitName=" + URLEncoder.encode(unitName, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 							
 					systemCode="";
 					systemName="";
@@ -180,7 +190,7 @@ public class RoomSearchActivity extends Activity implements OnClickListener, Abs
 	}
 	
 	
-	static String baseurl = "http://211.155.229.136:8080/assetapi2/room/roomList?"
+	static String baseurl = "http://121.40.188.122:8080/assetapi2/room/roomList?"
 			+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
 	
 	static String url = null;

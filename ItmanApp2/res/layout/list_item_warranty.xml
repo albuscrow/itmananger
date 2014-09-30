@@ -18,7 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="报修时间：" />
+                android:text="分配时间：" />
 
             <TextView
                 android:id="@+id/warrantyTimeTv"
@@ -51,7 +51,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <LinearLayout
+<!--                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp" >
@@ -59,13 +59,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="所属系统：" />
+                        android:text="所属机柜：" />
 
                     <TextView
                         android:id="@+id/belongsSystemTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-                </LinearLayout>
+                </LinearLayout> -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,10 +75,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="所属设备：" />
+                        android:text="设备编号：" />
 
                     <TextView
-                        android:id="@+id/warrantyEptTv"
+                        android:id="@+id/code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -91,10 +91,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="报修类型：" />
+                        android:text="设备名称：" />
 
                     <TextView
-                        android:id="@+id/warrantyTypeTv"
+                        android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"  />
                 </LinearLayout>
@@ -107,7 +107,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="状  态：" />
+                        android:text="工单状态：" />
 
                     <TextView
                         android:id="@+id/statusTv"
@@ -119,7 +119,6 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"

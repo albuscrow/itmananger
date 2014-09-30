@@ -1,4 +1,4 @@
-package com.itmanapp;
+package com.itmanapp2;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -6,64 +6,56 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Random;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.itmanapp.entity.WorkOrderEntity;
-import com.itmanapp.json.GetWorkOrderDetailJson;
-import com.itmanapp.util.AppManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Base64;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request.Method;
+import com.android.volley.Response;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.itmanapp2.entity.EquipmentEntity;
+import com.itmanapp2.entity.RelatedDeviceEntity;
+import com.itmanapp2.json.GetDeviceDetailJson;
+import com.itmanapp2.util.AppManager;
+import com.itmanapp2.util.CommonUtil;
+
 /**
- * @date 2014-7-17
+ * @date 2014-7-15
  * @author wangpeng
- * @class description 我的维修工单详细页面
+ * @class description 设备查询结果页面
  * 
  */
-public class MyRepairOrderDetailActivity extends Activity implements OnClickListener{
+public class DeviceDetailActivity extends Activity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
 	
-	/**订单编号*/
-	private TextView orderNumberTv;
-	
-	/**分配时间*/
-	private TextView assignTimeTv;
-	
-	/**使用单位*/
-	private TextView useNameTv;
-	
 	/**所属系统*/
-	private TextView belongsSystemTv;
+	private TextView roomTv;
+	
+	/**设备编号*/
+	private TextView deviceIdTv;
 	
 	/**设备类型*/
 	private TextView deviceTypeTv;
 	
-	/**报修描述*/
-	private TextView despTv;
-	
-	/**维修状态*/
-	private TextView statusTv;
-	
+	/**设备配置*/
+	private TextView deviceConfigurationTv;
+    	
     private String key;
 	
 	private String base;
@@ -73,37 +65,44 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 	/** 进度框 */
 	private ProgressDialog mDialog = null;
 	
-	private long detailId;
+	private RelatedDeviceEntity entity=null;
 	
-	/**工单实体类*/
-	private WorkOrderEntity entity=null;
+	private String deviceCode;
 
+	private TextView belongsCabinet;
+
+	private TextView devicePosition;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_repair_order_detail);
+		setContentView(R.layout.activity_device_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
 	}
-
+	
 	/**
 	 * 控件显示
 	 */
 	private void getView() {
-		detailId=getIntent().getLongExtra("id", 0);
-		mDialog = new ProgressDialog(MyRepairOrderDetailActivity.this);
-		mDialog.setMessage(getString(R.string.login_msg));
+		Intent intent=getIntent();
+		deviceCode=intent.getStringExtra("deviceCode");
 		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
-
-		orderNumberTv=(TextView)findViewById(R.id.orderNumberTv);
-		assignTimeTv=(TextView)findViewById(R.id.assignTimeTv);
-		useNameTv=(TextView)findViewById(R.id.useNameTv);
-		belongsSystemTv=(TextView)findViewById(R.id.belongsSystemTv);
+		
+		roomTv=(TextView)findViewById(R.id.belongsRoomTv);
+		deviceIdTv=(TextView)findViewById(R.id.deviceIdTv);
 		deviceTypeTv=(TextView)findViewById(R.id.deviceTypeTv);
-		despTv=(TextView)findViewById(R.id.despTv);
-		statusTv=(TextView)findViewById(R.id.statusTv);
+		deviceConfigurationTv=(TextView)findViewById(R.id.deviceConfigurationTv);
+		devicePosition = (TextView)findViewById(R.id.deviceLocationTv);
+		
+		//add by albuscrow
+		belongsCabinet = (TextView) findViewById(R.id.belongsCabinetTv);
+		findViewById(R.id.related_file_Btn).setOnClickListener(this);
+		
+		mDialog = new ProgressDialog(DeviceDetailActivity.this);
+		mDialog.setMessage(getString(R.string.login_msg));
 		
 		key = getRandomString(5);
 		String kb = key + "ASSET-HJTECH";
@@ -117,6 +116,7 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 		
 	}
 	
+	
 	/**
 	 * description 解析数据
 	 * 
@@ -127,9 +127,11 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://121.40.188.122:8080/assetapi2/order/detail?"
+		String url = "http://121.40.188.122:8080/assetapi2/device/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&detailId="+detailId;
+				+ "&deviceCode="+deviceCode 
+				+ "&accountType=2"
+				+ "&unitId=" + getSharedPreferences("user", Context.MODE_PRIVATE).getLong("unitId", -1);
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -141,18 +143,23 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						int result = GetWorkOrderDetailJson.getJson(response.toString());
+						
+						int result = GetDeviceDetailJson.getJson(response.toString());
 						if (result == 1) {
-							entity=GetWorkOrderDetailJson.entity;
-							handler.sendEmptyMessage(1);
+							entity=GetDeviceDetailJson.entity;
+							if (entity.getUnitId() == getSharedPreferences("user", Context.MODE_PRIVATE).getLong("unitId", -1)) {
+								handler.sendEmptyMessage(1);
+							}else{
+								handler.sendEmptyMessage(100);
+							}
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
 						} else if (result == 0) {
 							handler.sendEmptyMessage(0);
+						} else if (result == 101) {
+							handler.sendEmptyMessage(101);
 						} else if (result == 103) {
 							handler.sendEmptyMessage(103);
-						} else if (result == 104) {
-							handler.sendEmptyMessage(104);
 						}
 
 					}
@@ -180,54 +187,45 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case 1:
-				//Toast.makeText(MyRepairOrderDetailActivity.this, "获取成功", 1000).show();
-				if(entity!=null){
-					orderNumberTv.setText(entity.getOrderNo()+"");
-					assignTimeTv.setText(entity.getAllocateDate()+"");
-					useNameTv.setText(entity.getAuiName()+"");
-					belongsSystemTv.setText(entity.getRoomName()+"");
-					deviceTypeTv.setText(entity.getAdName()+"");
-					despTv.setText(entity.getDesp()+"");
-					int status=entity.getOrderStatus();
-					//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败
-					if(status==1){
-						statusTv.setText("提交报修");
-					}else if(status==2){
-						statusTv.setText("已经确认");
-					}else if(status==3){
-						statusTv.setText("已派工");
-					}else if(status==4){
-						statusTv.setText("待维修");
-					}else if(status==5){
-						statusTv.setText("已维修");
-					}else if(status==6){
-						statusTv.setText("已验收");
-					}else if(status==0){
-						statusTv.setText("审核失败");
-					}else if(status==7){
-						statusTv.setText("维修失败");
-					}
-				}else{
-					Toast.makeText(MyRepairOrderDetailActivity.this, "获取失败", 1000).show();
-				}
+				//Toast.makeText(EquipmentSearchDetailActivity.this, "获取成功", 1000).show();
+				roomTv.setText(entity.getTmrName()+"");
+				deviceIdTv.setText(entity.getAdCode()+"");
+				deviceTypeTv.setText(entity.getTdcName()+"");
+				deviceConfigurationTv.setText(entity.getAdDesp()+"");
+				devicePosition.setText(entity.getAdPosition());
+				((TextView)findViewById(R.id.name)).setText(entity.getAdName());
 				
+				belongsCabinet.setText(CommonUtil.decorateStringWithUnderlineAndColor(entity.getAsName()));
+				belongsCabinet.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(DeviceDetailActivity.this, CabinetDetailActivity.class);
+						intent.putExtra("cabinetId", entity.getCabinetId());
+						startActivity(intent);
+					}
+				});
 				break;
+				
 			case -1:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "验证不通过，非法用户", 1000).show();
+				Toast.makeText(DeviceDetailActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
+				
 			case 0:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "获取失败", 1000).show();
+				Toast.makeText(DeviceDetailActivity.this, "获取失败", 1000).show();
 				break;
+				
+			case 101:
+				Toast.makeText(DeviceDetailActivity.this, "设备不存在", 1000).show();
+				break;
+				
 			case 103:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "参数错误", 1000).show();
+				Toast.makeText(DeviceDetailActivity.this, "参数错误", 1000).show();
 				break;
-			case 104:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "工单不存在", 1000).show();
-				break;
-			case 111:
-				Toast.makeText(MyRepairOrderDetailActivity.this, "提交成功", 1000).show();
+				
+			case 100:
+				Toast.makeText(DeviceDetailActivity.this, "您输入的信息有误，请核对后使用", 1000).show();
 				finish();
-				break;
 			}
 			// 关闭ProgressDialog
 			if (mDialog != null && mDialog.isShowing()) {
@@ -277,16 +275,29 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 		return hex.toString().toUpperCase();
 	}
 
-	/***
-	 * 点击事件
-	 */
+	/**点击事件*/
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
+		switch(v.getId()){
 		case R.id.backBtn:
 			finish();
 			break;
-		}
+			
+		case R.id.related_file_Btn:
+			Intent intent1=new Intent(DeviceDetailActivity.this,RelatedFileActivity.class);
+			if(entity.getAdId()>-1){
+				intent1.putExtra("id", entity.getAdId());
+			}
+
+			intent1.putExtra("type", RelatedFileActivity.TYPE_DEVICE);
+
+			if(entity.getAdName()!=null&&!entity.getAdName().equals("")){
+				intent1.putExtra("name", entity.getAdName());
+			}
+			startActivity(intent1);
+			break;		}
+		
 	}
+
 	
 }

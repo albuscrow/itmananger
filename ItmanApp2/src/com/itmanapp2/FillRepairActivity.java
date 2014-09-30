@@ -222,7 +222,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult05() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getDepListByUnitId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getDepListByUnitId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&unitId=" + unitId;
 		System.out.println(url);
@@ -276,7 +276,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult1() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getRoomListByDepId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getRoomListByDepId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&depId="+depId;
 		System.out.println(url);
@@ -328,7 +328,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult15() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getCabinetListByRoomId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getCabinetListByRoomId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&roomId="+roomId;
 		System.out.println(url);
@@ -380,7 +380,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult2() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getDeviceListByRoomId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getDeviceListByRoomId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&cabinetId="+cabId;
 		System.out.println(url);
@@ -433,7 +433,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult3() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getWxCategoryListByDeviceId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getWxCategoryListByDeviceId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&deviceId="+adId;
 		System.out.println(url);
@@ -497,13 +497,13 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 //				+ "&userId="+userId+"&roomId="+roomId+"&deviceId="+adId + "&cabinetId=" + cabId
 //				+ "&unitId=" + unitId + "&depId="+depId 
 //				+"&wxId="+getWxIdStr()+"&desp="+descriptionStr;
-		String url = "http://211.155.229.136:8080/assetapi2/order/add?"
+		String url = "http://121.40.188.122:8080/assetapi2/order/add?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
 		
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
-		params.put("userId", "1");
+		params.put("userId", String.valueOf(userId));
 		params.put("unitId", String.valueOf(unitId));
 		params.put("depId", String.valueOf(depId));
 		params.put("roomId", String.valueOf(roomId));

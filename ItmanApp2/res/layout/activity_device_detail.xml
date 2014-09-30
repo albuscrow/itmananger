@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="机柜信息"
+            android:text="设备信息"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -68,7 +68,23 @@
                 android:layout_margin="20dp"
                 android:background="@drawable/modify_info"
                 android:orientation="vertical" >
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp" >
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="设备名称：" />
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,10 +109,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="机柜编号：" />
+                        android:text="所属机柜：" />
 
                     <TextView
-                        android:id="@+id/code"
+                        android:id="@+id/belongsCabinetTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -109,10 +125,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="机柜名称：" />
+                        android:text="设备编号：" />
 
                     <TextView
-                        android:id="@+id/name"
+                        android:id="@+id/deviceIdTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -125,10 +141,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="使用单位：" />
+                        android:text="设备类型：" />
 
                     <TextView
-                        android:id="@+id/unit"
+                        android:id="@+id/deviceTypeTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -141,42 +157,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="所属部门：" />
+                        android:text="设备配置：" />
 
                     <TextView
-                        android:id="@+id/department"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="位        置：" />
-
-                    <TextView
-                        android:id="@+id/position"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="安放时间：" />
-
-                    <TextView
-                        android:id="@+id/time"
+                        android:id="@+id/deviceConfigurationTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
@@ -190,10 +174,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="描        述：" />
+                        android:text="设备地址：" />
 
                     <TextView
-                        android:id="@+id/desp"
+                        android:id="@+id/deviceLocationTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>

@@ -128,7 +128,7 @@ public class CabinetDetailActivity extends Activity implements OnClickListener{
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/cabinet/detail?"
+		String url = "http://121.40.188.122:8080/assetapi2/cabinet/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&tcId="+cabinetId;
 		System.out.println(url);

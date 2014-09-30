@@ -95,7 +95,7 @@ public class RoomDetailActivity extends Activity implements OnClickListener{
 		if(entity!=null){
 			roomNumberTv.setText(entity.getTmrCode()+"");
 			roomNameTv.setText(entity.getTmrName()+"");
-			addressTv.setText(entity.getTmrAddress()+"");
+			addressTv.setText(entity.getTmrPosition()+"");
 			useUnitTv.setText(entity.getUnitName()+"");
 			roomContactTv.setText(entity.getRoomManager()+"");
 			String roomManagerPhone = entity.getRoomManagerPhone();

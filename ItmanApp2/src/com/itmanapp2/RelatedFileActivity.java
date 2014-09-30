@@ -117,7 +117,7 @@ public class RelatedFileActivity extends Activity implements OnClickListener{
 		base = md5(kb);
 		code = Base64.encodeToString(base.getBytes(), Base64.DEFAULT);
 		
-		url = "http://211.155.229.136:8080/assetapi2/file/list?"
+		url = "http://121.40.188.122:8080/assetapi2/file/list?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&referId="+id
 				+ "&type=";	

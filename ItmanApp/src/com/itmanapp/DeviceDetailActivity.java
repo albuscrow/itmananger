@@ -126,7 +126,7 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/device/detail?"
+		String url = "http://121.40.188.122:8080/assetapi2/device/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&deviceCode="+deviceCode;
 		System.out.println(url);
@@ -186,6 +186,7 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 				deviceTypeTv.setText(entity.getTdcName()+"");
 				deviceConfigurationTv.setText(entity.getAdDesp()+"");
 				devicePosition.setText(entity.getAdPosition());
+				((TextView)findViewById(R.id.name)).setText(entity.getAdName());
 				
 				belongsCabinet.setText(CommonUtil.decorateStringWithUnderlineAndColor(entity.getAsName()));
 				belongsCabinet.setOnClickListener(new OnClickListener() {

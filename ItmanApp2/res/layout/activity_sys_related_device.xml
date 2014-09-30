@@ -45,10 +45,10 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="系统编号：" />
+                android:text="机柜编号：" />
 
             <TextView
-                android:id="@+id/systemNumberTv"
+                android:id="@+id/code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -59,13 +59,12 @@
             android:padding="10dp" >
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="系统名称：" />
+                android:text="机柜名称：" />
 
             <TextView
-                android:id="@+id/systemNameTv"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

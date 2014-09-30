@@ -172,7 +172,7 @@ public class MyRepairOrderActivity extends Activity implements OnItemClickListen
 		
 		if (!loading) {
 			// tencent 123456
-			String url = "http://211.155.229.136:8080/assetapi2/order/list?"
+			String url = "http://121.40.188.122:8080/assetapi2/order/list?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&userId="+userId+"&status="+status+"&page="+pageIndex
 				+ "&accountType=1";
@@ -298,6 +298,7 @@ public class MyRepairOrderActivity extends Activity implements OnItemClickListen
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Intent intent=new Intent(MyRepairOrderActivity.this, MyNeedFixOrderDetailActivity.class);
 		intent.putExtra("id", listAll.get(arg2-1).getDetailId());
+		intent.putExtra("status", listAll.get(arg2-1).getOrderStatus());
 		startActivity(intent);
 	}
 

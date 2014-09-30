@@ -135,7 +135,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 	private void getLoginResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/unituser/login?"
+		String url = "http://121.40.188.122:8080/assetapi2/unituser/login?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&loginUser=" + acountStr + "&loginPass=" + pwd
 				+ "&accountType=1";

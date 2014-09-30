@@ -32,6 +32,7 @@ public class GetLoginJson {
 				entity.setTuiEmail(js.getString("tuiEmail"));
 				entity.setTuiPassword(js.getString("tuiPassword"));
 				entity.setTuiPhone(js.getString("tuiPhone"));
+				entity.setUnitId(js.getLong("unitId"));
 				
 			}
 		} catch (JSONException e) {

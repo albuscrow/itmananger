@@ -58,18 +58,19 @@ public class WarrantyAdatper extends BaseAdapter {
 			inflater = LayoutInflater.from(context);
 			v = inflater.inflate(R.layout.list_item_warranty, null);
 			holder.warrantyTimeTv = (TextView) v.findViewById(R.id.warrantyTimeTv);
-			holder.belongsSystemTv = (TextView) v.findViewById(R.id.belongsSystemTv);
-			holder.warrantyEptTv = (TextView) v.findViewById(R.id.warrantyEptTv);
-			holder.warrantyTypeTv = (TextView) v.findViewById(R.id.warrantyTypeTv);
+//			holder.belongsSystemTv = (TextView) v.findViewById(R.id.belongsSystemTv);
+			holder.warrantyCode = (TextView) v.findViewById(R.id.code);
+			holder.warrantyName = (TextView) v.findViewById(R.id.name);
 			holder.statusTv = (TextView) v.findViewById(R.id.statusTv);
 			v.setTag(holder);
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
 		holder.warrantyTimeTv.setText(warrantyList.get(position).getAddtime()+"");
-		holder.belongsSystemTv.setText(warrantyList.get(position).getAsName()+"");
-		holder.warrantyEptTv.setText(warrantyList.get(position).getAdName()+"");
-		holder.warrantyTypeTv.setText(warrantyList.get(position).getWxName()+"");
+//		holder.belongsSystemTv.setText(warrantyList.get(position).getAsName()+"");
+		holder.warrantyCode.setText(warrantyList.get(position).getNumber()+"");
+		holder.warrantyName.setText(warrantyList.get(position).getAdName());
+//		holder.warrantyTypeTv.setText(warrantyList.get(position).getWxName()+"");
 		
 		int status=warrantyList.get(position).getStatus();
 		//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败
@@ -98,11 +99,11 @@ public class WarrantyAdatper extends BaseAdapter {
 		/** 报修时间 */
 		private TextView warrantyTimeTv;
 		/** 所属系统 */
-		private TextView belongsSystemTv;
+//		private TextView belongsSystemTv;
 		/** 所属设备 */
-		private TextView warrantyEptTv;
+		private TextView warrantyCode;
 		/** 保修类型*/
-		private TextView warrantyTypeTv;
+		private TextView warrantyName;
 		/** 状  态 */
 		private TextView statusTv;
 	}

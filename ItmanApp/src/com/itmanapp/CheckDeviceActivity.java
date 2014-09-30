@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -117,6 +118,10 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 	private String deviceCode;
 
 	private TextView despTv;
+
+	private String roomName;
+
+	private String cabName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +133,9 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		planName = intent.getStringExtra("planName");
 		name = intent.getStringExtra("name");
 		deviceCode = intent.getStringExtra("code");
+		
+		roomName = intent.getStringExtra("roomName");
+		cabName = intent.getStringExtra("cabName");
 		
 		getView();
 	}
@@ -165,7 +173,7 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 							@Override
 							public void run() {
 
-								String urlForUploadFile = "http://211.155.229.136:8080/assetapi2/file/upload?"
+								String urlForUploadFile = "http://121.40.188.122:8080/assetapi2/file/upload?"
 										+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 										+ "&referId="+id+"&userId="+getSharedPreferences("user",Context.MODE_PRIVATE).getInt("Id", 0)
 										+ "&type=6";
@@ -202,7 +210,7 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 							@Override
 							public void run() {
 
-								String urlForUploadFile = "http://211.155.229.136:8080/assetapi2/file/upload?"
+								String urlForUploadFile = "http://121.40.188.122:8080/assetapi2/file/upload?"
 										+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 										+ "&referId="+ id +"&userId="+getSharedPreferences("user",Context.MODE_PRIVATE).getInt("Id", 0)
 										+ "&type=7";
@@ -325,9 +333,9 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/xj/items?"
+		String url = "http://121.40.188.122:8080/assetapi2/xj/items?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&txcId="+id;
+				+ "&txrId="+id;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -432,11 +440,11 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 				
 				for(int i=0;i<list.size();i++){
 					if(i==(list.size()-1)){
-						sbId.append(list.get(i).getTxpId());
+						sbId.append(list.get(i).getDetailId());
 					}else if(list.size()==1){
-						sbId.append(list.get(i).getTxpId());
+						sbId.append(list.get(i).getDetailId());
 					}else{
-						sbId.append(list.get(i).getTxpId()+",");
+						sbId.append(list.get(i).getDetailId()+",");
 					}
 				}
 				
@@ -531,7 +539,41 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 			break;
 			
 		case R.id.bx_Btn:
+			CharSequence desp = despTv.getText();
+			if (desp == null || desp.length() == 0) {
+				Toast.makeText(this, "请输入检查描述！", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
+			for(int i=0;i<list.size();i++){
+				if(i==(list.size()-1)){
+					sbResult.append(list.get(i).getTxpStatus());
+				}else if(list.size()==1){
+					sbResult.append(list.get(i).getTxpStatus());
+				}else{
+					sbResult.append(list.get(i).getTxpStatus()+",");
+				}
+			}
+			System.out.println("id-->"+sbId.toString()+"--Result-->"+sbResult.toString());
+//			submitResult();
+			
 			Intent intent3=new Intent(CheckDeviceActivity.this,FillRepairActivity.class);
+			String url = null;
+			try {
+				url = "http://121.40.188.122:8080/assetapi2/xj/commit_item_result?"
+					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+					+ "&recordIds="+id+"&detailIds="+ sbId.toString()
+					+ "&resultIds=" + sbResult.toString()
+					+ "&recordDesp=" + URLEncoder.encode(desp.toString(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			intent3.putExtra("url", url);
+			intent3.putExtra("id",id);
+			intent3.putExtra("cabName",cabName);
+			intent3.putExtra("roomName",roomName);
+			intent3.putExtra("deviceName", name);
 			startActivityForResult(intent3, 2);
 			break;
 			
@@ -578,11 +620,17 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 	private void submitResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/xj/commit_item_result?"
-				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&recordIds="+id+"&detailIds="+ sbId.toString()
-				+ "&resultIds=" + sbResult.toString()
-				+ "&recorddesp=" + despTv.getText();
+		String url = null;
+		try {
+			url = "http://121.40.188.122:8080/assetapi2/xj/commit_item_result?"
+					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+					+ "&recordIds="+id+"&detailIds="+ sbId.toString()
+					+ "&resultIds=" + sbResult.toString()
+					+ "&recordDesp=" + URLEncoder.encode(despTv.getText().toString(), "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();

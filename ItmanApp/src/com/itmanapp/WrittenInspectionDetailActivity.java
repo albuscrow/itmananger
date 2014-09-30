@@ -198,15 +198,15 @@ public class WrittenInspectionDetailActivity extends Activity implements OnClick
 				adapter=new WrittenInspectionDetailAdatper(WrittenInspectionDetailActivity.this, list);
 				inspectionProjectLv.setAdapter(adapter);
 				
-				for(int i=0;i<list.size();i++){
-					if(i==(list.size()-1)){
-						sbId.append(list.get(i).getTxpId());
-					}else if(list.size()==1){
-						sbId.append(list.get(i).getTxpId());
-					}else{
-						sbId.append(list.get(i).getTxpId()+",");
-					}
-				}
+//				for(int i=0;i<list.size();i++){
+//					if(i==(list.size()-1)){
+//						sbId.append(list.get(i).getTxpId());
+//					}else if(list.size()==1){
+//						sbId.append(list.get(i).getTxpId());
+//					}else{
+//						sbId.append(list.get(i).getTxpId()+",");
+//					}
+//				}
 				
 				break;
 			case -1:

@@ -57,6 +57,10 @@ public class MyRepairDetailActivity extends Activity implements OnClickListener{
 	private String adName;
 	
 	private int status;
+
+	private String cabName;
+
+	private String itemName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +79,13 @@ public class MyRepairDetailActivity extends Activity implements OnClickListener{
 		System.out.println("detailId==="+detailId);
 		wxName=intent.getStringExtra("wxName");
 		asName=intent.getStringExtra("asName");
-		adName=intent.getStringExtra("asName");
+		adName=intent.getStringExtra("adName");
 		desp=intent.getStringExtra("desp");
 		status=intent.getIntExtra("status", 0);
+		cabName = intent.getStringExtra("cabName");
+		itemName = intent.getStringExtra("itemName");
 		
+				
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
 		mDialog = new ProgressDialog(MyRepairDetailActivity.this);
@@ -92,10 +99,11 @@ public class MyRepairDetailActivity extends Activity implements OnClickListener{
 		mDialog.show();
 		mDialog.setCanceledOnTouchOutside(false);
 		
-		systemTv.setText(asName+"");
+		systemTv.setText(cabName+"");
 		equipmentTv.setText(adName+"");
-		repairTypeTv.setText(wxName+"");
+		repairTypeTv.setText(itemName+"");
 		errorDespTv.setText(desp+"");
+		
 		//1:提交报修 2:已经确认 3：已派工 4：待维修 5：已维修 6：已验收 0：审核失败 7：维修失败
 		if(status==1){
 			statusTv.setText("提交报修");

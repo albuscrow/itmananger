@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
       <string-array name="name">
-        <item>编          码 </item>
-        <item>名          称 </item>
+        <item>编&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;码</item>
+        <item>名&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;称</item>
         <!-- add by albuscrow  -->
         <item>使用单位</item>
     </string-array>

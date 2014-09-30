@@ -161,6 +161,16 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	private ImageView unitsIgv;
 
 	private TextView unitsTv;
+
+	private String submitUrl;
+
+	private long id;
+
+	private String cabNameStr;
+
+	private String roomNameStr;
+
+	private String deviceNameStr;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +179,13 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		AppManager.getAppManager().addActivity(this);
 		spf = getSharedPreferences("user",Context.MODE_PRIVATE);
 		userId=spf.getInt("Id", 0);
-		getView();
+
+		submitUrl = getIntent().getStringExtra("url"); 
+		id = getIntent().getLongExtra("id", -1);
+		cabNameStr = getIntent().getStringExtra("cabName");
+		roomNameStr = getIntent().getStringExtra("roomName");
+		deviceNameStr = getIntent().getStringExtra("deviceName");
+				getView();
 	}
 	
 	/**
@@ -178,20 +194,8 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	private void getView() {
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
-		unitsIgv = (ImageView)findViewById(R.id.unitsIgv);
-		unitsIgv.setOnClickListener(this);
-		unitsTv=(TextView)findViewById(R.id.unitsTv);
-		depsIgv=(ImageView)findViewById(R.id.depsIgv);
-		depsIgv.setOnClickListener(this);
-		depsTv=(TextView)findViewById(R.id.depsTv);
-		roomsIgv=(ImageView)findViewById(R.id.roomsIgv);
-		roomsIgv.setOnClickListener(this);
 		roomsTv=(TextView)findViewById(R.id.roomsTv);
-		cabsIgv = (ImageView)findViewById(R.id.cabIgv);
-		cabsIgv.setOnClickListener(this);
 		cabsTv = (TextView)findViewById(R.id.cabTv);
-		equipmentIgv=(ImageView)findViewById(R.id.equipmentIgv);
-		equipmentIgv.setOnClickListener(this);
 		equipmentTv=(TextView)findViewById(R.id.equipmentTv);
 		typeRepairIgv=(ImageView)findViewById(R.id.typeRepairIgv);
 		typeRepairIgv.setOnClickListener(this);
@@ -199,6 +203,10 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		descriptionTv=(EditText)findViewById(R.id.descriptionTv);
 		submitBtn=(Button)findViewById(R.id.submitBtn);
 		submitBtn.setOnClickListener(this);
+		
+		roomsTv.setText(roomNameStr);
+		cabsTv.setText(cabNameStr);
+		equipmentTv.setText(deviceNameStr);
 		
 		mDialog = new ProgressDialog(FillRepairActivity.this);
 		mDialog.setMessage(getString(R.string.login_msg));
@@ -213,7 +221,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		mDialog.show();
 		mDialog.setCanceledOnTouchOutside(false);
 		
-		getResult0();
+		getResult3();
 		
 	}
 	/**
@@ -225,7 +233,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult0() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getUnitList?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getUnitList?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
 		System.out.println(url);
 
@@ -278,7 +286,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult05() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getDepListByUnitId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getDepListByUnitId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&unitId=" + unitId;
 		System.out.println(url);
@@ -332,7 +340,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult1() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getRoomListByDepId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getRoomListByDepId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&depId="+depId;
 		System.out.println(url);
@@ -384,7 +392,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult15() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getCabinetListByRoomId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getCabinetListByRoomId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&roomId="+roomId;
 		System.out.println(url);
@@ -436,7 +444,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult2() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getDeviceListByRoomId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getDeviceListByRoomId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&cabinetId="+cabId;
 		System.out.println(url);
@@ -489,9 +497,9 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void getResult3() {
 
-		String url = "http://211.155.229.136:8080/assetapi2/room/getWxCategoryListByDeviceId?"
+		String url = "http://121.40.188.122:8080/assetapi2/room/getWxCategoryListByDeviceId?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&deviceId="+adId;
+				+ "&deviceId="+id;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -542,31 +550,36 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	 */
 	private void submitResult() {
 
-//		try {
-//			descriptionStr = URLEncoder.encode(descriptionStr, "UTF-8");
-//		} catch (UnsupportedEncodingException e1) {
-//			e1.printStackTrace();
-//		}
+		try {
+			descriptionStr = URLEncoder.encode(descriptionStr, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
 		
 //		String url = "http://211.155.229.136:8080/assetapi2/order/add?"
 //				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 //				+ "&userId="+userId+"&roomId="+roomId+"&deviceId="+adId + "&cabinetId=" + cabId
 //				+ "&unitId=" + unitId + "&depId="+depId 
 //				+"&wxId="+getWxIdStr()+"&desp="+descriptionStr;
-		String url = "http://211.155.229.136:8080/assetapi2/order/add?"
-				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
+//		String url = "http://211.155.229.136:8080/assetapi2/order/add?"
+//				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
 		
-		System.out.println(url);
+//		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
-		params.put("userId", String.valueOf(userId));
-		params.put("unitId", String.valueOf(unitId));
-		params.put("depId", String.valueOf(depId));
-		params.put("roomId", String.valueOf(roomId));
-		params.put("cabinetId", String.valueOf(cabId));
-		params.put("deviceId", String.valueOf(adId));
-		params.put("wxIds", getWxIdStr());
-		params.put("desp", descriptionStr);
+//		params.put("userId", String.valueOf(userId));
+//		params.put("unitId", String.valueOf(unitId));
+//		params.put("depId", String.valueOf(depId));
+//		params.put("roomId", String.valueOf(roomId));
+//		params.put("cabinetId", String.valueOf(cabId));
+//		params.put("deviceId", String.valueOf(adId));
+//		params.put("wxIds", getWxIdStr());
+//		params.put("desp", descriptionStr);
+		
+		String url = submitUrl + "&wxIds=" + getWxIdStr()
+				+ "&desp=" + descriptionStr
+				+ "&userId=" + userId;
+		System.out.println(url);
 
 		CustomRequest req = new CustomRequest(Method.POST, url,
 				params, new Listener<JSONObject>() {
@@ -773,83 +786,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		case R.id.backBtn:
 			finish();
 			break;
-			
-		case R.id.unitsIgv:
-			if(unitNameList.size()>0 && unitNameList!=null){
-				depsTv.setText("");
-				roomsTv.setText("");
-				cabsTv.setText("");
-				equipmentTv.setText("");
-				typeRepairTv.setText("");
-				depNameList.clear();
-				roomNameList.clear();
-				cabNameList.clear();
-				eptStrList.clear();
-				deviceTypeStrList.clear();
-				deviceTypeNames.clear();
-				showSpinWindow0();
-				first=0;
-			}
-			break;
-		case R.id.depsIgv:
-			if(depNameList.size()>0 && depNameList!=null){
-				
-				roomsTv.setText("");
-				cabsTv.setText("");
-				equipmentTv.setText("");
-				typeRepairTv.setText("");
-				roomNameList.clear();
-				cabNameList.clear();
-				eptStrList.clear();
-				deviceTypeStrList.clear();
-				deviceTypeNames.clear();
-				showSpinWindow05();
-				first=15;
-			}
-			break;
-					case R.id.cabIgv:
-			if(cabNameList.size()>0 && cabNameList!=null){
-				equipmentTv.setText("");
-				typeRepairTv.setText("");
-				eptStrList.clear();
-				deviceTypeStrList.clear();
-				deviceTypeNames.clear();
-				showSpinWindow15();
-				first=16;
-			}
-			break;		case R.id.roomsIgv:
-			System.out.println("systemsList:"+roomNameList);
-			System.out.println("eptStrList:"+eptStrList);
-			System.out.println("deviceTypeStrList"+deviceTypeStrList);
-			if(roomNameList.size()>0 && roomNameList!=null){
-				cabsTv.setText("");
-				equipmentTv.setText("");
-				typeRepairTv.setText("");
-				cabNameList.clear();
-				eptStrList.clear();
-				deviceTypeStrList.clear();
-				deviceTypeNames.clear();
-				showSpinWindow1();
-				first=1;
-			}
-			
-			break;
-
-		case R.id.equipmentIgv:
-			System.out.println("systemsList:"+roomNameList);
-			System.out.println("eptStrList:"+eptStrList);
-			System.out.println("deviceTypeStrList"+deviceTypeStrList);
-			if(eptStrList.size()>0&&eptStrList!=null){
-				System.out.println("222222222");
-				deviceTypeNames.clear();
-				deviceTypeStrList.clear();
-				typeRepairTv.setText("");
-				showSpinWindow2();
-				first=2;
-			}
-			
-			break;
-			
+		
 		case R.id.typeRepairIgv:
 			System.out.println("systemsList:"+roomNameList);
 			System.out.println("eptStrList:"+eptStrList);

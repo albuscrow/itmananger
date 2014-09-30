@@ -31,8 +31,10 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.itmanapp2.adapter.FileListAdatper;
 import com.itmanapp2.adapter.RelatedDeviceAdatper;
 import com.itmanapp2.entity.RelatedDeviceEntity;
+import com.itmanapp2.json.GetModifyInfoJson;
 import com.itmanapp2.json.GetRelatedDeviceJson;
 import com.itmanapp2.util.AppManager;
 
@@ -63,21 +65,21 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	private RelatedDeviceAdatper adapter;
 	
 	/**数据集合*/
-	private List<RelatedDeviceEntity> modifyInfoList = new ArrayList<RelatedDeviceEntity>();
+	private List<RelatedDeviceEntity> deviceList = new ArrayList<RelatedDeviceEntity>();
 	
 	/**系统编号*/
-    private TextView systemNumberTv;
+    private TextView codeTv;
 	
     /**系统名称*/
-	private TextView systemNameTv;
+	private TextView nameTv;
 	
 	private Intent intent;
 	
-	private int systemNumber;
+	private long cabinetId;
 	
-    private String asCode;
+    private String cabinetCode;
 	
-	private String systemName;
+	private String cabinetName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +87,10 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 		setContentView(R.layout.activity_sys_related_device);
 		AppManager.getAppManager().addActivity(this);
 		intent=getIntent();
-		systemNumber=intent.getIntExtra("AsId", -1);
-		asCode=intent.getStringExtra("AsCode");
-		systemName=intent.getStringExtra("AsName");
+		cabinetId=intent.getLongExtra("cabinetId", -1);
+		cabinetCode=intent.getStringExtra("cabinetCode");
+		cabinetName=intent.getStringExtra("cabinetName");
+		
 		getView();
 	}
 	
@@ -101,11 +104,11 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
 		
-		systemNumberTv=(TextView)findViewById(R.id.systemNumberTv);
-		systemNameTv=(TextView)findViewById(R.id.systemNameTv);
+		codeTv=(TextView)findViewById(R.id.code);
+		nameTv=(TextView)findViewById(R.id.name);
 		
-		systemNumberTv.setText(asCode+"");
-		systemNameTv.setText(systemName+"");
+		codeTv.setText(cabinetCode+"");
+		nameTv.setText(cabinetName+"");
 		
 		relatedDeviceLv=(ListView)findViewById(R.id.relatedDeviceLv);
 		relatedDeviceLv.setOnItemClickListener(this);
@@ -132,9 +135,9 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi/system/related?"
+		String url = "http://121.40.188.122:8080/assetapi2/device/list?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&systemId="+systemNumber;
+				+ "&tcId="+cabinetId;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -146,10 +149,10 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 					public void onResponse(JSONObject response) {
 
 						System.out.println("@@" + response.toString());
-						modifyInfoList=GetRelatedDeviceJson.getJson(response.toString());
+						deviceList=GetRelatedDeviceJson.getJson(response.toString());
 						int result = GetRelatedDeviceJson.result;
 						if (result == 1) {
-							System.out.println("List:"+modifyInfoList);
+							System.out.println("List:"+deviceList);
 							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
@@ -189,7 +192,7 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 			switch (msg.what) {
 			case 1:
 				//Toast.makeText(RelatedDeviceActivity.this, "获取成功", 1000).show();
-				adapter=new RelatedDeviceAdatper(RelatedDeviceActivity.this, modifyInfoList);
+				adapter=new RelatedDeviceAdatper(RelatedDeviceActivity.this, deviceList);
 				relatedDeviceLv.setAdapter(adapter);
 				break;
 			case -1:
@@ -223,17 +226,6 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 			sb.append(base.charAt(number));
 		}
 		return sb.toString();
-	}
-
-	/**
-	 * 判断是否为空
-	 */
-	private boolean isEmpty(String result) {
-		if (result == null || result.equals("")) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	/**
@@ -273,10 +265,9 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Intent resultIntent = new Intent(RelatedDeviceActivity.this,EquipmentSearchDetailActivity.class);
-		resultIntent.putExtra("deviceCode", modifyInfoList.get(arg2).getAdCode());
+		Intent resultIntent = new Intent(RelatedDeviceActivity.this,DeviceDetailActivity.class);
+		resultIntent.putExtra("deviceCode", deviceList.get(arg2).getAdCode());
 		startActivity(resultIntent);
-		
 	}
 
 }

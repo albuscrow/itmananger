@@ -123,7 +123,7 @@ public class CheckListActivity extends Activity implements OnClickListener,OnIte
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/xj/plans?"
+		String url = "http://121.40.188.122:8080/assetapi2/xj/plans?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&userId="+userId
 				+ "&page=" + 1;

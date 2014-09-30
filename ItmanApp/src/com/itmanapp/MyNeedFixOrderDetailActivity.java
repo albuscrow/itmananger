@@ -112,6 +112,26 @@ public class MyNeedFixOrderDetailActivity extends Activity implements OnClickLis
 		despTv=(TextView)findViewById(R.id.despTv);
 		statusTv=(TextView)findViewById(R.id.statusTv);
 		
+		int status = getIntent().getIntExtra("status", -1);
+		
+		if (status == 4) {
+			((TextView)findViewById(R.id.textView1)).setText("待维修工单");
+		}else if(status == 5){
+			((TextView)findViewById(R.id.textView1)).setText("已完成工单");
+		}else if(status == 3){
+			((TextView)findViewById(R.id.textView1)).setText("已派工工单");
+		}else if(status == 7){
+			((TextView)findViewById(R.id.textView1)).setText("维修失败工单");
+		}else if (status == 6) {
+			((TextView)findViewById(R.id.textView1)).setText("已验收工单");
+		}else if (status == 1) {
+			((TextView)findViewById(R.id.textView1)).setText("提交报修工单");
+		}else if (status == 2) {
+			((TextView)findViewById(R.id.textView1)).setText("已确认工单");
+		}else if (status == 0) {
+			((TextView)findViewById(R.id.textView1)).setText("审核失败工单");
+		}
+		
 //		confirmBtn=(Button)findViewById(R.id.confirmBtn);
 //		confirmBtn.setOnClickListener(this);
 //		giveupBtn=(Button)findViewById(R.id.giveupBtn);
@@ -139,7 +159,7 @@ public class MyNeedFixOrderDetailActivity extends Activity implements OnClickLis
 	private void getResult() {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/order/detail?"
+		String url = "http://121.40.188.122:8080/assetapi2/order/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 				+ "&detailId="+detailId;
 		System.out.println(url);
@@ -325,7 +345,7 @@ public class MyNeedFixOrderDetailActivity extends Activity implements OnClickLis
 	private void submitData(int status) {
 
 		// tencent 123456
-		String url = "http://211.155.229.136:8080/assetapi2/order/sure_or_giveup?"
+		String url = "http://121.40.188.122:8080/assetapi2/order/sure_or_giveup?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
 		
 		System.out.println(url);

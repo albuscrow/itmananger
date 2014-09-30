@@ -144,7 +144,7 @@ public class WaitFixOrdersActivity extends Activity implements OnItemClickListen
 
 		if (!loading) {
 			// tencent 123456
-			String url = "http://211.155.229.136:8080/assetapi2/order/list?"
+			String url = "http://121.40.188.122:8080/assetapi2/order/list?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
 					+ "&userId="+userId+"&status=2"+"&page="+pageIndex
 					+ "&accountType=1";

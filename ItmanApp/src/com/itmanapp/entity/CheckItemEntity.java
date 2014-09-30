@@ -19,18 +19,32 @@ public class CheckItemEntity {
     long txpAddPerson;
     int txpStatus;
     String txpValue;
+    
+    long detailId;
 	/**
-	 * @return the txpId
+	 * @return the detailId
 	 */
-	public long getTxpId() {
-		return txpId;
+	public long getDetailId() {
+		return detailId;
 	}
 	/**
-	 * @param txpId the txpId to set
+	 * @param detailId the detailId to set
 	 */
-	public void setTxpId(long txpId) {
-		this.txpId = txpId;
+	public void setDetailId(long detailId) {
+		this.detailId = detailId;
 	}
+//	/**
+//	 * @return the txpId
+//	 */
+//	public long getTxpId() {
+//		return txpId;
+//	}
+//	/**
+//	 * @param txpId the txpId to set
+//	 */
+//	public void setTxpId(long txpId) {
+//		this.txpId = txpId;
+//	}
 	/**
 	 * @return the txpName
 	 */

@@ -90,6 +90,8 @@ public class WarrantyAdatper extends BaseAdapter {
 			holder.statusTv.setText("审核失败");
 		}else if(status==7){
 			holder.statusTv.setText("维修失败");
+		}else if(status==8){
+			holder.statusTv.setText("维修已审核");
 		}
 		
 		return v;

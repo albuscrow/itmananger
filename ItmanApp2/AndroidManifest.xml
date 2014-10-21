@@ -84,6 +84,13 @@
         <!-- 系统查询详细页面 -->
         <activity android:name="com.itmanapp2.SystemSeachDetailActivity" >
         </activity>
+        
+        <activity
+            android:name="com.itmanapp2.CaptureActivity"
+            android:configChanges="keyboardHidden|navigation|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
 
         <!-- 系统整改历史页面 -->
         <activity android:name="com.itmanapp2.SystemModifyInfoActivity" >

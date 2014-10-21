@@ -29,6 +29,81 @@ public class RelatedDeviceEntity implements Serializable {
     String modelName;
     String tmrName;
     String tdcName;
+    
+    long unitId;
+	String roomName;
+    long roomId;
+    long depId;
+    String depName;
+    
+    
+    
+     /**
+	 * @return the unitId
+	 */
+	public long getUnitId() {
+		return unitId;
+	}
+	/**
+	 * @param unitId the unitId to set
+	 */
+	public void setUnitId(long unitId) {
+		this.unitId = unitId;
+	}
+	/**
+	 * @return the roomName
+	 */
+	public String getRoomName() {
+		return roomName;
+	}
+	/**
+	 * @param roomName the roomName to set
+	 */
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+	/**
+	 * @return the roomId
+	 */
+	public long getRoomId() {
+		return roomId;
+	}
+	/**
+	 * @param roomId the roomId to set
+	 */
+	public void setRoomId(long roomId) {
+		this.roomId = roomId;
+	}
+	/**
+	 * @return the depId
+	 */
+	public long getDepId() {
+		return depId;
+	}
+	/**
+	 * @param depId the depId to set
+	 */
+	public void setDepId(long depId) {
+		this.depId = depId;
+	}
+	/**
+	 * @return the depName
+	 */
+	public String getDepName() {
+		return depName;
+	}
+	/**
+	 * @param depName the depName to set
+	 */
+	public void setDepName(String depName) {
+		this.depName = depName;
+	}
+	/**
+	 * @return the serialversionuid
+	 */
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	/**
 	 * @return the adId
 	 */

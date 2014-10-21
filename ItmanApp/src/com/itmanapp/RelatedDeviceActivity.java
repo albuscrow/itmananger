@@ -267,6 +267,7 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Intent resultIntent = new Intent(RelatedDeviceActivity.this,DeviceDetailActivity.class);
 		resultIntent.putExtra("deviceCode", deviceList.get(arg2).getAdCode());
+		resultIntent.putExtra("room", getIntent().getSerializableExtra("room"));
 		startActivity(resultIntent);
 	}
 

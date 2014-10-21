@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -130,6 +131,8 @@ public class MyNeedFixOrderDetailActivity extends Activity implements OnClickLis
 			((TextView)findViewById(R.id.textView1)).setText("已确认工单");
 		}else if (status == 0) {
 			((TextView)findViewById(R.id.textView1)).setText("审核失败工单");
+		}else if(status==8){
+			statusTv.setText("维修已审核");
 		}
 		
 //		confirmBtn=(Button)findViewById(R.id.confirmBtn);
@@ -246,6 +249,8 @@ public class MyNeedFixOrderDetailActivity extends Activity implements OnClickLis
 						statusTv.setText("审核失败");
 					}else if(status==7){
 						statusTv.setText("维修失败");
+					}else if(status==8){
+						statusTv.setText("维修已审核");
 					}
 				}else{
 					Toast.makeText(MyNeedFixOrderDetailActivity.this, "获取失败", 1000).show();
@@ -353,6 +358,9 @@ public class MyNeedFixOrderDetailActivity extends Activity implements OnClickLis
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("detailId", String.valueOf(detailId));
 		params.put("status", String.valueOf(status));
+		
+		SharedPreferences sharedPreferences = getSharedPreferences( "user", MODE_PRIVATE);
+		params.put("userId", "" + sharedPreferences.getInt("Id", -1));
 
 		CustomRequest req = new CustomRequest(Method.POST, url,
 				params, new Listener<JSONObject>() {

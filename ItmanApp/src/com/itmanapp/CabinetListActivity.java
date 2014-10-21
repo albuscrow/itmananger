@@ -272,6 +272,7 @@ public class CabinetListActivity extends Activity implements OnClickListener,OnI
 		resultIntent.putExtra("cabinetId", cabinetList.get(arg2).getTcId());
 		resultIntent.putExtra("cabinetCode", cabinetList.get(arg2).getTcCode());
 		resultIntent.putExtra("cabinetName", cabinetList.get(arg2).getTcName());
+		resultIntent.putExtra("room", getIntent().getSerializableExtra("room"));
 		startActivity(resultIntent);
 		
 	}

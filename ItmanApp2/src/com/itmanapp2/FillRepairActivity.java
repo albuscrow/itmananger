@@ -30,6 +30,7 @@ import com.itmanapp2.entity.RoomEntity;
 import com.itmanapp2.entity.UnitEntity;
 import com.itmanapp2.json.GetCabinetDetailJson;
 import com.itmanapp2.json.GetDepJson;
+import com.itmanapp2.json.GetDeviceDetailJson;
 import com.itmanapp2.json.GetDeviceTypeJson;
 import com.itmanapp2.json.GetEptJson;
 import com.itmanapp2.json.GetFillRepairJson;
@@ -45,6 +46,7 @@ import com.itmanapp2.widget.spiner.SpinerPopWindow;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -144,16 +146,16 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	private int userId;
 	
 	/**系统Id*/
-	private long roomId;
+	private long roomId = -1l;
 	private long unitId;
-	private long depId;
-	private long cabId;
+	private long depId = -1l;
+	private long cabId = -1l;
 	
 	/**类型Id*/
 	private int typeId;
 	
 	/**设备Id*/
-	private long adId;
+	private long adId = -1l;
 	
 //	/**维修类型Id*/
 //	private long wxId;
@@ -205,12 +207,105 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		System.out.println("base-->" + base);
 		code = Base64.encodeToString(base.getBytes(), Base64.DEFAULT);
 		System.out.println("code-->" + code);
+		
+		findViewById(R.id.scan).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent2=new Intent(FillRepairActivity.this,CaptureActivity.class);
+				startActivityForResult(intent2, 10086);
+			}
+		});
+		
+		
 
 		mDialog.show();
 		mDialog.setCanceledOnTouchOutside(false);
 		
 		getResult05();
 		
+	}
+	
+	private RelatedDeviceEntity entity;
+
+	private String deviceCode;
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK) {
+			deviceCode = data.getStringExtra("deviceCode");
+			getResult();
+		}
+	}
+	
+	private void fillUI() {
+		roomId = entity.getRoomId();
+		depId = entity.getDepId();
+		cabId = entity.getCabinetId();
+		adId = entity.getAdId();
+		
+		getResult1();
+		getResult15();
+		getResult2();
+		getResult3();
+		
+		roomsTv.setText(entity.getTmrName());
+		depsTv.setText(entity.getDepName());
+		cabsTv.setText(entity.getAsName());
+		equipmentTv.setText(entity.getAdName());
+	}
+
+	/**
+	 * description 解析数据
+	 * 
+	 * @param accountType
+	 *            单位用户，账号类型为2
+	 * @return void
+	 */
+	private void getResult() {
+//		deviceCode = "011504030001010010101000";
+		// tencent 123456
+		String url = "http://121.40.188.122:8080/assetapi2/device/detail?"
+				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+				+ "&deviceCode="+deviceCode;
+		System.out.println(url);
+
+		HashMap<String, String> params = new HashMap<String, String>();
+
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url,
+				new JSONObject(params), new Listener<JSONObject>() {
+					@Override
+					public void onResponse(JSONObject response) {
+
+						System.out.println("@@" + response.toString());
+						
+						int result = GetDeviceDetailJson.getJson(response.toString());
+						if (result == 1) {
+							entity=GetDeviceDetailJson.entity;
+							handler.sendEmptyMessage(37);
+						} else if (result == -1) {
+							handler.sendEmptyMessage(-1);
+						} else if (result == 0) {
+							handler.sendEmptyMessage(0);
+						} else if (result == 101) {
+							handler.sendEmptyMessage(1001);
+						} else if (result == 103) {
+							handler.sendEmptyMessage(103);
+						}
+
+					}
+				}, new Response.ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						System.out.println("##" + error.toString());
+						handler.sendEmptyMessage(0);
+
+					}
+				});
+		DemoApplication.getInstance().getRequestQueue().add(req);
 	}
 	
 	/**
@@ -501,6 +596,11 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
 		
 		System.out.println(url);
+		
+		if (depId == -1 || roomId == -1 || cabId == -1 || adId == -1) {
+			Toast.makeText(this, "请输入完整数据！", Toast.LENGTH_SHORT);
+			return;
+		}
 
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("userId", String.valueOf(userId));
@@ -574,6 +674,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			switch (msg.what) {
+		
 			case 10086:
 				//Toast.makeText(FillRepairActivity.this, "获取成功", 1000).show();
 				for(int i = 0; i < unitList.size(); i++){
@@ -651,6 +752,12 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				setResult(20);
 				finish();
 				break;
+			case 37:
+				fillUI();
+				break;
+			case 1001:
+				Toast.makeText(FillRepairActivity.this, "未查询到该设备", Toast.LENGTH_SHORT).show();
+				break;
 			}
 			// 关闭ProgressDialog
 			if (mDialog != null && mDialog.isShowing()) {
@@ -720,7 +827,10 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 
 		case R.id.depsIgv:
 			if(depNameList.size()>0 && depNameList!=null){
-				
+				depId = -1;
+				roomId = -1;
+				cabId = -1;
+				adId = -1;
 				roomsTv.setText("");
 				cabsTv.setText("");
 				equipmentTv.setText("");
@@ -736,6 +846,8 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 			break;
 					case R.id.cabIgv:
 			if(cabNameList.size()>0 && cabNameList!=null){
+				cabId = -1;
+				adId = -1;
 				equipmentTv.setText("");
 				typeRepairTv.setText("");
 				eptStrList.clear();
@@ -745,10 +857,10 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				first=16;
 			}
 			break;		case R.id.roomsIgv:
-			System.out.println("systemsList:"+roomNameList);
-			System.out.println("eptStrList:"+eptStrList);
-			System.out.println("deviceTypeStrList"+deviceTypeStrList);
 			if(roomNameList.size()>0 && roomNameList!=null){
+				roomId = -1;
+				cabId = -1;
+				adId = -1;
 				cabsTv.setText("");
 				equipmentTv.setText("");
 				typeRepairTv.setText("");
@@ -763,11 +875,8 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 			break;
 
 		case R.id.equipmentIgv:
-			System.out.println("systemsList:"+roomNameList);
-			System.out.println("eptStrList:"+eptStrList);
-			System.out.println("deviceTypeStrList"+deviceTypeStrList);
 			if(eptStrList.size()>0&&eptStrList!=null){
-				System.out.println("222222222");
+				adId = -1;
 				deviceTypeNames.clear();
 				deviceTypeStrList.clear();
 				typeRepairTv.setText("");

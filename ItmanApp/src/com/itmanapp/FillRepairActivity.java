@@ -23,16 +23,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.entity.CabinetEntity;
 import com.itmanapp.entity.DepEntity;
 import com.itmanapp.entity.DeviceTypeEntity;
-import com.itmanapp.entity.EquipmentEntity;
-import com.itmanapp.entity.FillRepairEntity;
 import com.itmanapp.entity.RelatedDeviceEntity;
 import com.itmanapp.entity.RoomEntity;
 import com.itmanapp.entity.UnitEntity;
-import com.itmanapp.json.GetCabinetDetailJson;
 import com.itmanapp.json.GetDepJson;
+import com.itmanapp.json.GetDeviceDetailJson;
 import com.itmanapp.json.GetDeviceTypeJson;
-import com.itmanapp.json.GetEptJson;
-import com.itmanapp.json.GetFillRepairJson;
 import com.itmanapp.json.GetRelatedCabinetListJson;
 import com.itmanapp.json.GetRelatedDeviceJson;
 import com.itmanapp.json.GetRoomSearchJson;
@@ -45,6 +41,7 @@ import com.itmanapp.widget.spiner.SpinerPopWindow;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -171,6 +168,8 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	private String roomNameStr;
 
 	private String deviceNameStr;
+
+	private String deviceCode;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -217,6 +216,17 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		System.out.println("base-->" + base);
 		code = Base64.encodeToString(base.getBytes(), Base64.DEFAULT);
 		System.out.println("code-->" + code);
+		
+		findViewById(R.id.scan).setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent2=new Intent(FillRepairActivity.this,CaptureActivity.class);
+				startActivityForResult(intent2, 10086);
+			}
+		});
+		
+		
 
 		mDialog.show();
 		mDialog.setCanceledOnTouchOutside(false);
@@ -224,6 +234,69 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		getResult3();
 		
 	}
+	
+	private RelatedDeviceEntity entity;
+		/**
+	 * description 解析数据
+	 * 
+	 * @param accountType
+	 *            单位用户，账号类型为2
+	 * @return void
+	 */
+	private void getResult() {
+//		deviceCode = "011504030001010010101000";
+		// tencent 123456
+		String url = "http://121.40.188.122:8080/assetapi2/device/detail?"
+				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+				+ "&deviceCode="+deviceCode;
+		System.out.println(url);
+
+		HashMap<String, String> params = new HashMap<String, String>();
+
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url,
+				new JSONObject(params), new Listener<JSONObject>() {
+
+					@Override
+					public void onResponse(JSONObject response) {
+
+						System.out.println("@@" + response.toString());
+						
+						int result = GetDeviceDetailJson.getJson(response.toString());
+						if (result == 1) {
+							entity=GetDeviceDetailJson.entity;
+							handler.sendEmptyMessage(37);
+						} else if (result == -1) {
+							handler.sendEmptyMessage(-1);
+						} else if (result == 0) {
+							handler.sendEmptyMessage(0);
+						} else if (result == 101) {
+							handler.sendEmptyMessage(1001);
+						} else if (result == 103) {
+							handler.sendEmptyMessage(103);
+						}
+
+					}
+				}, new Response.ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						System.out.println("##" + error.toString());
+						handler.sendEmptyMessage(0);
+					}
+				});
+		DemoApplication.getInstance().getRequestQueue().add(req);
+	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK) {
+			deviceCode = data.getStringExtra("deviceCode");
+			getResult();
+		}
+	}		
 	/**
 	 * description 解析数据-获取单位下的系统列表
 	 * 
@@ -720,6 +793,13 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 				setResult(20);
 				finish();
 				break;
+				
+			case 37:
+				fillUI();
+				break;
+			case 1001:
+				Toast.makeText(FillRepairActivity.this, "未查询到该设备", Toast.LENGTH_SHORT).show();
+				break;
 			}
 			// 关闭ProgressDialog
 			if (mDialog != null && mDialog.isShowing()) {
@@ -727,6 +807,25 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 			}
 		}
 	};
+	private void fillUI() {
+		unitId = entity.getUnitId();
+		roomId = entity.getRoomId();
+		depId = entity.getDepId();
+		cabId = entity.getCabinetId();
+		adId = entity.getAdId();
+
+		getResult05();
+		getResult1();
+		getResult15();
+		getResult2();
+		getResult3();
+
+		depsTv.setText(entity.getDepName());
+		roomsTv.setText(entity.getTmrName());
+		cabsTv.setText(entity.getAsName());
+		equipmentTv.setText(entity.getAdName());
+		unitsTv.setText(entity.getRoomName());
+	}
 
 	/**
 	 * description 随机生成5位字符串
@@ -875,7 +974,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	}
 	
 
-	Map<Long, String> deviceTypeNames = new HashMap<>();
+	Map<Long, String> deviceTypeNames = new HashMap<Long, String>();
 	private String getItemStr() {
 		String result = "";
 		for (Long i : item) {

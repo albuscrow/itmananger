@@ -20,11 +20,14 @@ public class GetCheckDeviceListJson {
 	
 	public static int result = 0; 
 	
+	public static int total = 0; 
+	
 	public static List<DeviceNeedToCheck> getJson(String response){
 		List<DeviceNeedToCheck> list = new ArrayList<DeviceNeedToCheck>();
 		try {
 			JSONObject job=new JSONObject(response);
 			result=job.getInt("result");
+			total=job.getInt("total");
 			if(result==1){
 				if (job != null ) {
 					JSONArray jsonArray = job.getJSONArray("details");

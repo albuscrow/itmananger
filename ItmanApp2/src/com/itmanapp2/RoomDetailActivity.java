@@ -1,9 +1,17 @@
 package com.itmanapp2;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONObject;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.View;
@@ -11,8 +19,17 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.itmanapp2.entity.RoomEntity;
+import com.itmanapp2.json.GetRoomSearchJson;
 import com.itmanapp2.util.AppManager;
 import com.itmanapp2.util.CommonUtil;
 
@@ -20,7 +37,8 @@ import com.itmanapp2.util.CommonUtil;
 /**
  * @date 2014-7-11
  * @author wangpeng
- * @class description 系统查询页面
+ * @
+ * class description 系统查询页面
  * 
  */
 public class RoomDetailActivity extends Activity implements OnClickListener{
@@ -63,23 +81,134 @@ public class RoomDetailActivity extends Activity implements OnClickListener{
 	
 	/**系统查询结果实体类*/
 	private RoomEntity entity = null;
+
+	private ProgressDialog mDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_room_detail);
 		AppManager.getAppManager().addActivity(this);
-		getView();
 	}
+	@Override
+	protected void onResume() {
+		getView();
+		super.onResume();
+	}
+
+	protected void onNewIntent(Intent intent) {
+		setIntent(intent);
+		super.onNewIntent(intent);
+	}
+	
+	static String baseurl = "http://121.40.188.122:8080/assetapi2/room/detail?"
+			+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE=";
+	
+
+	/**
+	 * description 解析数据
+	 * 
+	 * @param accountType
+	 *            单位用户，账号类型为2
+	 * @return void
+	 */
+	private void getResult(long id) {
+		
+		mDialog = new ProgressDialog(RoomDetailActivity.this);
+		mDialog.setMessage(getString(R.string.login_msg));
+		String url = baseurl + "&roomId=" + id;
+		System.out.println(url);
+
+		HashMap<String, String> params = new HashMap<String, String>();
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url, new JSONObject(), new Listener<JSONObject>() {
+
+
+			public void onResponse(JSONObject response) {
+				System.out.println("@@" + response.toString());
+				try {
+					entity = new Gson().fromJson(response.toString(), RoomEntity.class);
+					
+					roomNumberTv.setText(entity.getTmrCode()+"");
+					roomNameTv.setText(entity.getTmrName()+"");
+					addressTv.setText(entity.getTmrPosition()+"");
+					useUnitTv.setText(entity.getUnitName()+"");
+					roomContactTv.setText(entity.getRoomManager()+"");
+					String roomManagerPhone = entity.getRoomManagerPhone();
+					System.out.println(roomManagerPhone);
+					if (roomManagerPhone.length() == 0) {
+						roomPhoneTv.setText("末录入");
+					}else{
+						roomPhoneTv.setText(CommonUtil.decorateStringWithUnderlineAndColor(roomManagerPhone + ""));//modify by albuscrow
+					}
+					clientContactTv.setText(entity.getUnitManager() + ""); 
+
+					String unitManagerPhone = entity.getUnitManagerPhone();
+					if (unitManagerPhone.length() == 0) {
+						clientPhoneTv.setText("末录入");
+					}else{
+						clientPhoneTv.setText(CommonUtil.decorateStringWithUnderlineAndColor(unitManagerPhone + ""));//modify by albuscrow
+					}
+				} catch (Exception e) {
+					handler.sendEmptyMessage(100086);
+				}
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				System.out.println("##" + error.toString());
+				handler.sendEmptyMessage(0);
+				
+			}
+		});
+
+
+		DemoApplication.getInstance().getRequestQueue().add(req);
+	}
+	/**
+	 * description 消息处理
+	 * 
+	 * @return void
+	 */
+	Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case 1:
+				//Toast.makeText(SystemSearchActivity.this, "获取成功", 1000).show();
+				Intent intent=new Intent(RoomDetailActivity.this, RoomListActivity.class);
+				intent.putExtra("rooms", entity);
+				startActivity(intent);
+				break;
+			case -1:
+				Toast.makeText(RoomDetailActivity.this, "验证不通过，非法用户", 1000).show();
+				break;
+			case 0:
+				Toast.makeText(RoomDetailActivity.this, "获取失败", 1000).show();
+				break;
+			case 101:
+				Toast.makeText(RoomDetailActivity.this, "系统信息不存在", 1000).show();
+				break;
+			case 103:
+				Toast.makeText(RoomDetailActivity.this, "参数错误", 1000).show();
+				break;
+			case 100086:
+				Toast.makeText(RoomDetailActivity.this, "获取机房信息出错", 1000).show();
+				break;
+			}
+			// 关闭ProgressDialog
+			if (mDialog != null && mDialog.isShowing()) {
+				mDialog.dismiss();
+			}
+		}
+	};
+	
 	
 	/**
 	 * 控件显示
 	 */
 	private void getView() {
-		Intent intent = this.getIntent(); 
-		entity=(RoomEntity)intent.getSerializableExtra("room");
-		System.out.println("数据："+entity);
-		
 		backBtn=(ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(this);
 		
@@ -92,32 +221,42 @@ public class RoomDetailActivity extends Activity implements OnClickListener{
 		roomPhoneTv=(TextView)findViewById(R.id.roomPhoneTv);
 		clientContactTv=(TextView)findViewById(R.id.clientContactTv);
 		clientPhoneTv=(TextView)findViewById(R.id.clientPhoneTv);
-		if(entity!=null){
-			roomNumberTv.setText(entity.getTmrCode()+"");
-			roomNameTv.setText(entity.getTmrName()+"");
-			addressTv.setText(entity.getTmrAddress()+"");
-			useUnitTv.setText(entity.getUnitName()+"");
-			roomContactTv.setText(entity.getRoomManager()+"");
-			String roomManagerPhone = entity.getRoomManagerPhone();
-			System.out.println(roomManagerPhone);
-			if (roomManagerPhone.length() == 0) {
-				roomPhoneTv.setText("末录入");
-			}else{
-				roomPhoneTv.setText(CommonUtil.decorateStringWithUnderlineAndColor(roomManagerPhone + ""));//modify by albuscrow
-			}
-			clientContactTv.setText(entity.getUnitManager() + ""); 
-			
-			String unitManagerPhone = entity.getUnitManagerPhone();
-			if (unitManagerPhone.length() == 0) {
-				clientPhoneTv.setText("末录入");
-			}else{
-				clientPhoneTv.setText(CommonUtil.decorateStringWithUnderlineAndColor(unitManagerPhone + ""));//modify by albuscrow
-			}
+
+		Intent intent = this.getIntent(); 
+		entity=(RoomEntity)intent.getSerializableExtra("room");
+		String from = intent.getStringExtra("from");
+		if (from != null && from.equals("device")) {
+			long roomId = intent.getLongExtra("roomId", -1);
+			getResult(roomId);
+		}else{
+			if(entity!=null){
+				roomNumberTv.setText(entity.getTmrCode()+"");
+				roomNameTv.setText(entity.getTmrName()+"");
+				addressTv.setText(entity.getTmrPosition()+"");
+				useUnitTv.setText(entity.getUnitName()+"");
+				roomContactTv.setText(entity.getRoomManager()+"");
+				String roomManagerPhone = entity.getRoomManagerPhone();
+				System.out.println(roomManagerPhone);
+				if (roomManagerPhone.length() == 0) {
+					roomPhoneTv.setText("末录入");
+				}else{
+					roomPhoneTv.setText(CommonUtil.decorateStringWithUnderlineAndColor(roomManagerPhone + ""));//modify by albuscrow
+				}
+				clientContactTv.setText(entity.getUnitManager() + ""); 
+
+				String unitManagerPhone = entity.getUnitManagerPhone();
+				if (unitManagerPhone.length() == 0) {
+					clientPhoneTv.setText("末录入");
+				}else{
+					clientPhoneTv.setText(CommonUtil.decorateStringWithUnderlineAndColor(unitManagerPhone + ""));//modify by albuscrow
+				}
+			}	
 		}
-		
+
+
 		//add by albuscrow
 		roomPhoneTv.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + ((TextView)v).getText()));
@@ -125,7 +264,7 @@ public class RoomDetailActivity extends Activity implements OnClickListener{
 			}
 		});
 		clientPhoneTv.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:" + ((TextView)v).getText()));
@@ -133,20 +272,19 @@ public class RoomDetailActivity extends Activity implements OnClickListener{
 			}
 		});
 		findViewById(R.id.phoneTv).setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:400-800-8003"));
 				startActivity(intent);
 			}
-		});;
+		});
 		
 		cxzgjlBtn=(Button)findViewById(R.id.related_file_Btn);
 		cxzgjlBtn.setOnClickListener(this);
 		glsbBtn=(Button)findViewById(R.id.glsbBtn);
 		glsbBtn.setOnClickListener(this);
 	}
-	
 	
 
 	/***
@@ -178,7 +316,7 @@ public class RoomDetailActivity extends Activity implements OnClickListener{
 				intent2.putExtra("roomId", entity.getTmrId());
 			}
 			intent2.putExtra("roomCode", entity.getTmrCode());
-			
+			intent2.putExtra("room", entity);
 			intent2.putExtra("roomName", entity.getTmrName());
 			startActivity(intent2);
 			break;

@@ -181,7 +181,17 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 			switch (msg.what) {
 			case 1:
 				//Toast.makeText(EquipmentSearchDetailActivity.this, "获取成功", 1000).show();
-				roomTv.setText(entity.getTmrName()+"");
+				roomTv.setText(CommonUtil.decorateStringWithUnderlineAndColor(entity.getTmrName()));
+				roomTv.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(DeviceDetailActivity.this, RoomDetailActivity.class);
+						intent.putExtra("roomId", entity.getRoomId());
+						intent.putExtra("from", "device");
+						startActivity(intent);
+					}
+				});
 				deviceIdTv.setText(entity.getAdCode()+"");
 				deviceTypeTv.setText(entity.getTdcName()+"");
 				deviceConfigurationTv.setText(entity.getAdDesp()+"");

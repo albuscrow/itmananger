@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -129,9 +128,7 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 		// tencent 123456
 		String url = "http://121.40.188.122:8080/assetapi2/device/detail?"
 				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-				+ "&deviceCode="+deviceCode 
-				+ "&accountType=2"
-				+ "&unitId=" + getSharedPreferences("user", Context.MODE_PRIVATE).getLong("unitId", -1);
+				+ "&deviceCode="+deviceCode;
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();
@@ -147,11 +144,7 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 						int result = GetDeviceDetailJson.getJson(response.toString());
 						if (result == 1) {
 							entity=GetDeviceDetailJson.entity;
-							if (entity.getUnitId() == getSharedPreferences("user", Context.MODE_PRIVATE).getLong("unitId", -1)) {
-								handler.sendEmptyMessage(1);
-							}else{
-								handler.sendEmptyMessage(100);
-							}
+							handler.sendEmptyMessage(1);
 						} else if (result == -1) {
 							handler.sendEmptyMessage(-1);
 						} else if (result == 0) {
@@ -188,7 +181,17 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 			switch (msg.what) {
 			case 1:
 				//Toast.makeText(EquipmentSearchDetailActivity.this, "获取成功", 1000).show();
-				roomTv.setText(entity.getTmrName()+"");
+				roomTv.setText(CommonUtil.decorateStringWithUnderlineAndColor(entity.getTmrName()));
+				roomTv.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(DeviceDetailActivity.this, RoomDetailActivity.class);
+						intent.putExtra("roomId", entity.getRoomId());
+						intent.putExtra("from", "device");
+						startActivity(intent);
+					}
+				});
 				deviceIdTv.setText(entity.getAdCode()+"");
 				deviceTypeTv.setText(entity.getTdcName()+"");
 				deviceConfigurationTv.setText(entity.getAdDesp()+"");
@@ -206,26 +209,18 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 					}
 				});
 				break;
-				
 			case -1:
 				Toast.makeText(DeviceDetailActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
-				
 			case 0:
 				Toast.makeText(DeviceDetailActivity.this, "获取失败", 1000).show();
 				break;
-				
 			case 101:
 				Toast.makeText(DeviceDetailActivity.this, "设备不存在", 1000).show();
 				break;
-				
 			case 103:
 				Toast.makeText(DeviceDetailActivity.this, "参数错误", 1000).show();
 				break;
-				
-			case 100:
-				Toast.makeText(DeviceDetailActivity.this, "您输入的信息有误，请核对后使用", 1000).show();
-				finish();
 			}
 			// 关闭ProgressDialog
 			if (mDialog != null && mDialog.isShowing()) {

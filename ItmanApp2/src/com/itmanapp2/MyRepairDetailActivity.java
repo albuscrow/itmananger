@@ -121,6 +121,8 @@ public class MyRepairDetailActivity extends Activity implements OnClickListener{
 			statusTv.setText("审核失败");
 		}else if(status==7){
 			statusTv.setText("维修失败");
+		}else if(status==8){
+			statusTv.setText("维修已审核");
 		}
 		
 		// 关闭ProgressDialog

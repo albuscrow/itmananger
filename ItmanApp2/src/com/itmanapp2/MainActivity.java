@@ -71,8 +71,8 @@ public class MainActivity extends Activity implements OnClickListener{
 		fillRepairLayout.setOnClickListener(this);
 		myRepairLayout=(LinearLayout)findViewById(R.id.myRepairLayout);
 		myRepairLayout.setOnClickListener(this);
-		repairAcceptanceLayout=(LinearLayout)findViewById(R.id.repairAcceptanceLayout);
-		repairAcceptanceLayout.setOnClickListener(this);
+//		repairAcceptanceLayout=(LinearLayout)findViewById(R.id.repairAcceptanceLayout);
+//		repairAcceptanceLayout.setOnClickListener(this);
 		phoneTv=(TextView)findViewById(R.id.phoneTv);
 		phoneTv.setOnClickListener(this);
 	}
@@ -140,10 +140,10 @@ public class MainActivity extends Activity implements OnClickListener{
 			break;
 			
 		//待验收工单
-		case R.id.repairAcceptanceLayout:
-			Intent intent4=new Intent(MainActivity.this,RepairAcceptanceActivity.class);
-			startActivity(intent4);
-			break;
+//		case R.id.repairAcceptanceLayout:
+//			Intent intent4=new Intent(MainActivity.this,RepairAcceptanceActivity.class);
+//			startActivity(intent4);
+//			break;
 			
 		//我的报修
 		case R.id.myRepairLayout:

@@ -375,7 +375,7 @@ public class MyCheckActivity extends Activity implements OnItemClickListener,OnC
 	private void initSetPullLoad() {
 
 		// 判断是否加载上拉加载更多
-		count = GetMyInspectionJson.total;
+		count = GetCheckDeviceListJson.total;
 		if (adapter.getCount() < MIN_NUM || adapter.getCount() == count) {
 
 			myInspectionLv.setPullLoadEnable(false);

@@ -91,6 +91,8 @@ public class NeedToCheckDeviceAdatper extends BaseAdapter {
 			holder.status.setText("已验收");
 		}else if(status==2){
 			holder.status.setText("巡检完成");
+		}else if(status==5){
+			holder.status.setText("巡检已审核");
 		}
 		
 		if (needTime) {

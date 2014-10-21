@@ -206,6 +206,8 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 						statusTv.setText("审核失败");
 					}else if(status==7){
 						statusTv.setText("维修失败");
+					}else if(status==8){
+						statusTv.setText("维修已审核");
 					}
 				}else{
 					Toast.makeText(MyRepairOrderDetailActivity.this, "获取失败", 1000).show();

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -226,6 +227,8 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 						statusTv.setText("审核失败");
 					}else if(status==7){
 						statusTv.setText("维修失败");
+					}else if(status==8){
+						statusTv.setText("维修已审核");
 					}
 				}else{
 					Toast.makeText(PendingConfirmWorkOrdersDetailActivity.this, "获取失败", 1000).show();
@@ -333,6 +336,8 @@ public class PendingConfirmWorkOrdersDetailActivity extends Activity implements 
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("detailId", String.valueOf(detailId));
 		params.put("status", String.valueOf(status));
+		SharedPreferences sharedPreferences = getSharedPreferences( "user", MODE_PRIVATE);
+		params.put("userId", "" + sharedPreferences.getInt("Id", -1));
 
 		CustomRequest req = new CustomRequest(Method.POST, url,
 				params, new Listener<JSONObject>() {

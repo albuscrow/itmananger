@@ -16,7 +16,10 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,115 +95,152 @@ public class FileListAdatper extends BaseAdapter {
 				final String tfaFilePath = fileList.get(position).getTfaFilePath();
 				final String url_str = "http://it.hjtechcn.cn/upload/"+tfaFilePath;
 				final int type = fileList.get(position).getTfaFileType();
-//				if (type == 1 || type == 4) {
 				Toast.makeText(context, "正在加载文件...", Toast.LENGTH_SHORT).show();  
-//				}else{
-//					//其它下载
-//					Toast.makeText(context, "正在下载文件...", Toast.LENGTH_SHORT).show();  
-//				}
-				
+
+
 				new Thread(new Runnable() {
-					
+
 					@Override
 					public void run() {
 						final File file = new File(context.getExternalFilesDir(null), tfaFilePath); 
+						HttpURLConnection conn = null;
+						InputStream is = null;
+						FileOutputStream fos = null;
 						try {
 							URL url = new URL(url_str);
 							System.out.println(url_str);
-							try {
-								HttpURLConnection conn = (HttpURLConnection) url  
-										.openConnection();  
-								InputStream is = conn.getInputStream();  
-								context.getExternalFilesDir(null);
-								FileOutputStream fos = new FileOutputStream(file);  
-								byte[] buf = new byte[256];  
-								conn.connect();  
-								double count = 0;
-								if (conn.getResponseCode() >= 400) {  
-									Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT).show();  
-									Log.i("time","time exceed");
-								} else {
-									while (count <= 100) {  
-										if (is != null) {  
-											int numRead = is.read(buf);  
-											if (numRead <= 0) {  
-												break;  
-											} else {  
-												fos.write(buf, 0, numRead);  
-											}  
-										} else {  
+							conn = (HttpURLConnection) url  
+									.openConnection();  
+							is = conn.getInputStream();  
+							context.getExternalFilesDir(null);
+							fos = new FileOutputStream(file);  
+							byte[] buf = new byte[256];  
+							conn.connect();  
+							double count = 0;
+							if (conn.getResponseCode() >= 400) {  
+								Toast.makeText(context, "连接超时", Toast.LENGTH_SHORT).show();  
+								Log.i("time","time exceed");
+							} else {
+								while (count <= 100) {  
+									if (is != null) {  
+										int numRead = is.read(buf);  
+										if (numRead <= 0) {  
 											break;  
+										} else {  
+											fos.write(buf, 0, numRead);  
 										}  
+									} else {  
+										break;  
 									}  
 								}  
-								conn.disconnect();  
-								fos.close();  
-								is.close();
-								System.out
-										.println("FileListAdatper.getView(...).new OnClickListener() {...}.onClick(...).new Runnable() {...}.run()");
-								context.runOnUiThread(new Runnable() {
-									
-									@Override
-									public void run() {
-										Intent intent = new Intent();
-										intent.setAction(Intent.ACTION_VIEW);
-										Uri uri = Uri.fromFile(file);
-										String viewType = null;
-										switch (type) {
-										case 1:
-											viewType = "image/*";
-											break;
-										case 2:
-											viewType = "application/msword";
-											break;
-										case 3:
-											viewType = "application/vnd.ms-excel";
-											break;
-										case 4:
-											viewType = "text/plain";
-											break;
-										case 5:
-											viewType = "application/vnd.ms-powerpoint";
-											break;
-										case 6:
-											viewType = "application/pdf";
-											break;
+							}  
 
-										default:
-											break;
-										}
-										intent.setDataAndType(uri, viewType);
-										try {
-											context.startActivity(intent);
-										} catch (Exception e) {
-											context.runOnUiThread(new Runnable() {
+							context.runOnUiThread(new Runnable() {
 
-												@Override
-												public void run() {
-													Toast.makeText(context, "打开文件失败!\n已保存至"+file.getAbsolutePath(), Toast.LENGTH_SHORT).show();  
-												}
-											});		
+								@Override
+								public void run() {
+									Intent it = new Intent(Intent.ACTION_VIEW);
+									String viewType = getViewType(type);
+									Uri uri = Uri.fromFile(file);
+									it.setDataAndType(uri, viewType);
+									List<ResolveInfo> resInfo = context.getPackageManager().queryIntentActivities(it, 0);
+									if (!resInfo.isEmpty()) {
+										List<Intent> targetedShareIntents = new ArrayList<Intent>();
+										for (ResolveInfo info : resInfo) {
+											ActivityInfo activityInfo = info.activityInfo;
+											// judgments : activityInfo.packageName, activityInfo.name, etc.
+											if (activityInfo.packageName.contains("tencent") || activityInfo.name.contains("tencent")) {
+												continue;
+											}
+											Intent targeted = new Intent(Intent.ACTION_VIEW);
+											targeted.setDataAndType(uri, viewType);
+											targeted.setPackage(activityInfo.packageName);
+											targetedShareIntents.add(targeted);
 										}
-									}
-								});
-							} catch (IOException e) {  
-								context.runOnUiThread(new Runnable() {
-									
-									@Override
-									public void run() {
-										Toast.makeText(context, "加载失败!", Toast.LENGTH_SHORT).show();  
-									}
-								});
-								e.printStackTrace();
-							}
+										if(targetedShareIntents.size()>0) {
+											Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "请选择一个应用打开该文件");
+											chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[] {}));
+											try {
+												context.startActivity(chooserIntent);
+											} catch (android.content.ActivityNotFoundException ex) {
+												Toast.makeText(context, "打开文件失败!\n已保存至"+file.getAbsolutePath(), Toast.LENGTH_SHORT).show();  
+											}
+										}else{
+											Toast.makeText(context, "暂无可以打开该文件的应用!\n文件已保存至"+file.getAbsolutePath(), Toast.LENGTH_SHORT).show();  
+
+										}
+									}									
+								}
+							});
 						} catch (MalformedURLException e) {
 							e.printStackTrace();  
-						}  
+							context.runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									Toast.makeText(context, "加载失败!", Toast.LENGTH_SHORT).show();  
+								}
+							});
+						} catch (IOException e) {  
+							context.runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									Toast.makeText(context, "加载失败!", Toast.LENGTH_SHORT).show();  
+								}
+							});
+							e.printStackTrace();
+						}finally {
+							if (conn != null) {
+								conn.disconnect();  
+							}
+							if (fos != null) {
+								try {
+									fos.close();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}  
+							}
+
+							if (is != null) {
+								try {
+									is.close();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+						}
 					}
 				}).start();
 			}
 		});
 		return v;
+	}
+	
+	private String getViewType(final int type) {
+		String viewType = null;
+		switch (type) {
+		case 1:
+			viewType = "image/*";
+			break;
+		case 2:
+			viewType = "application/msword";
+			break;
+		case 3:
+			viewType = "application/vnd.ms-excel";
+			break;
+		case 4:
+			viewType = "text/plain";
+			break;
+		case 5:
+			viewType = "application/vnd.ms-powerpoint";
+			break;
+		case 6:
+			viewType = "application/pdf";
+			break;
+
+		default:
+			break;
+		}
+		return viewType;
 	}
 
 	class ViewHolder {

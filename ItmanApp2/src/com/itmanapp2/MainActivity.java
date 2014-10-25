@@ -4,6 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.itmanapp2.util.AppManager;
+import com.umeng.update.UmengUpdateAgent;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -51,6 +52,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		UmengUpdateAgent.update(this);
 		setContentView(R.layout.activity_main);
 		AppManager.getAppManager().addActivity(this);
 		getView();

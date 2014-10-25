@@ -57,6 +57,23 @@
         android:icon="@drawable/logo_120"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+		<meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5448c523fd98c5d110002bc2" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
 
         <!-- 启动页面 -->
         <activity

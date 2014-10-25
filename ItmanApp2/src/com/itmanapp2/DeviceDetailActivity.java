@@ -71,6 +71,10 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 	private TextView belongsCabinet;
 
 	private TextView devicePosition;
+
+	private TextView model;
+
+	private TextView supplyName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +99,9 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 		deviceTypeTv=(TextView)findViewById(R.id.deviceTypeTv);
 		deviceConfigurationTv=(TextView)findViewById(R.id.deviceConfigurationTv);
 		devicePosition = (TextView)findViewById(R.id.deviceLocationTv);
+		supplyName = (TextView)findViewById(R.id.deviceSupplyTv);
+		model = (TextView)findViewById(R.id.deviceModelTv);
+		
 		
 		//add by albuscrow
 		belongsCabinet = (TextView) findViewById(R.id.belongsCabinetTv);
@@ -196,6 +203,8 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 				deviceTypeTv.setText(entity.getTdcName()+"");
 				deviceConfigurationTv.setText(entity.getAdDesp()+"");
 				devicePosition.setText(entity.getAdPosition());
+				supplyName.setText(entity.getSupplyName());
+				model.setText(entity.getModelName());
 				((TextView)findViewById(R.id.name)).setText(entity.getAdName());
 				
 				belongsCabinet.setText(CommonUtil.decorateStringWithUnderlineAndColor(entity.getAsName()));

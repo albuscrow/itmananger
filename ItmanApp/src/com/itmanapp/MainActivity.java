@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.itmanapp.util.AppManager;
+import com.umeng.update.UmengUpdateAgent;
 
 /**
  * @date 2014-7-10
@@ -57,6 +58,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		UmengUpdateAgent.update(this);
 		setContentView(R.layout.activity_main);
 		AppManager.getAppManager().addActivity(this);
 		getView();

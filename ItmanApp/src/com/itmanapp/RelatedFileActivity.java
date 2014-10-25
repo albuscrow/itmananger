@@ -89,6 +89,7 @@ public class RelatedFileActivity extends Activity implements OnClickListener{
 		AppManager.getAppManager().addActivity(this);
 		intent=getIntent();
 		id=intent.getLongExtra("id", -1);
+		System.out.println("iddddddddddddddddddddd:" + id);
 		name=intent.getStringExtra("name");
 		type = intent.getIntExtra("type", -1);
 		getView();
@@ -161,7 +162,6 @@ public class RelatedFileActivity extends Activity implements OnClickListener{
 	 * @return void
 	 */
 	private void getResult() {
-		System.out.println("huh");
 		System.out.println(url);
 
 		HashMap<String, String> params = new HashMap<String, String>();

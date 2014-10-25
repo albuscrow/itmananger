@@ -432,10 +432,18 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 			case 1:
 				//Toast.makeText(WrittenInspectionDetailActivity.this, "获取成功", 1000).show();
 //				adapter=new WrittenInspectionDetailAdatper(CheckDeviceActivity.this, list);ListView
-				for (CheckItemEntity item : list) {
+				for (final CheckItemEntity item : list) {
 					View view = getView(item, inspectionProjectLv);
+					view.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							AlertDialog ad = new AlertDialog.Builder(CheckDeviceActivity.this).setTitle("巡检项目详情")
+									.setMessage(item.getDesc()).setNeutralButton("确定", null).create();
+							ad.show();
+						}
+					});
 					inspectionProjectLv.addView(view);
-					
 				}
 				
 				for(int i=0;i<list.size();i++){

@@ -967,7 +967,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 	}
 	
 
-	Map<Long, String> deviceTypeNames = new HashMap<>();
+	Map<Long, String> deviceTypeNames = new HashMap<Long, String>();
 	private String getItemStr() {
 		String result = "";
 		for (Long i : item) {

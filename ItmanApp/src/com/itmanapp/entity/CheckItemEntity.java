@@ -19,8 +19,33 @@ public class CheckItemEntity {
     long txpAddPerson;
     int txpStatus;
     String txpValue;
-    
     long detailId;
+    String desc;
+    
+	/**
+	 * @return the txpId
+	 */
+	public long getTxpId() {
+		return txpId;
+	}
+	/**
+	 * @param txpId the txpId to set
+	 */
+	public void setTxpId(long txpId) {
+		this.txpId = txpId;
+	}
+	/**
+	 * @return the desc
+	 */
+	public String getDesc() {
+		return desc;
+	}
+	/**
+	 * @param desc the desc to set
+	 */
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 	/**
 	 * @return the detailId
 	 */

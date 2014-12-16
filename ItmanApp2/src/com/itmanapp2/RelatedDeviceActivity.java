@@ -44,7 +44,7 @@ import com.itmanapp2.util.AppManager;
  * @class description 关联设备页面
  * 
  */
-public class RelatedDeviceActivity extends Activity implements OnClickListener,OnItemClickListener{
+public class RelatedDeviceActivity extends BaseActivity implements OnClickListener,OnItemClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -92,6 +92,7 @@ public class RelatedDeviceActivity extends Activity implements OnClickListener,O
 		cabinetName=intent.getStringExtra("cabinetName");
 		
 		getView();
+		setPhone();
 	}
 	
 	/**

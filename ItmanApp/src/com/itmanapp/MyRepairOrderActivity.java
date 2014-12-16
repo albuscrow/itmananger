@@ -48,7 +48,7 @@ import com.itmanapp.widget.listview.XListView.IXListViewListener;
  * @class description 我的维修工单页面
  * 
  */
-public class MyRepairOrderActivity extends Activity implements OnItemClickListener,OnClickListener{
+public class MyRepairOrderActivity extends BaseActivity implements OnItemClickListener,OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -121,6 +121,7 @@ public class MyRepairOrderActivity extends Activity implements OnItemClickListen
 		spf = getSharedPreferences("user",Context.MODE_PRIVATE);
 		userId=spf.getInt("Id", 0);
 		getView();
+		setPhone();
 	}
 	
 	/**

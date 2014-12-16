@@ -40,7 +40,7 @@ import com.itmanapp2.util.AppManager;
  * @class description 系统整改历史页面
  * 
  */
-public class SystemModifyInfoActivity extends Activity implements OnClickListener{
+public class SystemModifyInfoActivity extends BaseActivity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -88,6 +88,7 @@ public class SystemModifyInfoActivity extends Activity implements OnClickListene
 		asCode=intent.getStringExtra("AsCode");
 		systemName=intent.getStringExtra("AsName");
 		getView();
+		setPhone();
 	}
 	
 	/**

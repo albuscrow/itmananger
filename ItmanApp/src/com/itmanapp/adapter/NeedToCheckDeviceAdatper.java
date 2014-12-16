@@ -76,9 +76,29 @@ public class NeedToCheckDeviceAdatper extends BaseAdapter {
 			holder = (ViewHolder) v.getTag();
 		}
 		DeviceNeedToCheck deviceNeedToCheck = list.get(position);
-		holder.name.setText(deviceNeedToCheck.getTdName()+"");
-		holder.code.setText(deviceNeedToCheck.getTdCode()+"");
-	 
+		if (deviceNeedToCheck.getDname() == null || deviceNeedToCheck.getDname().length() == 0) {
+			String type = deviceNeedToCheck.getType();
+			if (type.equals("1")) {
+				holder.name.setText(deviceNeedToCheck.getInfo().getTmrName());
+				holder.code.setText(deviceNeedToCheck.getInfo().getTmrCode());
+				((TextView)v.findViewById(R.id.nameLable)).setText("机房名称：");
+				((TextView)v.findViewById(R.id.codeLable)).setText("机房编号：");
+			}else if (type.equals("2")) {
+				holder.name.setText(deviceNeedToCheck.getInfo().getTcName());
+				holder.code.setText(deviceNeedToCheck.getInfo().getTcCode());
+				((TextView)v.findViewById(R.id.nameLable)).setText("机柜名称：");
+				((TextView)v.findViewById(R.id.codeLable)).setText("机柜编号：");
+			}else if (type.equals("3")) {
+				holder.name.setText(deviceNeedToCheck.getInfo().getTdName());
+				holder.code.setText(deviceNeedToCheck.getInfo().getTdCode());
+				((TextView)v.findViewById(R.id.nameLable)).setText("设备名称：");
+				((TextView)v.findViewById(R.id.codeLable)).setText("设备编号：");
+			}
+		}else{
+			holder.name.setText(deviceNeedToCheck.getDname());
+			holder.code.setText(deviceNeedToCheck.getDcode());
+		}
+		
 		
 		int status=deviceNeedToCheck.getTxrStatus();
 		if(status==0){
@@ -113,6 +133,13 @@ public class NeedToCheckDeviceAdatper extends BaseAdapter {
 		private TextView code;
 		
 		private TextView time;
+	}
+
+	public void get() {
+		for (DeviceNeedToCheck device : list) {
+			device.setTxrStatus(1);
+		}
+		notifyDataSetChanged();
 	}
 
 }

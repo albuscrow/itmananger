@@ -24,7 +24,7 @@ import android.widget.Toast;
  * @class description 主框架页面
  * 
  */
-public class MainActivity extends Activity implements OnClickListener{
+public class MainActivity extends BaseActivity implements OnClickListener{
 
 	/** 退出程序标示 */
 	private static Boolean isExit = false;
@@ -56,6 +56,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_main);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 

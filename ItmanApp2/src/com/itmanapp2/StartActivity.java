@@ -16,7 +16,7 @@ import android.os.Message;
  * @class description 启动页面
  * 
  */
-public class StartActivity extends Activity{
+public class StartActivity extends BaseActivity{
 	
 	/**本地保存*/
 	private SharedPreferences spf = null;
@@ -30,6 +30,8 @@ public class StartActivity extends Activity{
 		
 		//加载2秒
 		getThread();
+		
+		setPhone();
 	}
 	
 	/**

@@ -40,7 +40,7 @@ import com.itmanapp.json.GetDeviceDetailJson;
 import com.itmanapp.util.AppManager;
 import com.itmanapp.util.CommonUtil;
 
-public class GetOrderActivity extends Activity implements OnClickListener{
+public class GetOrderActivity extends BaseActivity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -91,7 +91,9 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 		AppManager.getAppManager().addActivity(this);
 		
 		getView();
+		setPhone();
 	}
+	
 
 	boolean canEdit = false;
 
@@ -126,6 +128,8 @@ public class GetOrderActivity extends Activity implements OnClickListener{
 			if (status == 1) {
 				button.setBackgroundResource(R.drawable.glsb);
 				button.setText("填写检查结果");
+			}else{
+				button.setVisibility(View.GONE);
 			}
 		}else{
 			button.setVisibility(View.GONE);

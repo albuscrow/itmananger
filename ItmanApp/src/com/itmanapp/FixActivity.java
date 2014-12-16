@@ -56,7 +56,7 @@ import com.itmanapp.util.NetUtils;
  * @class description 待维修工单详细页面
  * 
  */
-public class FixActivity extends Activity implements OnClickListener{
+public class FixActivity extends BaseActivity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -100,6 +100,7 @@ public class FixActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.fix_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 	/**

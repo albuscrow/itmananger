@@ -46,7 +46,7 @@ import com.itmanapp.widget.listview.XListView.IXListViewListener;
  * @class description 待确认工单页面
  * 
  */
-public class PendingConfirmWorkOrdersActivity extends Activity implements OnItemClickListener,OnClickListener{
+public class PendingConfirmWorkOrdersActivity extends BaseActivity implements OnItemClickListener,OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -107,7 +107,9 @@ public class PendingConfirmWorkOrdersActivity extends Activity implements OnItem
 		spf = getSharedPreferences("user",Context.MODE_PRIVATE);
 		userId=spf.getInt("Id", 0);
 		getView();
+		setPhone();
 	}
+	
 	
 	/**
 	 * 控件显示

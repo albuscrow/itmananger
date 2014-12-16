@@ -44,7 +44,7 @@ import com.itmanapp2.widget.spiner.SpinerPopWindow;
  * @class description 系统查询页面
  * 
  */
-public class SystemSearchActivity extends Activity implements OnClickListener, IOnItemSelectListener{
+public class SystemSearchActivity extends BaseActivity implements OnClickListener, IOnItemSelectListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -89,6 +89,7 @@ public class SystemSearchActivity extends Activity implements OnClickListener, I
 		setContentView(R.layout.activity_sys_search);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 	/**

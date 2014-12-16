@@ -19,7 +19,7 @@ import com.itmanapp2.util.AppManager;
  * @class description 系统查询页面
  * 
  */
-public class SystemSeachDetailActivity extends Activity implements OnClickListener{
+public class SystemSeachDetailActivity extends BaseActivity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -66,6 +66,7 @@ public class SystemSeachDetailActivity extends Activity implements OnClickListen
 		setContentView(R.layout.activity_sys_search_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 	/**

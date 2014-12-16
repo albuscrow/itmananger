@@ -39,7 +39,7 @@ import com.itmanapp.zxing.view.ViewfinderView;
  * @class description 设备查询页面
  * 
  */
-public class EquipmentSearchActivity extends Activity implements Callback {
+public class EquipmentSearchActivity extends BaseActivity implements Callback {
 
 	private CaptureActivityHandler handler;
 	private ViewfinderView viewfinderView;
@@ -95,6 +95,7 @@ public class EquipmentSearchActivity extends Activity implements Callback {
 		
 		hasSurface = false;
 		inactivityTimer = new InactivityTimer(this);
+		setPhone();
 	}
 
 	@Override

@@ -39,7 +39,7 @@ import com.itmanapp2.util.AppManager;
  * @create date: 2014/7/15
  * @class description 修改密码页面
  */
-public class ChangePasswordActivity extends Activity implements OnClickListener {
+public class ChangePasswordActivity extends BaseActivity implements OnClickListener {
 
 	/**返回按钮*/
 	private ImageView backBtn;
@@ -87,6 +87,7 @@ public class ChangePasswordActivity extends Activity implements OnClickListener 
 		loginUser=spf.getString("auuLoginUser", "");
 		// 调用根据控件id声明控件对象的方法
 		getViews();
+		setPhone();
 	}
 
 	/**

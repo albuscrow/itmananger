@@ -37,7 +37,7 @@ import com.itmanapp2.util.AppManager;
  * @class description 待验收工单页面
  * 
  */
-public class RepairAcceptanceDetailActivity extends Activity implements
+public class RepairAcceptanceDetailActivity extends BaseActivity implements
 		OnClickListener {
 
 	/** 返回按钮 */
@@ -89,6 +89,7 @@ public class RepairAcceptanceDetailActivity extends Activity implements
 		AppManager.getAppManager().addActivity(this);
 		intent=getIntent();
 		getView();
+		setPhone();
 	}
 
 	/**

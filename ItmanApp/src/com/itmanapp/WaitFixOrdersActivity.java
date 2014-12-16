@@ -45,7 +45,7 @@ import com.itmanapp.widget.listview.XListView.IXListViewListener;
  * @class description 待确认工单页面
  * 
  */
-public class WaitFixOrdersActivity extends Activity implements OnItemClickListener,OnClickListener{
+public class WaitFixOrdersActivity extends BaseActivity implements OnItemClickListener,OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -106,6 +106,7 @@ public class WaitFixOrdersActivity extends Activity implements OnItemClickListen
 		spf = getSharedPreferences("user",Context.MODE_PRIVATE);
 		userId=spf.getInt("Id", 0);
 		getView();
+		setPhone();
 	}
 	
 	/**

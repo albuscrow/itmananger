@@ -40,7 +40,7 @@ import com.itmanapp.util.CustomRequest;
  * @class description 待确认工单详细页面
  * 
  */
-public class MyNeedFixOrderDetailActivity extends Activity implements OnClickListener{
+public class MyNeedFixOrderDetailActivity extends BaseActivity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -92,6 +92,7 @@ public class MyNeedFixOrderDetailActivity extends Activity implements OnClickLis
 		setContentView(R.layout.activity_need_fix_order_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 	/**

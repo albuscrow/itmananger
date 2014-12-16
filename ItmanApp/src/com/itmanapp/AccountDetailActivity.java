@@ -33,9 +33,7 @@ import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.itmanapp.entity.LoginEntity;
 import com.itmanapp.entity.UserDetailEntity;
-import com.itmanapp.json.GetLoginJson;
 import com.itmanapp.json.GetUserDetailJson;
 import com.itmanapp.util.AppManager;
 
@@ -45,7 +43,7 @@ import com.itmanapp.util.AppManager;
  * @class description 设置页面
  * 
  */
-public class AccountDetailActivity extends Activity implements OnClickListener{
+public class AccountDetailActivity extends BaseActivity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -100,6 +98,7 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 		getView();
 		
 		getResult();
+		setPhone();
 	}
 	
 	/**

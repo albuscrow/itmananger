@@ -41,7 +41,7 @@ import com.itmanapp.util.AppManager;
  * @class description 待巡检工单页面
  * 
  */
-public class WrittenInspectionActivity extends Activity implements
+public class WrittenInspectionActivity extends BaseActivity implements
 		OnItemClickListener, OnClickListener {
 
 	/** 返回按钮 */
@@ -80,6 +80,7 @@ public class WrittenInspectionActivity extends Activity implements
 		intent=getIntent();
 		id=intent.getIntExtra("id", 0);
 		getView();
+		setPhone();
 	}
 
 	/**

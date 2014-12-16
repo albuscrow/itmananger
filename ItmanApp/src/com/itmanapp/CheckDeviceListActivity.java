@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -33,10 +34,14 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.adapter.NeedToCheckDeviceAdatper;
+import com.itmanapp.adapter.RelatedDeviceAdatper;
 import com.itmanapp.entity.DeviceNeedToCheck;
+import com.itmanapp.entity.RelatedDeviceEntity;
 import com.itmanapp.json.GetDeviceDetailJson;
 import com.itmanapp.json.GetInspectionPlanJson;
 import com.itmanapp.json.GetCheckDeviceListJson;
+import com.itmanapp.json.GetRelatedDeviceForXJJson;
+import com.itmanapp.json.GetRelatedDeviceJson;
 import com.itmanapp.util.AppManager;
 
 /**
@@ -45,7 +50,7 @@ import com.itmanapp.util.AppManager;
  * @class description 待巡检工单页面
  * 
  */
-public class CheckDeviceListActivity extends Activity implements
+public class CheckDeviceListActivity extends BaseActivity implements
 		OnItemClickListener, OnClickListener {
 
 	/** 返回按钮 */
@@ -80,6 +85,10 @@ public class CheckDeviceListActivity extends Activity implements
 
 	private SharedPreferences spf;
 
+	private Long txrId;
+
+	private String type;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,7 +100,11 @@ public class CheckDeviceListActivity extends Activity implements
 		
 		intent=getIntent();
 		id=intent.getLongExtra("id", 0);
+		txrId = intent.getLongExtra("txrId", -1);
+		type = intent.getStringExtra("type");
+		status = intent.getIntExtra("status", -1);
 		getView();
+		setPhone();
 	}
 
 	/**
@@ -115,7 +128,8 @@ public class CheckDeviceListActivity extends Activity implements
 
 		mDialog.show();
 		mDialog.setCanceledOnTouchOutside(false);
-
+		
+		findViewById(R.id.get).setOnClickListener(this);
 
 	}
 	
@@ -133,11 +147,9 @@ public class CheckDeviceListActivity extends Activity implements
 	 */
 	private void getResult() {
 
-			String url = "http://121.40.188.122:8080/assetapi2/xj/records?"
+			String url = "http://121.40.188.122:8080/assetapi2/xj/listByXj?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-					+ "&planId="+id
-					+ "&userId=" + userId
-					+ "&status=0";
+					+ "&txrId=" + txrId;
 			
 			System.out.println(url);
 
@@ -150,8 +162,8 @@ public class CheckDeviceListActivity extends Activity implements
 						public void onResponse(JSONObject response) {
 							
 							System.out.println("@@" + response.toString());
-							list = GetCheckDeviceListJson.getJson(response.toString());
-							int result = GetCheckDeviceListJson.result;
+							list = GetRelatedDeviceForXJJson.getJson(response.toString());
+							int result = GetRelatedDeviceForXJJson.result;
 							if (result == 1) {
 								if (list != null && list.size() > 0) {
 									// 适配数据
@@ -208,6 +220,18 @@ public class CheckDeviceListActivity extends Activity implements
 				Toast.makeText(CheckDeviceListActivity.this, "参数错误", 1000)
 						.show();
 				break;
+				
+			case 101:
+				Toast.makeText(CheckDeviceListActivity.this, "系统出错", 1000)
+				.show();
+				break;
+			
+				
+			case 10086:
+				Toast.makeText(CheckDeviceListActivity.this, "领取成功", 1000)
+						.show();
+				adapter.get();
+				break;
 			}
 			// 关闭ProgressDialog
 			if (mDialog != null && mDialog.isShowing()) {
@@ -215,6 +239,8 @@ public class CheckDeviceListActivity extends Activity implements
 			}
 		}
 	};
+
+	private int status;
 
 	/**
 	 * description 随机生成5位字符串
@@ -289,8 +315,67 @@ public class CheckDeviceListActivity extends Activity implements
 		case R.id.backBtn:
 			finish();
 			break;
+			
+		case R.id.get:
+			getOrder();
+			break;
 		}
 		
+	}
+	
+	private void getOrder() {
+
+		// tencent 123456
+		String url = "http://121.40.188.122:8080/assetapi2/xj/sure?"
+				+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
+				+ "&txrId="+txrId
+				+ "&userId=" + userId;
+		System.out.println(url);
+//		if (status == 1) {
+//			handler.sendEmptyMessage(10086);
+//			return;
+//		}
+
+		HashMap<String, String> params = new HashMap<String, String>();
+
+		JsonObjectRequest req = new JsonObjectRequest(Method.GET, url,
+				new JSONObject(params), new Listener<JSONObject>() {
+
+					@Override
+					public void onResponse(JSONObject response) {
+
+						System.out.println("@@" + response.toString());
+						
+						int result = -1;
+						try {
+							result = response.getInt("result");
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						if (result == 1) {
+							handler.sendEmptyMessage(10086);
+						} else if (result == -1) {
+							handler.sendEmptyMessage(-1);
+						} else if (result == 0) {
+							handler.sendEmptyMessage(0);
+						} else if (result == 101) {
+							handler.sendEmptyMessage(101);
+						} else if (result == 103) {
+							handler.sendEmptyMessage(103);
+						}
+
+					}
+				}, new Response.ErrorListener() {
+
+					@Override
+					public void onErrorResponse(VolleyError error) {
+
+						System.out.println("##" + error.toString());
+						handler.sendEmptyMessage(0);
+
+					}
+				});
+		DemoApplication.getInstance().getRequestQueue().add(req);
 	}
 
 }

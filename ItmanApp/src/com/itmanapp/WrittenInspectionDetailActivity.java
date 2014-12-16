@@ -42,7 +42,7 @@ import com.itmanapp.util.AppManager;
  * @class description 待巡检详细提交页面
  * 
  */
-public class WrittenInspectionDetailActivity extends Activity implements OnClickListener{
+public class WrittenInspectionDetailActivity extends BaseActivity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -95,6 +95,7 @@ public class WrittenInspectionDetailActivity extends Activity implements OnClick
 		intent=getIntent();
 		id=intent.getIntExtra("id", 0);
 		getView();
+		setPhone();
 	}
 	
 	/**

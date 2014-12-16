@@ -25,6 +25,18 @@
             android:text="待巡检工单"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
+        
+         <TextView
+            android:id="@+id/get"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="领取"
+            android:layout_marginRight="10dp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+        
     </RelativeLayout>
 
      <RelativeLayout

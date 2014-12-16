@@ -66,7 +66,7 @@ import com.itmanapp.util.NetUtils;
  * @class description 待巡检详细提交页面
  * 
  */
-public class CheckDeviceActivity extends Activity implements OnClickListener{
+public class CheckDeviceActivity extends BaseActivity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -138,6 +138,7 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 		cabName = intent.getStringExtra("cabName");
 		
 		getView();
+		setPhone();
 	}
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// 结果码不等于取消时候
@@ -438,8 +439,12 @@ public class CheckDeviceActivity extends Activity implements OnClickListener{
 						
 						@Override
 						public void onClick(View v) {
+							String desc = item.getDesc();
+							if (desc.indexOf("\n") == -1) {
+								desc = "        " + desc.trim();
+							}
 							AlertDialog ad = new AlertDialog.Builder(CheckDeviceActivity.this).setTitle("巡检项目详情")
-									.setMessage(item.getDesc()).setNeutralButton("确定", null).create();
+									.setMessage(desc).setNeutralButton("确定", null).create();
 							ad.show();
 						}
 					});

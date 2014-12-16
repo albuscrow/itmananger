@@ -38,7 +38,7 @@ import com.itmanapp2.util.AppManager;
  * @class description 登录页面
  * 
  */
-public class LoginActivity extends Activity implements OnClickListener {
+public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	/** 账号编辑框 */
 	private EditText acountEdt;
@@ -76,6 +76,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 		AppManager.getAppManager().addActivity(this);
 		//获取控件显示
 		getView();
+		setPhone();
 	}
 
 	/**

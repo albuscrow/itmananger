@@ -40,7 +40,7 @@ import com.itmanapp.util.AppManager;
  * @class description 我的巡检详细页面
  * 
  */
-public class MyInspectionDetailActivity extends Activity implements OnClickListener{
+public class MyInspectionDetailActivity extends BaseActivity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -85,6 +85,7 @@ public class MyInspectionDetailActivity extends Activity implements OnClickListe
 		intent=getIntent();
 		id=intent.getIntExtra("id", 0);
 		getView();
+		setPhone();
 	}
 	
 	/**

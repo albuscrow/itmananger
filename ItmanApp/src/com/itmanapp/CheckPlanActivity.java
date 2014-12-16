@@ -33,6 +33,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.itmanapp.adapter.InspectionPlanAdatper;
 import com.itmanapp.entity.CheckPlanEntity;
+import com.itmanapp.entity.DeviceNeedToCheck;
+import com.itmanapp.json.GetCheckDeviceListJson;
 import com.itmanapp.json.GetInspectionPlanJson;
 import com.itmanapp.util.AppManager;
 import com.itmanapp.util.NetworkCheck;
@@ -45,7 +47,7 @@ import com.itmanapp.widget.listview.XListView.IXListViewListener;
  * @class description 待巡检工单页面
  * 
  */
-public class CheckPlanActivity extends Activity implements
+public class CheckPlanActivity extends BaseActivity implements
 		OnItemClickListener, OnClickListener {
 
 	/** 返回按钮 */
@@ -67,10 +69,10 @@ public class CheckPlanActivity extends Activity implements
 	private InspectionPlanAdatper adapter;
 
 	/** 服务端解析数据 */
-	private List<CheckPlanEntity> list = new ArrayList<CheckPlanEntity>();
+	private List<DeviceNeedToCheck> list = new ArrayList<DeviceNeedToCheck>();
 
 	/** 适配类显示数据 */
-	private List<CheckPlanEntity> listAll = new ArrayList<CheckPlanEntity>();
+	private List<DeviceNeedToCheck> listAll = new ArrayList<DeviceNeedToCheck>();
 
 	/** 页码 */
 	private int pageIndex = 1;
@@ -107,6 +109,7 @@ public class CheckPlanActivity extends Activity implements
 		spf = getSharedPreferences("user",Context.MODE_PRIVATE);
 		userId=spf.getInt("Id", 0);
 		getView();
+		setPhone();
 	}
 
 	/**
@@ -148,9 +151,9 @@ public class CheckPlanActivity extends Activity implements
 
 		if (!loading) {
 
-			String url = "http://121.40.188.122:8080/assetapi2/xj/plans?"
+			String url = "http://121.40.188.122:8080/assetapi2/xj/records?"
 					+ "key=z1zky&code=M0U3Q0IwQzE0RDMwNzUwQTI3MTZFNTc5NjIxMzJENzE="
-					+ "&userId=" + userId + "&page=" + pageIndex 
+					+ "&userId=" + userId + "&page=" + pageIndex
 					+ "&status=0";
 			System.out.println(url);
 
@@ -163,8 +166,8 @@ public class CheckPlanActivity extends Activity implements
 						public void onResponse(JSONObject response) {
 							loading = true;
 							System.out.println("@@" + response.toString());
-							list = GetInspectionPlanJson.getJson(response.toString());
-							int result = GetInspectionPlanJson.result;
+							list = GetCheckDeviceListJson.getJson(response.toString());
+							int result = GetCheckDeviceListJson.result;
 							if (result == 1) {
 								if (list != null && list.size() > 0) {
 									// 适配数据
@@ -211,8 +214,7 @@ public class CheckPlanActivity extends Activity implements
 				//Toast.makeText(InspectionSystemPlanActivity.this, "获取成功", 1000).show();
 				break;
 			case -1:
-				Toast.makeText(CheckPlanActivity.this, "验证不通过，非法用户",
-						1000).show();
+				Toast.makeText(CheckPlanActivity.this, "验证不通过，非法用户", 1000).show();
 				break;
 			case 0:
 				Toast.makeText(CheckPlanActivity.this, "获取失败", 1000)
@@ -277,7 +279,11 @@ public class CheckPlanActivity extends Activity implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Intent intent=new Intent(CheckPlanActivity.this,CheckDeviceListActivity.class);
-		intent.putExtra("id", listAll.get(arg2-1).getTxpId());
+		DeviceNeedToCheck deviceNeedToCheck = listAll.get(arg2-1);
+		intent.putExtra("id", deviceNeedToCheck.getTxrId());
+		intent.putExtra("txrId", deviceNeedToCheck.getTxrId());
+		intent.putExtra("type", deviceNeedToCheck.getType());
+		intent.putExtra("status", deviceNeedToCheck.getTxrStatus());
 		startActivity(intent);
 	}
 	
@@ -288,7 +294,7 @@ public class CheckPlanActivity extends Activity implements
 	 * 
 	 * @return void
 	 */
-	private void setLvData(List<CheckPlanEntity> list) {
+	private void setLvData(List<DeviceNeedToCheck> list) {
 		// 刷新数据、适配数据
 		if (updateFlag) {
 			// 适配数据

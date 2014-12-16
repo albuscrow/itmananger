@@ -167,7 +167,6 @@ public class FileListAdatper extends BaseAdapter {
 											}
 										}else{
 											Toast.makeText(context, "暂无可以打开该文件的应用!\n文件已保存至"+file.getAbsolutePath(), Toast.LENGTH_SHORT).show();  
-
 										}
 									}									
 								}

@@ -62,7 +62,7 @@ import android.widget.Toast;
  * @class description 填写报修页面
  * 
  */
-public class FillRepairActivity extends Activity implements OnClickListener, IOnItemSelectListener{
+public class FillRepairActivity extends BaseActivity implements OnClickListener, IOnItemSelectListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -185,6 +185,7 @@ public class FillRepairActivity extends Activity implements OnClickListener, IOn
 		roomNameStr = getIntent().getStringExtra("roomName");
 		deviceNameStr = getIntent().getStringExtra("deviceName");
 				getView();
+		setPhone();
 	}
 	
 	/**

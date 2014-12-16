@@ -41,7 +41,7 @@ import com.itmanapp2.json.GetRelatedCabinetListJson;
 import com.itmanapp2.json.GetRelatedDeviceJson;
 import com.itmanapp2.util.AppManager;
 
-public class CabinetListActivity extends Activity implements OnClickListener,OnItemClickListener {
+public class CabinetListActivity extends BaseActivity implements OnClickListener,OnItemClickListener {
 
 
 	/** 返回按钮 */
@@ -95,6 +95,7 @@ public class CabinetListActivity extends Activity implements OnClickListener,OnI
 			roomName = "";
 		}
 		getView();
+		setPhone();
 	}
 	
 	/**

@@ -50,7 +50,7 @@ import com.itmanapp.widget.listview.XListView.IXListViewListener;
  * @class description 我的巡检页面
  * 
  */
-public class MyCheckActivity extends Activity implements OnItemClickListener,OnClickListener{
+public class MyCheckActivity extends BaseActivity implements OnItemClickListener,OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -119,6 +119,7 @@ public class MyCheckActivity extends Activity implements OnItemClickListener,OnC
 		spf = getSharedPreferences("user",Context.MODE_PRIVATE);
 		userId=spf.getInt("Id", 0);
 		getView();
+		setPhone();
 	}
 	
 	/**

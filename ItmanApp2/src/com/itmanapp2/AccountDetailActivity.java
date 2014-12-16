@@ -43,7 +43,7 @@ import com.itmanapp2.util.AppManager;
  * @class description 设置页面
  * 
  */
-public class AccountDetailActivity extends Activity implements OnClickListener{
+public class AccountDetailActivity extends BaseActivity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -104,6 +104,7 @@ public class AccountDetailActivity extends Activity implements OnClickListener{
 		getView();
 		
 		getResult();
+		setPhone();
 	}
 	
 	/**

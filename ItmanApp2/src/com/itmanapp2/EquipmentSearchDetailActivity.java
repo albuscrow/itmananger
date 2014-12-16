@@ -36,7 +36,7 @@ import com.itmanapp2.util.AppManager;
  * @class description 设备查询结果页面
  * 
  */
-public class EquipmentSearchDetailActivity extends Activity implements OnClickListener{
+public class EquipmentSearchDetailActivity extends BaseActivity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -72,6 +72,7 @@ public class EquipmentSearchDetailActivity extends Activity implements OnClickLi
 		setContentView(R.layout.activity_ept_search_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 	/**

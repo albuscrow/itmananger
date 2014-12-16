@@ -36,9 +36,8 @@ public class RelatedDeviceEntity implements Serializable {
     long depId;
     String depName;
     
-    
-    
-     /**
+ 
+	/**
 	 * @return the unitId
 	 */
 	public long getUnitId() {

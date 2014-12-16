@@ -38,7 +38,7 @@ import com.itmanapp.util.CommonUtil;
  * @class description 设备查询结果页面
  * 
  */
-public class DeviceDetailActivity extends Activity implements OnClickListener{
+public class DeviceDetailActivity extends BaseActivity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -82,6 +82,7 @@ public class DeviceDetailActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_device_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 	/**

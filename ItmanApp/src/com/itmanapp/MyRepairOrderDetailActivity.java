@@ -38,7 +38,7 @@ import android.widget.Toast;
  * @class description 我的维修工单详细页面
  * 
  */
-public class MyRepairOrderDetailActivity extends Activity implements OnClickListener{
+public class MyRepairOrderDetailActivity extends BaseActivity implements OnClickListener{
 
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -84,6 +84,7 @@ public class MyRepairOrderDetailActivity extends Activity implements OnClickList
 		setContentView(R.layout.activity_repair_order_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 
 	/**

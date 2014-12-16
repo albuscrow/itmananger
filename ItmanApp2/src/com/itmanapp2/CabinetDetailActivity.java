@@ -34,7 +34,7 @@ import com.itmanapp2.json.GetDeviceDetailJson;
 import com.itmanapp2.util.AppManager;
 import com.itmanapp2.util.CommonUtil;
 
-public class CabinetDetailActivity extends Activity implements OnClickListener{
+public class CabinetDetailActivity extends BaseActivity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -79,6 +79,7 @@ public class CabinetDetailActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_cabinet_detail);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 	/**

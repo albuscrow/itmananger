@@ -41,7 +41,7 @@ import com.itmanapp2.util.CommonUtil;
  * class description 系统查询页面
  * 
  */
-public class RoomDetailActivity extends Activity implements OnClickListener{
+public class RoomDetailActivity extends BaseActivity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -89,6 +89,7 @@ public class RoomDetailActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_room_detail);
 		AppManager.getAppManager().addActivity(this);
+		setPhone();
 	}
 	@Override
 	protected void onResume() {

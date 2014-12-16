@@ -24,7 +24,7 @@ import com.umeng.update.UmengUpdateAgent;
  * @class description 主框架页面
  * 
  */
-public class MainActivity extends Activity implements OnClickListener{
+public class MainActivity extends BaseActivity implements OnClickListener{
 
 	/** 退出程序标示 */
 	private static Boolean isExit = false;
@@ -62,6 +62,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_main);
 		AppManager.getAppManager().addActivity(this);
 		getView();
+		setPhone();
 	}
 	
 
@@ -93,8 +94,6 @@ public class MainActivity extends Activity implements OnClickListener{
 		socialSecurityLayout=(LinearLayout)findViewById(R.id.social_securityLayout);
 		socialSecurityLayout.setOnClickListener(this);
 		
-		phoneTv=(TextView)findViewById(R.id.phoneTv);
-		phoneTv.setOnClickListener(this);
 	}
 
 	/**
@@ -166,7 +165,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		case R.id.myInspectionLayout:
 			Intent intent3=new Intent(MainActivity.this,MyCheckActivity.class);
 			startActivity(intent3);
-			break;	
+			break;
 			
 		//待确认工单
 		case R.id.pendingConfirmWorkOrdersLayout:
@@ -190,12 +189,6 @@ public class MainActivity extends Activity implements OnClickListener{
 		case R.id.social_securityLayout:
 			Intent intent8=new Intent(MainActivity.this,AccountDetailActivity.class);
 			startActivity(intent8);
-			break;
-	
-		//拨打电话
-		case R.id.phoneTv:
-			  Intent intent9 = new Intent(Intent.ACTION_CALL,Uri.parse("tel:400-800-8003"));
-			  startActivity(intent9);
 			break;
 			
 		}

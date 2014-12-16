@@ -38,7 +38,9 @@ public class CheckItemEntity {
 	 * @return the desc
 	 */
 	public String getDesc() {
-		return desc;
+		if (desc == null) {
+			return "暂无详情";
+		}		return desc;
 	}
 	/**
 	 * @param desc the desc to set

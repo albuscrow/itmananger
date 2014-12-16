@@ -20,7 +20,7 @@ import android.widget.Toast;
  * @class description 我的报修详细页面
  * 
  */
-public class MyRepairDetailActivity extends Activity implements OnClickListener{
+public class MyRepairDetailActivity extends BaseActivity implements OnClickListener{
 	
 	/** 返回按钮 */
 	private ImageView backBtn;
@@ -69,6 +69,8 @@ public class MyRepairDetailActivity extends Activity implements OnClickListener{
 		AppManager.getAppManager().addActivity(this);
 		intent=getIntent();
 		getView();
+		
+		setPhone();
 	}
 
 	/**

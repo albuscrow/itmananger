@@ -43,7 +43,7 @@ import com.itmanapp.json.GetRelatedCabinetListJson;
 import com.itmanapp.json.GetRelatedDeviceJson;
 import com.itmanapp.util.AppManager;
 
-public class CheckListActivity extends Activity implements OnClickListener,OnItemClickListener {
+public class CheckListActivity extends BaseActivity implements OnClickListener,OnItemClickListener {
 
 
 	/** 返回按钮 */
@@ -86,6 +86,7 @@ public class CheckListActivity extends Activity implements OnClickListener,OnIte
 		spf = getSharedPreferences("user",Context.MODE_PRIVATE);
 		userId=spf.getInt("Id", 0);
 		getView();
+		setPhone();
 	}
 	
 	/**

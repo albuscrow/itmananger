@@ -44,7 +44,7 @@ import com.itmanapp.util.AppManager;
  * @author albuscrow
  * 机房查询
  */
-public class RoomListActivity extends Activity implements OnClickListener, OnItemClickListener{/** 返回按钮 */
+public class RoomListActivity extends BaseActivity implements OnClickListener, OnItemClickListener{/** 返回按钮 */
 	private ImageView backBtn;
 
 	/** 进度框 */
@@ -68,6 +68,7 @@ public class RoomListActivity extends Activity implements OnClickListener, OnIte
 		intent=getIntent();
 		rooms=(ArrayList<RoomEntity>) intent.getSerializableExtra("rooms");
 		getView();
+		setPhone();
 	}
 	
 	/**

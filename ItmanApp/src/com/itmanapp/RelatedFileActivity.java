@@ -40,7 +40,7 @@ import com.itmanapp.util.AppManager;
  * @class description 系统整改历史页面
  * 
  */
-public class RelatedFileActivity extends Activity implements OnClickListener{
+public class RelatedFileActivity extends BaseActivity implements OnClickListener{
 	
 	public static final int TYPE_ROOM = 1;
 	public static final int TYPE_CABINET = 2;
@@ -93,6 +93,7 @@ public class RelatedFileActivity extends Activity implements OnClickListener{
 		name=intent.getStringExtra("name");
 		type = intent.getIntExtra("type", -1);
 		getView();
+		setPhone();
 	}
 	
 	/**
